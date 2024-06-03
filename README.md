@@ -1,8 +1,8 @@
-# React + Vite
+# NAV Kontrollnotat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Aims to make a simple interface for workers at NAV to record important info where clients meet bi-annualy to control certain aspects of their benefit entitlement.
 
-Currently, two official plugins are available:
+## Main functions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Check for important changes to client circumstances, and highlights appropriate actions to staff.
+- Autocompile letters
