@@ -3,11 +3,6 @@
     display: flex;
 }
 
-.inputsField {
-    background-color: aqua;
-    flex: 1;    
-}
-
 /* Output fields */
 .outputsField {
     flex: 1.5;

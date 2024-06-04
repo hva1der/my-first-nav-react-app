@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import styles from "./App.module.css";
+import Inputs from "./components/Inputs";
 
 // add simple input on left and a textbox on the right that simply displays the inputted data again
 
@@ -10,17 +11,7 @@ export default function App() {
 
   return (
     <div className={styles.mainContent}>
-      <div className={styles.inputsField}>
-        <input
-          type="text"
-          placeholder="hello"
-          onChange={(e) => {
-            e.preventDefault;
-            setFirstText(e.target.value);
-          }}
-        />
-        <button onClick={() => setShowLetter(!showLetter)}>Show letter</button>
-      </div>
+      <Inputs onShowLetter={() => setShowLetter(!showLetter)} />
 
       {/* OUTPUT FIELDS */}
       <div className={styles.outputsField}>
