@@ -1,0 +1,35 @@
+
+.mainContent {
+    display: flex;
+}
+
+.inputsField {
+    background-color: aqua;
+    flex: 1;    
+}
+
+/* Output fields */
+.outputsField {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NOTES */
+.notesField {
+    flex: 1;
+
+}
+
+/* LETTER */
+.letterField {
+    flex: 1;
+
+}
+
+.content {
+
+    margin: 5vh 3vw ;
+    padding: 5vh 0vw;
+    border: 1px solid black;
+}
