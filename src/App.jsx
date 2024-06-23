@@ -1,7 +1,7 @@
 import { useState } from "react";
-
 import styles from "./App.module.css";
 import Inputs from "./components/Inputs";
+import Notes from "./components/Notes";
 
 // add simple input on left and a textbox on the right that simply displays the inputted data again
 
@@ -15,13 +15,13 @@ export default function App() {
 
       {/* OUTPUT FIELDS */}
       <div className={styles.outputsField}>
-        <div className={styles.notesField}>
-          <p className={styles.content}>another line of content</p>
+        {/* Notes */}
+        <div className={styles.textBox}>
+          <Notes />
         </div>
 
-        <div className={styles.letterField}>
-          {showLetter && <p className={styles.content}>{firstText}</p>}
-        </div>
+        {/* Letter */}
+        <div className={styles.textBox}>{showLetter && <p>{firstText}</p>}</div>
       </div>
     </div>
   );

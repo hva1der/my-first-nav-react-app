@@ -28,3 +28,10 @@
     padding: 5vh 0vw;
     border: 1px solid black;
 }
+
+.textBox {
+    flex: 1;
+    margin: 5vh 3vw ;
+    padding: 5vh 0vw;
+    border: 1px solid black;
+}
