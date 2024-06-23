@@ -10,25 +10,6 @@
     flex-direction: column;
 }
 
-/* NOTES */
-.notesField {
-    flex: 1;
-
-}
-
-/* LETTER */
-.letterField {
-    flex: 1;
-
-}
-
-.content {
-
-    margin: 5vh 3vw ;
-    padding: 5vh 0vw;
-    border: 1px solid black;
-}
-
 .textBox {
     flex: 1;
     margin: 5vh 3vw ;

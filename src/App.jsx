@@ -3,25 +3,37 @@ import styles from "./App.module.css";
 import Inputs from "./components/Inputs";
 import Notes from "./components/Notes";
 
-// add simple input on left and a textbox on the right that simply displays the inputted data again
-
 export default function App() {
-  const [firstText, setFirstText] = useState("Nothing added yet");
+  const [content, setContent] = useState({
+    applicationDate: "",
+    rate: "EV",
+  });
+  const onChangeContent = (newContent) => {
+    setContent({ ...content, ...newContent });
+  };
+
   const [showLetter, setShowLetter] = useState(true);
 
   return (
     <div className={styles.mainContent}>
-      <Inputs onShowLetter={() => setShowLetter(!showLetter)} />
+      {/* INPUT FIELDS */}
+      <Inputs
+        onChangeContent={onChangeContent}
+        onShowLetter={() => setShowLetter(!showLetter)}
+      />
 
       {/* OUTPUT FIELDS */}
       <div className={styles.outputsField}>
         {/* Notes */}
         <div className={styles.textBox}>
-          <Notes />
+          <Notes content={content} />
         </div>
 
         {/* Letter */}
-        <div className={styles.textBox}>{showLetter && <p>{firstText}</p>}</div>
+        <div className={styles.textBox}>
+          {/* Button to hide content (in case people find it distracting to have live updates) */}
+          {showLetter && <p>{content.rate}</p>}
+        </div>
       </div>
     </div>
   );

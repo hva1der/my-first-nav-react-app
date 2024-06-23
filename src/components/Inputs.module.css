@@ -1,5 +1,18 @@
 .inputsField {
-    background-color: aqua;
+    border-right: 1px solid grey;
     flex: 1;    
     height: 100vh;
+}
+
+.inputsField form {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputsField label {
+    margin-bottom: 10px;  
+}
+
+.inputsField input {
+    margin-left: 5px;
 }

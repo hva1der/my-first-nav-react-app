@@ -1,9 +1,14 @@
 import styles from "./Notes.module.css";
 
-export default function Notes({ notesContents = "helloNotes" }) {
+export default function Notes({ content }) {
   return (
-    <div>
-      <p>{notesContents}</p>
+    <div className={styles.notesText}>
+      <p>
+        Søknadsdato: <b>{content.applicationDate}</b>
+      </p>
+      <p>
+        Sats: <b>{content.rate}</b>
+      </p>
     </div>
   );
 }
