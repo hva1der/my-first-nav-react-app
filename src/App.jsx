@@ -6,7 +6,8 @@ import Letters from "./components/Letters";
 
 export default function App() {
   const [content, setContent] = useState({
-    applicationDate: "",
+    applicationDate: "01.01.2024",
+    newPeriodStartDate: "01.01.2024",
     rate: "EV",
   });
   const onChangeContent = (newContent) => {
@@ -19,6 +20,7 @@ export default function App() {
     <div className={styles.mainContent}>
       {/* INPUT FIELDS */}
       <Inputs
+        content={content}
         onChangeContent={onChangeContent}
         onShowLetter={() => setShowLetter(!showLetter)}
       />

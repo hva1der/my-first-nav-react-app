@@ -1,6 +1,7 @@
+import { controlClash } from "../utilities/dateUtils";
 import styles from "./Inputs.module.css";
 
-export default function Inputs({ onShowLetter, onChangeContent }) {
+export default function Inputs({ onShowLetter, onChangeContent, content }) {
   return (
     <div className={styles.inputsField}>
       <form>
@@ -13,6 +14,20 @@ export default function Inputs({ onShowLetter, onChangeContent }) {
               onChangeContent({ applicationDate: e.target.value });
             }}
           />
+        </label>
+        <label>
+          Virkningstidspunkt:
+          <input
+            type="date"
+            id="newPeriodStartDate"
+            onChange={(e) => {
+              onChangeContent({ newPeriodStartDate: e.target.value });
+            }}
+          />
+          {/* IF controlClash -> adds button to ask IF user has to attend for control */}
+          {controlClash(content.newPeriodStartDate).clash && (
+            <button onClick={() => {}}>Må møte til samtale?</button>
+          )}
         </label>
         <label>
           Sats:

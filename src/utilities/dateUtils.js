@@ -25,18 +25,20 @@ const months = [
 // # Internal functions #
 //--------------------------
 // Function to convert JS Dates to display format dd.mm.yyyy - takes a JS Date string and returns an array ["dd", "mm", yyyy]
-
-function formatDates(date) {
+// NB: also exported!
+export function formatDates(date) {
+  // ensure format of date is JS Date
+  const ensureDate = new Date(date);
   // "pad" dates so the appear in format 01.01.2024, rather than 1.1.2024
   const padZero = (date) => date.toString().padStart(2, "0");
 
   return [
-    padZero(date.getDate()),
-    padZero(date.getMonth() + 1),
-    date.getFullYear(),
+    padZero(ensureDate.getDate()),
+    padZero(ensureDate.getMonth() + 1),
+    ensureDate.getFullYear(),
   ];
 }
-
+// -------------------------
 // Function to increase a date by X months. Defaults  to 1st day of month, but can set day to 0 to get last day of previous month
 // ref: https://www.w3resource.com/javascript-exercises/javascript-date-exercise-9.php
 function addMonths(date, numOfMonths, day = 1) {
@@ -49,7 +51,7 @@ function addMonths(date, numOfMonths, day = 1) {
   );
   return newDate;
 }
-
+// --------------------------
 // ### Exported functions ###
 // ---------------------------------------------------------------------------
 // FUNCTION to determine 12 month award period
@@ -91,7 +93,7 @@ export function controlClash(startOfPeriod) {
     if (
       addMonths(startDate, controlMonths[i]).getMonth() === today.getMonth()
     ) {
-      return { clash: controlMonths[i] };
+      return { clash: "clash " + controlMonths[i] };
     }
   }
   return { clash: false };
