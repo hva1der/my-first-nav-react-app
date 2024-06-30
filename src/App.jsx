@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import Inputs from "./components/Inputs";
 import Notes from "./components/Notes";
+import Letters from "./components/Letters";
 
 export default function App() {
   const [content, setContent] = useState({
@@ -32,7 +33,7 @@ export default function App() {
         {/* Letter */}
         <div className={styles.textBox}>
           {/* Button to hide content (in case people find it distracting to have live updates) */}
-          {showLetter && <p>{content.rate}</p>}
+          {showLetter && <Letters content={content} />}
         </div>
       </div>
     </div>

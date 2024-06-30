@@ -10,7 +10,6 @@ export default function Inputs({ onShowLetter, onChangeContent }) {
             type="date"
             id="applicationDate"
             onChange={(e) => {
-              e.preventDefault;
               onChangeContent({ applicationDate: e.target.value });
             }}
           />
