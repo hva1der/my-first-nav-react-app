@@ -1,8 +1,11 @@
 const basetexts = {
-  controlClash: {
-    "clash 4": "MÅ MØTE TIL KONTROLLSAMTALE",
-    "clash 8": "MÅ MØTE TIL KONTROLLSAMTALE",
-    "clash 11": "MÅ MØTE FOR Å SØKE NY PERIODE",
+  /* Text to be printed if awarding decision date coincides with control dates (i.e. in backdating cases) */
+  controlClashText: {
+    attendance: {
+      controlClash: "Må møte til kontroll",
+      applyAgain: "Må møte for å søke ny periode",
+    },
+    noAttendance: {},
   },
 };
 

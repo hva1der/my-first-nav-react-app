@@ -25,8 +25,20 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
             }}
           />
           {/* IF controlClash -> adds button to ask IF user has to attend for control */}
-          {controlClash(content.newPeriodStartDate).clash && (
-            <button onClick={() => {}}>Må møte til samtale?</button>
+          {controlClash(content.newPeriodStartDate).clash ===
+            "controlClash" && (
+            <button
+              type="button"
+              onClick={() => {
+                onChangeContent({
+                  controlClashAttendance: !content.controlClashAttendance,
+                });
+              }}
+            >
+              {content.controlClashAttendance
+                ? "Må møte til samtale"
+                : "Må ikke møte"}
+            </button>
           )}
         </label>
         <label>

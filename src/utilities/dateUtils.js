@@ -82,27 +82,29 @@ export function canApplyAgain(startOfPeriod) {
 }
 
 // ------------------------
-// FUNCTION to see if a backdated award causes a control meeting to be called the same date as the award letter is issued
-// returns a "clash" object either false or specifying the clash as 4, 8, or 11 months into the period
-export function controlClash(startOfPeriod) {
+// FUNCTION to determine control period expiry months
+// returns array of 3 dates: 4, 8 and 11 months after startDate
+export function findControlMonths(startOfPeriod) {
   const startDate = new Date(startOfPeriod);
+  const controlMonths = [
+    addMonths(startDate, 4),
+    addMonths(startDate, 8),
+    addMonths(startDate, 11),
+  ];
+  return controlMonths;
+}
+// -------------------------
+// FUNCTION to see if a backdated award causes a control meeting to be called the same date as the award letter is issued
+// returns a "clash" object either false or specifying a clash with a control meeting (or in rarer case needing to apply for a new award period altogether - i.e. backdating cases)
+export function controlClash(startOfPeriod) {
   const today = new Date();
-  const controlMonths = [4, 8, 11];
+  const controlMonths = findControlMonths(startOfPeriod);
 
-  for (let i = 0; i < 3; i++) {
-    if (
-      addMonths(startDate, controlMonths[i]).getMonth() === today.getMonth()
-    ) {
-      return { clash: "clash " + controlMonths[i] };
-    }
-  }
-  return { clash: false };
+  if (today >= controlMonths[2]) {
+    return { clash: "applyAgain" };
+  } else if (today >= controlMonths[0]) {
+    return { clash: "controlClash" };
+  } else return { clash: false };
 }
 
 // TESTING
-const testDate = "2023-07-01";
-console.log(canApplyAgain(testDate));
-
-console.log(controlClash(testDate));
-
-console.log(awardPeriod(testDate));

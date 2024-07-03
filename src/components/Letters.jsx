@@ -3,9 +3,11 @@ import {
   formatDates,
   awardPeriod,
   canApplyAgain,
-  controlClash,
 } from "../utilities/dateUtils";
 import basetexts from "../texts/letters/baseTexts";
+
+//testing
+import ControlClashText from "../texts/letters/letterComponents/ControlClashText";
 
 export default function Letters({ content }) {
   return (
@@ -19,9 +21,10 @@ export default function Letters({ content }) {
         {canApplyAgain(content.newPeriodStartDate).newApplicationMonth}{" "}
         {canApplyAgain(content.newPeriodStartDate).newApplicationYear}.
       </p>
-      <p>
-        {basetexts.controlClash[controlClash(content.newPeriodStartDate).clash]}
-      </p>
+      <ControlClashText
+        newPeriodStartDate={content.newPeriodStartDate}
+        attendance={content.controlClashAttendance}
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import Letters from "./components/Letters";
 export default function App() {
   const [content, setContent] = useState({
     applicationDate: "01.01.2024",
-    newPeriodStartDate: "01.01.2024",
+    newPeriodStartDate: new Date(),
     rate: "EV",
   });
   const onChangeContent = (newContent) => {
