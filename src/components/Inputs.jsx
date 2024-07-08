@@ -1,10 +1,12 @@
 import { controlClash } from "../utilities/dateUtils";
 import styles from "./Inputs.module.css";
+import Incomes from "./Letters/Inputs/subComponents/Incomes";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   return (
     <div className={styles.inputsField}>
       <form>
+        {/* INPUT application date */}
         <label>
           Søknadsdato:
           <input
@@ -15,6 +17,7 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
             }}
           />
         </label>
+        {/* INPUT start date of award period */}
         <label>
           Virkningstidspunkt:
           <input
@@ -51,6 +54,8 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
             }}
           />
         </label>
+        {/* INPUT Incomes COMPONENT */}
+        <Incomes incomes={content.incomes} onChangeContent={onChangeContent} />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
       <button

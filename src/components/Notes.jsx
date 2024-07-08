@@ -14,6 +14,13 @@ export default function Notes({ content }) {
       <p>
         Sats: <b>{content.rate}</b>
       </p>
+      <h4>Inntekter</h4>
+      <ul>
+        {content.incomes &&
+          content.incomes.map((income) => {
+            <li>{income.type}</li>;
+          })}
+      </ul>
     </div>
   );
 }
