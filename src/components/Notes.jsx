@@ -1,5 +1,6 @@
 import styles from "./Notes.module.css";
 import { formatDates } from "../utilities/dateUtils";
+import { yearlyIncome } from "../utilities/incomeUtils";
 
 export default function Notes({ content }) {
   return (
@@ -17,10 +18,17 @@ export default function Notes({ content }) {
       <h4>Inntekter</h4>
       <ul>
         {content.incomes &&
-          content.incomes.map((income) => {
-            <li>{income.type}</li>;
-          })}
+          content.incomes.map((income) => (
+            <li key={income.id}>
+              {income.source}: {yearlyIncome(income.amount)}
+            </li>
+          ))}
       </ul>
+
+      {/* TESTING */}
+      <button type="button" onClick={() => console.log(content)}>
+        log content
+      </button>
     </div>
   );
 }

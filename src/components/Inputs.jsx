@@ -55,16 +55,12 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           />
         </label>
         {/* INPUT Incomes COMPONENT */}
-        <Incomes incomes={content.incomes} onChangeContent={onChangeContent} />
+        <Incomes
+          oldIncomes={content.incomes}
+          onChangeContent={onChangeContent}
+        />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
-      <button
-        onClick={() =>
-          console.log(document.getElementById("applicationDate").value)
-        }
-      >
-        log content
-      </button>
     </div>
   );
 }
