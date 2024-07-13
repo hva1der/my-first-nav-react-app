@@ -15,6 +15,9 @@ export default function Incomes({ oldIncomes, onChangeContent }) {
     onChangeContent({ incomes });
   }
 
+  // *** for 130724:
+  // I need the "log content" button in notes to -from the start- log a content with an "incomes" object
+
   return (
     <div>
       {/* List of income input fields */}
@@ -24,15 +27,26 @@ export default function Incomes({ oldIncomes, onChangeContent }) {
           <li key={income.id}>
             <ul>
               <li>
+                {/* User selects type of income (default: social security) */}
                 <label>
                   Type:
-                  <input
-                    placeholder={income.type}
+                  <select
+                    value={income.type}
                     onChange={(e) => {
                       income.type = e.target.value;
                       updateIncomes(incomes);
                     }}
-                  />
+                  >
+                    <option value="Arbeidsinntekt">Arbeidsinntekt</option>
+                    <option value="Ytelser fra folketrygden">
+                      Ytelser fra folketrygden
+                    </option>
+                    <option value="Private pensjoner">Private pensjoner</option>
+                    <option value="Utenlandske pensjoner">
+                      Utenlandske pensjoner
+                    </option>
+                    <option value="Kapitalinntekt">Kapitalinntekt</option>
+                  </select>
                 </label>
               </li>
               <li>
