@@ -19,14 +19,12 @@ export default function IncomesText({ rate, incomes }) {
       FIX - move to CSS module etc */
       <div style={{ whiteSpace: "pre" }}>
         <p>BEREGNING for enslig</p>
-        <p>{padIncome(incomes[0])}</p>
-        <p>{padIncome({ type: "Ytelser fra folketrygden", amount: 6000 })}</p>
+        <p>{padIncome(incomes, "Arbeidsinntekt")}</p>
+        <p>{padIncome(incomes, "Ytelser fra folketrygden")}</p>
+        <p>{padIncome(incomes, "Private pensjoner")}</p>
+        <p>{padIncome(incomes, "Utenlandske pensjoner")}</p>
+        <p>{padIncome(incomes, "Kapitalinntekt")}</p>
       </div>
     );
   }
 }
-
-// NOTES for 150724:
-// Need to be working with combined sums of incomes of each type
-// -> keeping in mind decimals/ divide by 12 issue
-// Padding not workin as intended in letter
