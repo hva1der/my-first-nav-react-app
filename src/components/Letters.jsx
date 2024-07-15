@@ -8,10 +8,11 @@ import basetexts from "../texts/letters/baseTexts";
 
 //testing
 import ControlClashText from "../texts/letters/letterComponents/ControlClashText";
+import IncomesText from "../texts/letters/letterComponents/IncomesText";
 
 export default function Letters({ content }) {
   return (
-    <div>
+    <div className={styles.letterGlobal}>
       <p>
         Søknaden din av {formatDates(content.applicationDate).join(".")} er
         innvilget. Du får supplerende stønad i perioden{" "}
@@ -25,6 +26,7 @@ export default function Letters({ content }) {
         newPeriodStartDate={content.newPeriodStartDate}
         attendance={content.controlClashAttendance}
       />
+      <IncomesText incomes={content.incomes} rate={content.rate} />
     </div>
   );
 }

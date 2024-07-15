@@ -50,6 +50,7 @@ export default function Incomes({ oldIncomes, onChangeContent }) {
                 </label>
               </li>
               <li>
+                {/* User inputs source of income */}
                 <label>
                   Kilde:
                   <input
@@ -62,6 +63,7 @@ export default function Incomes({ oldIncomes, onChangeContent }) {
                 </label>
               </li>
               <li>
+                {/* User inputs amount of income */}
                 <label>
                   Sum:
                   <input
@@ -93,19 +95,6 @@ export default function Incomes({ oldIncomes, onChangeContent }) {
 
       <button type="button" onClick={() => console.log(incomes)}>
         log incomes
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          incomes[incomes.length - 1].type = "new type";
-          incomes[0].source = "new source";
-          incomes[0].amount = 100;
-          setIncomes(incomes);
-          onChangeContent({ incomes });
-        }}
-      >
-        Add TEST Income
       </button>
     </div>
   );
