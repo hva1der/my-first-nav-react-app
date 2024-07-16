@@ -24,6 +24,8 @@ export default function IncomesText({ rate, incomes }) {
         <p>{padIncome(incomes, "Private pensjoner")}</p>
         <p>{padIncome(incomes, "Utenlandske pensjoner")}</p>
         <p>{padIncome(incomes, "Kapitalinntekt")}</p>
+        <p>---------------------------------------------------</p>
+        <p>{padIncome(incomes, "Sum")}</p>
       </div>
     );
   }

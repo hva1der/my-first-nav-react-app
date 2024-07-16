@@ -42,15 +42,27 @@ export function yearlyIncome(income) {
 // Rounds sum to nearest integer
 export function incomeSum(incomes, type) {
   let sum = 0;
-  for (let i = 0; i < incomes.length; i++) {
-    if (incomes[i].type === type) {
+  // IF type is "Sum" -> returns yearly sum of all incomes combined, regardless of type
+  if (type === "Sum") {
+    for (let i = 0; i < incomes.length; i++) {
       // convert income interval amount to yearly amount
-      const yearly = yearlyIncome(incomes[i].amount);
-      sum = sum + yearly;
+      let yearlySum = yearlyIncome(incomes[i].amount);
+      sum = sum + yearlySum;
     }
+    // return sum rounded to nearest integer
+    return Math.round(sum);
+
+    // ELSE return yearly sum of the specified income
+  } else {
+    for (let i = 0; i < incomes.length; i++) {
+      if (incomes[i].type === type) {
+        // convert income interval amount to yearly amount
+        let yearlySum = yearlyIncome(incomes[i].amount);
+        sum = sum + yearlySum;
+      }
+    }
+    return Math.round(sum);
   }
-  // return sum rounded to nearest integer
-  return Math.round(sum);
 }
 // ---------------------------------------------------------------------------
 // FUNCTION formats numbers to be displayed in letter (namely adding spacing/padding). Expects an array of income objects as input (i.e. content.incomes) and a type
@@ -76,20 +88,30 @@ export function padIncome(incomes, type) {
 
   return longType + formattedYearly;
 }
-// ----------------------------------------------------------------------------------
-// FUNCTION sum of all incomes of all types
 
 // ----------------------------------------------------------------------------------
-// FUNCTION amount to be paid.
+// FUNCTION  returns rate minus total incomes = amount to be paid.
 // *** Crucial *** Must increase amount by X so amount is divisible by 12
-// PROBLEM: Need to confirm this is how Infotrygd works (rather than reducing incomes etc.)
+// PROBLEM: Need to confirm this is how Infotrygd works (as opposed to f.ex reducing incomes etc.)
+export function awardAmount(incomes) {
+  let sumOfIncomes = incomeSum(incomes, "Sum");
+  return 216228 - sumOfIncomes;
+}
 
 // ----------------------------------------------------------------------------------
 
 // testing
 const testIncome = [
-  { type: "typeA", amount: "d1" },
+  { type: "typeB", amount: "d1" },
   { type: "typeA", amount: "m500" },
 ];
 
 console.log(incomeSum(testIncome, "typeA"));
+
+console.log(incomeSum(testIncome, "Sum"));
+
+console.log(awardAmount(testIncome));
+
+// NOTES for 170724:
+// ALL instances of amounts in letters need to have spacing and the text "kroner", like 1 000 000 kroner
+// => Seperate out spacing logic from padding logic!
