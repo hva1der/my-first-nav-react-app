@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "./App.module.css";
-import Inputs from "./components/Inputs";
-import Notes from "./components/Notes";
-import Letters from "./components/Letters";
+import Inputs from "./components/Inputs/Inputs";
+import Notes from "./components/Notes/Notes";
+import Letters from "./components/Letters/Letters";
 
 export default function App() {
   const [content, setContent] = useState({

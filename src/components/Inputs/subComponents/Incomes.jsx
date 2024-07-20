@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 // Utilities
-import { addBlankIncome } from "../../../../utilities/incomeUtils";
+import { addBlankIncome } from "../../../utilities/incomeUtils";
 
 export default function Incomes({ oldIncomes, onChangeContent }) {
   let [incomes, setIncomes] = useState(

@@ -1,6 +1,6 @@
-import { controlClash } from "../utilities/dateUtils";
+import { controlClash } from "../../utilities/dateUtils";
 import styles from "./Inputs.module.css";
-import Incomes from "./Letters/Inputs/subComponents/Incomes";
+import Incomes from "./subComponents/Incomes";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   return (
@@ -44,16 +44,31 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
             </button>
           )}
         </label>
+
+        {/* Radio to select benefit rate */}
         <label>
-          Sats:
           <input
-            type="text"
-            id="rate"
+            type="radio"
+            name="rateSelector"
+            value="EV"
             onChange={(e) => {
               onChangeContent({ rate: e.target.value });
             }}
-          />
+          ></input>{" "}
+          EV
         </label>
+        <label>
+          <input
+            type="radio"
+            name="rateSelector"
+            value="EN"
+            onChange={(e) => {
+              onChangeContent({ rate: e.target.value });
+            }}
+          ></input>{" "}
+          EN
+        </label>
+
         {/* INPUT Incomes COMPONENT */}
         <Incomes
           oldIncomes={content.incomes}

@@ -3,12 +3,9 @@ import {
   formatDates,
   awardPeriod,
   canApplyAgain,
-} from "../utilities/dateUtils";
-import basetexts from "../texts/letters/baseTexts";
-
-//testing
-import ControlClashText from "../texts/letters/letterComponents/ControlClashText";
-import IncomesText from "../texts/letters/letterComponents/IncomesText";
+} from "../../utilities/dateUtils";
+import ControlClashText from "./subComponents/ControlClashText";
+import IncomesText from "./subComponents/IncomesText";
 
 export default function Letters({ content }) {
   return (
@@ -26,7 +23,11 @@ export default function Letters({ content }) {
         newPeriodStartDate={content.newPeriodStartDate}
         attendance={content.controlClashAttendance}
       />
-      <IncomesText incomes={content.incomes} rate={content.rate} />
+      <IncomesText
+        incomes={content.incomes}
+        rate={content.rate}
+        newPeriodStartDate={content.newPeriodStartDate}
+      />
     </div>
   );
 }

@@ -1,4 +1,6 @@
 //
+// Imports
+import { RATES } from "../constants.js";
 //
 // Income formatting
 //--------------------------------------------------------------------
@@ -90,28 +92,36 @@ export function padIncome(incomes, type) {
 }
 
 // ----------------------------------------------------------------------------------
-// FUNCTION  returns rate minus total incomes = amount to be paid.
-// *** Crucial *** Must increase amount by X so amount is divisible by 12
-// PROBLEM: Need to confirm this is how Infotrygd works (as opposed to f.ex reducing incomes etc.)
-export function awardAmount(incomes) {
-  let sumOfIncomes = incomeSum(incomes, "Sum");
-  return 216228 - sumOfIncomes;
+// FUNCTION  returns rate minus total incomes = amount to be paid. Effective date will usually be start date of new period.
+// PROBLEM: Need to confirm this is how Infotrygd works (as opposed to f.ex reducing incomes)
+export function awardAmount(incomes, rate, newPeriodStartDate) {
+  const effectiveDate = new Date(newPeriodStartDate);
+  // Determines what year's benefit rates to use. These values have to be updated in constants.js each May
+  const currentYear = new Date().getFullYear();
+  let awardStartYear;
+  if (effectiveDate > new Date(currentYear, 3, 30)) {
+    awardStartYear = "thisYear";
+  } else if (effectiveDate > new Date(currentYear - 1, 3, 30)) {
+    awardStartYear = "lastYear";
+  } else if (effectiveDate > new Date(currentYear - 2, 3, 30)) {
+    awardStartYear = "yearBeforeLast";
+  }
+
+  const grossRate = RATES[awardStartYear][rate];
+  const sumOfIncomes = incomeSum(incomes, "Sum");
+  let netRate = grossRate - sumOfIncomes;
+  // confirms that netRate/12 is an integer (Infotrygd doesn't work in decimals...)
+  while (netRate % 12 !== 0) {
+    netRate++;
+  }
+  return netRate;
 }
 
 // ----------------------------------------------------------------------------------
 
 // testing
-const testIncome = [
-  { type: "typeB", amount: "d1" },
-  { type: "typeA", amount: "m500" },
-];
 
-console.log(incomeSum(testIncome, "typeA"));
-
-console.log(incomeSum(testIncome, "Sum"));
-
-console.log(awardAmount(testIncome));
-
-// NOTES for 170724:
+// NOTES for 210724:
 // ALL instances of amounts in letters need to have spacing and the text "kroner", like 1 000 000 kroner
 // => Seperate out spacing logic from padding logic!
+// Example: function awardAmount is missing spacing and currency

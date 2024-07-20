@@ -1,6 +1,6 @@
 import styles from "./Notes.module.css";
-import { formatDates } from "../utilities/dateUtils";
-import { yearlyIncome } from "../utilities/incomeUtils";
+import { formatDates } from "../../utilities/dateUtils";
+import { yearlyIncome } from "../../utilities/incomeUtils";
 
 export default function Notes({ content }) {
   return (
