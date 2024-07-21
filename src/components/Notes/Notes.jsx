@@ -5,16 +5,23 @@ import { yearlyIncome } from "../../utilities/incomeUtils";
 export default function Notes({ content }) {
   return (
     <div className={styles.notesText}>
+      {/* Application date */}
       <p>
         Søknadsdato: <b>{formatDates(content.applicationDate).join(".")}</b>
       </p>
+      {/* Personal attendance at application */}
+      <p>Personlig fremmøte: {content.attendance}</p>
+      {content.attendance === "Nei" && <p>{content.noAttGrounds}</p>}
+      {/* Effective date */}
       <p>
         Virkningstidspunkt:{" "}
         <b>{formatDates(content.newPeriodStartDate).join(".")}</b>
       </p>
+      {/* Benefit rate */}
       <p>
         Sats: <b>{content.rate}</b>
       </p>
+      {/* Incomes */}
       <h4>Inntekter</h4>
       <ul>
         {content.incomes &&

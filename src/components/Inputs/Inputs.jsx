@@ -1,5 +1,6 @@
 import { controlClash } from "../../utilities/dateUtils";
 import styles from "./Inputs.module.css";
+import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
@@ -17,6 +18,11 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
             }}
           />
         </label>
+        {/* INPUT confirm attendance at application */}
+        <ApplicationAttendance
+          content={content}
+          onChangeContent={onChangeContent}
+        />
         {/* INPUT start date of award period */}
         <label>
           Virkningstidspunkt:

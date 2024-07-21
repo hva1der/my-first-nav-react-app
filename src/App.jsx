@@ -6,7 +6,7 @@ import Letters from "./components/Letters/Letters";
 
 export default function App() {
   const [content, setContent] = useState({
-    applicationDate: "01.01.2024",
+    applicationDate: new Date(),
     newPeriodStartDate: new Date(),
     rate: "EV",
   });
