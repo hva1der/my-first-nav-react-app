@@ -2,6 +2,7 @@ import { controlClash } from "../../utilities/dateUtils";
 import styles from "./Inputs.module.css";
 import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
+import Residency from "./subComponents/Residency";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   return (
@@ -23,7 +24,9 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           content={content}
           onChangeContent={onChangeContent}
         />
-        {/* INPUT start date of award period */}
+        {/* Right to Reside */}
+        <Residency content={content} onChangeContent={onChangeContent} />
+        {/* INPUT start date of award period - rename to "Effective Date" */}
         <label>
           Virkningstidspunkt:
           <input

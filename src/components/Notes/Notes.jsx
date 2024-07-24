@@ -12,6 +12,8 @@ export default function Notes({ content }) {
       {/* Personal attendance at application */}
       <p>Personlig fremmøte: {content.attendance}</p>
       {content.attendance === "Nei" && <p>{content.noAttGrounds}</p>}
+      {/* Right to reside */}
+      <p>Lovlig opphold: {content.residency} </p>
       {/* Effective date */}
       <p>
         Virkningstidspunkt:{" "}

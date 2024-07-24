@@ -4,10 +4,9 @@
 import { appAttTexts } from "../../../texts/notesTexts";
 
 export default function ApplicationAttendance({ content, onChangeContent }) {
-  //
-
   return (
     <div>
+      {/* Radio button to select whether claimant attended yes/no */}
       <label>
         Personlig fremmøte:
         <input
