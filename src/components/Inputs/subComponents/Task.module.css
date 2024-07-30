@@ -1,2 +1,35 @@
 /* styling and CSS enabled functionality for Task component */
 
+dialog {
+    font: optional; 
+    /* Styles for dialogs that carry both modal and non-modal behaviors */
+  }
+  
+  dialog:modal {
+    font: optional;
+    /* Styles for dialogs that carry modal behavior */
+  }
+  
+  dialog:not(:modal) {
+    font: optional;
+    /* Styles for dialogs that carry non-modal behavior */
+  }
+
+  
+  /* COOL FEATURES TO IMPLEMENT: */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+  padding: 0.5em;
+  font: inherit;
+  line-height: 1;
+}
+
+button {
+    cursor: pointer;
+  }
+
+.modal::backdrop {
+    background: hsl(0 0% 0% / 50%);
+  }

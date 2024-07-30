@@ -3,6 +3,7 @@ import styles from "./Inputs.module.css";
 import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 import Residency from "./subComponents/Residency";
+import Task from "./subComponents/Task";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   return (
@@ -85,6 +86,8 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
         />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
+      {/* MODAL testing */}
+      <Task />
     </div>
   );
 }
