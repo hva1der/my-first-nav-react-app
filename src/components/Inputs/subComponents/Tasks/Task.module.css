@@ -1,0 +1,50 @@
+/* 
+STYLING TIPS
+The CSS ::backdrop pseudo-element can be used to style the backdrop of a modal dialog, 
+which is displayed behind the <dialog> element when the dialog is displayed using the 
+HTMLDialogElement.showModal() method. For example, this pseudo-element could be used to blur, 
+darken, or otherwise obfuscate the inert content behind the modal dialog. 
+
+The autofocus attribute should be added to the element the user is expected to interact with 
+immediately upon opening a modal dialog. If no other element involves more immediate interaction, 
+it is recommended to add autofocus to the close button inside the dialog, or the dialog itself if 
+the user is expected to click/activate it to dismiss. */
+
+
+
+
+/* styling and CSS enabled functionality for Task component */
+
+dialog {
+    font: optional; 
+    /* Styles for dialogs that carry both modal and non-modal behaviors */
+  }
+  
+  dialog:modal {
+    font: optional;
+    /* Styles for dialogs that carry modal behavior */
+  }
+  
+  dialog:not(:modal) {
+    font: optional;
+    /* Styles for dialogs that carry non-modal behavior */
+  }
+
+  
+  /* COOL FEATURES TO IMPLEMENT: */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+  padding: 0.5em;
+  font: inherit;
+  line-height: 1;
+}
+
+button {
+    cursor: pointer;
+  }
+
+.modal::backdrop {
+    background: hsl(0 0% 0% / 50%);
+  }
