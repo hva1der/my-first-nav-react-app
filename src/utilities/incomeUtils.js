@@ -40,7 +40,7 @@ export function yearlyIncome(income) {
   }
 }
 // ------------------------------------------------------------------------
-// FUNCTION sums incomes of same type. Expects an array of income objects as input (i.e. content.incomes) and a type of income sum to return
+// FUNCTION sums incomes of same type (or all incomes) Expects an array of income objects as input (i.e. content.incomes) and a type of income sum to return
 // Rounds sum to nearest integer
 export function incomeSum(incomes, type) {
   let sum = 0;
@@ -91,32 +91,42 @@ export function padIncome(incomes, type) {
   return longType + formattedYearly;
 }
 
-// ----------------------------------------------------------------------------------
-// FUNCTION  returns rate minus total incomes = amount to be paid. Effective date will usually be start date of new period.
-// PROBLEM: Need to confirm this is how Infotrygd works (as opposed to f.ex reducing incomes)
-export function awardAmount(incomes, rate, newPeriodStartDate) {
-  const effectiveDate = new Date(newPeriodStartDate);
+// FUNCTION returns yearly gross award (before deducting incomes)
+export function grossAward(rate, effectiveDate) {
+  const effDate = new Date(effectiveDate);
   // Determines what year's benefit rates to use. These values have to be updated in constants.js each May
   const currentYear = new Date().getFullYear();
   let awardStartYear;
-  if (effectiveDate > new Date(currentYear, 3, 30)) {
+  if (effDate > new Date(currentYear, 3, 30)) {
     awardStartYear = "thisYear";
-  } else if (effectiveDate > new Date(currentYear - 1, 3, 30)) {
+  } else if (effDate > new Date(currentYear - 1, 3, 30)) {
     awardStartYear = "lastYear";
-  } else if (effectiveDate > new Date(currentYear - 2, 3, 30)) {
+  } else if (effDate > new Date(currentYear - 2, 3, 30)) {
     awardStartYear = "yearBeforeLast";
   }
 
   const grossRate = RATES[awardStartYear][rate];
-  const sumOfIncomes = incomeSum(incomes, "Sum");
-  let netRate = grossRate - sumOfIncomes;
-  // confirms that netRate/12 is an integer (Infotrygd doesn't work in decimals...)
-  while (netRate % 12 !== 0) {
-    netRate++;
-  }
-  return netRate;
+  return grossRate;
 }
 
+// ----------------------------------------------------------------------------------
+// FUNCTION  returns object with yearly and monthly net award amount
+// NOTE: due to wokrings of Infotrygd montly rate will be rounded UP to nearest integer
+// PROBLEM: Unsure of workings of Infotrygd - what is actually logged as the yearly award??
+export function netAward(incomes, rate, effectiveDate) {
+  const grossRate = grossAward(rate, effectiveDate);
+  const sumOfIncomes = incomeSum(incomes, "Sum");
+
+  const yearlyNet = grossRate - sumOfIncomes;
+
+  let adjustedYearly = grossRate - sumOfIncomes;
+  while (adjustedYearly % 12 !== 0) {
+    adjustedYearly++;
+  }
+  let monthlyNet = adjustedYearly / 12;
+
+  return { yearly: yearlyNet, monthly: monthlyNet };
+}
 // ----------------------------------------------------------------------------------
 
 // testing

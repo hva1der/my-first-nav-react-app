@@ -1,7 +1,7 @@
 //
 // COMPONENT renders incomes overview section of letters (simplified text if there are no incomes)
 
-import { padIncome, awardAmount } from "../../../utilities/incomeUtils";
+import { padIncome, netAward } from "../../../utilities/incomeUtils";
 
 export default function IncomesText({ rate, incomes, newPeriodStartDate }) {
   // PROBLEM: Change to render nothing if no income?
@@ -27,9 +27,12 @@ export default function IncomesText({ rate, incomes, newPeriodStartDate }) {
         <p>---------------------------------------------------</p>
         <p>{padIncome(incomes, "Sum")}</p>
         <p>---------------------------------------------------</p>
+        <p></p>
+
         <p>
-          Du får {awardAmount(incomes, rate, newPeriodStartDate)} kroner per
-          måned supplerende stønad.
+          Du får {netAward(incomes, rate, newPeriodStartDate).yearly} per år og{" "}
+          {netAward(incomes, rate, newPeriodStartDate).monthly} kroner per måned
+          supplerende stønad.
         </p>
       </div>
     );

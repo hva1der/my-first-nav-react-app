@@ -21,7 +21,7 @@ export default function Tasks({ content }) {
       {/* (Modal only appears on above button click) */}
       <TasksModal isOpen={isTasksModalOpen} onClose={handleCloseTasksModal}>
         <button>test btn</button>
-        <p>{content.applicationDate}</p>
+        <p>{content.applicationDate.getFullYear()}</p>
       </TasksModal>
     </div>
   );
