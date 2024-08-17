@@ -3,7 +3,7 @@
 
 import { padIncome, netAward } from "../../../utilities/incomeUtils";
 
-export default function IncomesText({ rate, incomes, newPeriodStartDate }) {
+export default function IncomesText({ rate, incomes, effectiveDate }) {
   // PROBLEM: Change to render nothing if no income?
   if (!incomes || !incomes[0].amount) {
     return (
@@ -30,8 +30,8 @@ export default function IncomesText({ rate, incomes, newPeriodStartDate }) {
         <p></p>
 
         <p>
-          Du får {netAward(incomes, rate, newPeriodStartDate).yearly} per år og{" "}
-          {netAward(incomes, rate, newPeriodStartDate).monthly} kroner per måned
+          Du får {netAward(incomes, rate, effectiveDate).yearly} per år og{" "}
+          {netAward(incomes, rate, effectiveDate).monthly} kroner per måned
           supplerende stønad.
         </p>
       </div>

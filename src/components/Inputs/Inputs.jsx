@@ -4,8 +4,13 @@ import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 import Residency from "./subComponents/Residency";
 import Tasks from "./subComponents/Tasks/Tasks";
+import { checkForInputIssues } from "../../utilities/issuesUtils";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
+  // Check for issues and push any to array
+  const issues = [];
+  checkForInputIssues(content, issues);
+
   return (
     <div className={styles.inputsField}>
       <form>
@@ -32,14 +37,13 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           Virkningstidspunkt:
           <input
             type="date"
-            id="newPeriodStartDate"
+            id="effectiveDate"
             onChange={(e) => {
-              onChangeContent({ newPeriodStartDate: e.target.value });
+              onChangeContent({ effectiveDate: e.target.value });
             }}
           />
           {/* IF controlClash -> adds button to ask IF user has to attend for control */}
-          {controlClash(content.newPeriodStartDate).clash ===
-            "controlClash" && (
+          {controlClash(content.effectiveDate).clash === "controlClash" && (
             <button
               type="button"
               onClick={() => {
@@ -83,11 +87,12 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
         <Incomes
           oldIncomes={content.incomes}
           onChangeContent={onChangeContent}
+          issues={issues}
         />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
       {/* MODAL testing */}
-      <Tasks content={content} />
+      <Tasks content={content} issues={issues} />
     </div>
   );
 }

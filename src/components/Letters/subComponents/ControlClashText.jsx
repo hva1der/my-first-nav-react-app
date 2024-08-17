@@ -5,10 +5,10 @@ import { controlClash } from "../../../utilities/dateUtils";
 
 // Render 1 of 3 statements ***NB: change to take from basetexts, instead of specified here! ***
 export default function ControlClashText({
-  newPeriodStartDate,
+  effectiveDate,
   attendance = false,
 }) {
-  const controlClashDisplay = controlClash(newPeriodStartDate);
+  const controlClashDisplay = controlClash(effectiveDate);
 
   if (attendance && controlClashDisplay.clash) {
     return (

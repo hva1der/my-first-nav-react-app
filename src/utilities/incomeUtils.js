@@ -91,12 +91,13 @@ export function padIncome(incomes, type) {
   return longType + formattedYearly;
 }
 
-// FUNCTION returns yearly gross award (before deducting incomes)
-export function grossAward(rate, effectiveDate) {
+// FUNCTION returns the benefit year of the awarding period
+export function benefitYear(effectiveDate) {
   const effDate = new Date(effectiveDate);
   // Determines what year's benefit rates to use. These values have to be updated in constants.js each May
   const currentYear = new Date().getFullYear();
   let awardStartYear;
+  // check if the effective date is before or after 30/04/xx, where xx is the current, last, or year before last
   if (effDate > new Date(currentYear, 3, 30)) {
     awardStartYear = "thisYear";
   } else if (effDate > new Date(currentYear - 1, 3, 30)) {
@@ -104,7 +105,13 @@ export function grossAward(rate, effectiveDate) {
   } else if (effDate > new Date(currentYear - 2, 3, 30)) {
     awardStartYear = "yearBeforeLast";
   }
+  return awardStartYear;
+}
 
+// FUNCTION returns yearly gross award (before deducting incomes)
+export function grossAward(rate, effectiveDate) {
+  const awardStartYear = benefitYear(effectiveDate);
+  // RATES = {lastYear: { EV: 210420, EN: 227472 ...
   const grossRate = RATES[awardStartYear][rate];
   return grossRate;
 }

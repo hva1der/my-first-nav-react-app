@@ -4,7 +4,7 @@
 import { useState } from "react";
 import TasksModal from "./TasksModal";
 
-export default function Tasks({ content }) {
+export default function Tasks({ content, issues }) {
   const [isTasksModalOpen, setTasksModalOpen] = useState(false);
 
   // functions to open and close Tasks modal
@@ -22,6 +22,10 @@ export default function Tasks({ content }) {
       <TasksModal isOpen={isTasksModalOpen} onClose={handleCloseTasksModal}>
         <button>test btn</button>
         <p>{content.applicationDate.getFullYear()}</p>
+        {/* TESTING issues */}
+        {issues.map((issueObj) => {
+          return <button key={issueObj.issue}>{issueObj.issue}</button>;
+        })}
       </TasksModal>
     </div>
   );

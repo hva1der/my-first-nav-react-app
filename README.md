@@ -6,3 +6,7 @@
 
 - Check for important changes to client circumstances, and highlights appropriate actions to staff.
 - Autocompile letters
+
+## Known issues
+
+- Award less than 2% of rate -> Needs to be changed to an integer

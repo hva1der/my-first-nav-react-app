@@ -2,10 +2,10 @@
 // COMPONENT inputs for categorised incomes
 
 import { useState } from "react";
-// Utilities
 import { addBlankIncome } from "../../../utilities/incomeUtils";
+import styles from "../Inputs.module.css";
 
-export default function Incomes({ oldIncomes, onChangeContent }) {
+export default function Incomes({ oldIncomes, onChangeContent, issues }) {
   let [incomes, setIncomes] = useState(
     oldIncomes ? oldIncomes : [addBlankIncome()]
   );
@@ -67,6 +67,11 @@ export default function Incomes({ oldIncomes, onChangeContent }) {
                 <label>
                   Sum:
                   <input
+                    className={
+                      issues[0].issue
+                        ? styles.terminalIssue
+                        : "placeholder no issues"
+                    }
                     placeholder={income.amount}
                     onChange={(e) => {
                       income.amount = e.target.value;

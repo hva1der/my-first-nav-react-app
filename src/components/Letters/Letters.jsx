@@ -13,20 +13,19 @@ export default function Letters({ content }) {
       <p>
         Søknaden din av {formatDates(content.applicationDate).join(".")} er
         innvilget. Du får supplerende stønad i perioden{" "}
-        {awardPeriod(content.newPeriodStartDate).periodStart.join(".")} til{" "}
-        {awardPeriod(content.newPeriodStartDate).periodEnd.join(".")}. Du kan
-        søke ny periode i{" "}
-        {canApplyAgain(content.newPeriodStartDate).newApplicationMonth}{" "}
-        {canApplyAgain(content.newPeriodStartDate).newApplicationYear}.
+        {awardPeriod(content.effectiveDate).periodStart.join(".")} til{" "}
+        {awardPeriod(content.effectiveDate).periodEnd.join(".")}. Du kan søke ny
+        periode i {canApplyAgain(content.effectiveDate).newApplicationMonth}{" "}
+        {canApplyAgain(content.effectiveDate).newApplicationYear}.
       </p>
       <ControlClashText
-        newPeriodStartDate={content.newPeriodStartDate}
+        effectiveDate={content.effectiveDate}
         attendance={content.controlClashAttendance}
       />
       <IncomesText
         incomes={content.incomes}
         rate={content.rate}
-        newPeriodStartDate={content.newPeriodStartDate}
+        effectiveDate={content.effectiveDate}
       />
     </div>
   );

@@ -17,7 +17,7 @@ export default function Notes({ content }) {
       {/* Effective date */}
       <p>
         Virkningstidspunkt:{" "}
-        <b>{formatDates(content.newPeriodStartDate).join(".")}</b>
+        <b>{formatDates(content.effectiveDate).join(".")}</b>
       </p>
       {/* Benefit rate */}
       <p>

@@ -17,3 +17,7 @@
     margin-left: 5px;
 }
 
+/* Denotes input fields with issues that are terminal to the application */
+.terminalIssue {
+    background-color: red;
+}
