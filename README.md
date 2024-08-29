@@ -9,4 +9,8 @@
 
 ## Known issues
 
-- Award less than 2% of rate -> Needs to be changed to an integer
+-
+
+## Possible issues
+
+- Not tested if 2 % rounding is working correctly

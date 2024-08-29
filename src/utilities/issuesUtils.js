@@ -6,23 +6,30 @@ import { RATES } from "../constants";
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
 // *** All functions MUST only take 'content' as a parameter ***
+// All testing functions return ONE issue object in format: { issueType: "parent input field", issue: "name of issue", terminal: boolean, resolution: "solution text"/defualt -false- }
+// If there is NO issue, the function still returns an issue object, but with {issue: false}
 // ------------------------------------------------------------------
 // Function tests if combined incomes exceed award rate
 export function checkIncomes(content) {
-  // ****************** PROBLEM: I haven't renamed to effectiveDate yet! in content *******************
   const { rate, effectiveDate } = content;
   const incomes = content.incomes || [];
   const yearlyNet = netAward(incomes, rate, effectiveDate).yearly;
   const awardingYear = benefitYear(effectiveDate);
+  const issueType = "income";
 
   if (yearlyNet <= 0) {
-    return { issue: "Excess income", terminal: true, resolved: false };
+    return {
+      issueType,
+      issue: "Excess income",
+      terminal: true,
+      resolved: false,
+    };
     // No payment if award is -less- than 2 % of high rate of benefit of the awarding year
-    // *** PROBLEM *** This needs to be rounded to an integer, not 2% exactly
-  } else if (yearlyNet < RATES[awardingYear]["EN"] * 0.02) {
-    return { issue: "Low award", terminal: true, resolved: false };
+    // *** Possible issue *** Confirm rounding works correctly
+  } else if (yearlyNet < Math.ceil(RATES[awardingYear]["EN"] * 0.02)) {
+    return { issueType, issue: "Low award", terminal: true, resolution: false };
   } else {
-    return { issue: false, terminal: false, resolved: false };
+    return { issueType, issue: false, terminal: false, resolution: false };
   }
 }
 //
@@ -50,32 +57,111 @@ export function checkForInputIssues(content, issues = []) {
   return issues;
 }
 
-// ***OLD***FUNCTION works in steps and:
-// 1. sets all existing issues in 'issues' to "active: false" (in case issues have been resolved, but should not be deleted because the user has entered a "resolution:" text)
-// 2. checks for issues in inputs. Re-activates any old issues that are still present, and adds any new issues to the issues array
-// parameters: content, renderIssues
-// returns updated renderIssues array
-// Tests is an array of testing functions (above)
+// *** new NEW attempt *** using state again
+// useEffect in Inputs will OVERWRITE content.issues after this function has run (IF there are any changes)
 
-/* const tests = [checkIncomes];
-// for testing - renderIssues will be specified in Component and used to determine rendering of issues/markers
-const renderIssues = [];
-export function checkForInputIssues(content, renderIssues) {
-  //
-  // *** Missing: set all existing issues to 'active: false' ***
-  //
-  const oldIssues = content.issues;
-  // loop through and run all testing functions
+export function newCheckForInputIssues(content) {
+  let oldIssues = content.issues ? [...content.issues] : [];
+  let newIssues = [];
+  // Loop through testing functions
   for (let i = 0; i < tests.length; i++) {
-    const testingFunction = tests[i];
-    const newIssue = testingFunction(content);
-    // (testing functions return 'undefined' if there is no issue detected)
-    if (newIssue) {
-      // check if issue is already present
-      if (oldIssues.issue === issue) {
+    const testFunction = tests[i];
+    const newIssue = testFunction(content);
+    // If an issue is detected check if it is already registered in content.issues
+    if (newIssue.issue) {
+      // .some checks if a callback function on any element of an array returns true
+      const isIssuePresent = oldIssues.some(
+        (oldIssue) => oldIssue.issue === newIssue.issue
+      );
+      // add any new issues
+      if (!isIssuePresent) {
+        newIssues.push(newIssue);
+      }
+
+      /* If an issue has been entered with a resolution, and the issue still exists - it needs to be added
+      to newIssues, WITH it's current resolution text. */
+      if (isIssuePresent) {
+        if (issue.resolution) {
+          let resolvedIssue = { issueType: oldIssues.issueType };
+        }
+      }
+
+      // in case a solution has been registered for an issue, but a value is entered that removes the issue:
+      if (isIssuePresent) {
+        if (oldIssues.resolution) {
+        }
       }
     }
   }
-  // Update (a NON-state) array variable here that is used for rendering issue markers/colouring etc.
-  // This variable will reset to a blank array on every render(?)
-} */
+  // Finally, return newIssues, which should contain: a) any new issues b) any old issues
+  // c) any old issues that have now been resolved, BUT already had a resolution text.
+
+  return oldIssues;
+}
+
+// New attempt using an Issues object, rather than array. AND checking individually at each Input
+export function NEWcheckIncomes(content) {
+  const { rate, effectiveDate } = content;
+  const incomes = content.incomes || [];
+  const yearlyNet = netAward(incomes, rate, effectiveDate).yearly;
+  const awardingYear = benefitYear(effectiveDate);
+
+  if (yearlyNet <= 0) {
+    return {
+      excessIncome: { active: true, terminal: true, resolution: false },
+    };
+    // No payment if award is -less- than 2 % of high rate of benefit of the awarding year
+    // *** Possible issue *** Confirm rounding works correctly
+  } else if (yearlyNet < Math.ceil(RATES[awardingYear]["EN"] * 0.02)) {
+    return { lowAward: { active: true, terminal: true, resolution: false } };
+  } else {
+    // else return names of potential issues (used by checker function to check for saved solutions)
+    return { noIssues: ["excessIncome", "lowAward"] };
+  }
+}
+// For this option, use an object of tests instead - NB to access 'testFunction' must be a string!
+// Returns either -falsy- or an issue object
+const testsObj = { checkIncomes };
+export function checkIssues(content, testFunction = "allTests") {
+  let issueUpdate = {};
+  const oldIssues = { ...content.issues } || {};
+  const test = testsObj[testFunction];
+  // result should be an object in this format: {issueName: {active: boolean, terminal: boolean, resolution: false or string}}
+  const result = test(content);
+  // Object.keys returns an array of keys. result will always only have a single object, so [0] will be the issueName as a string (or undefined if the tesfunction hasn't detected any issues and returned an empty object {})
+  const issue = Object.keys(result)[0];
+
+  // if there is no issue now, check if the issue has been registered in the past - if active set active:false
+  // (In order to preserve user inputted solutions)
+  if (issue === "noIssues") {
+    const inactiveIssues = issue.noIssues; // (if there are no current issues the test functions return an [array] of the issues they test for)
+    for (let i = 0; i < inactiveIssues.length; i++) {
+      if (oldIssues.inactiveIssues[i]) {
+        // update only if the issue is not already set to active:false (Don't need to check if the issue is resolved, just set to inactive - resolved state icon will still render (if desireable))
+        if (oldIssues.inactiveIssues[i].active) {
+          oldIssues.inactiveIssues[i].active = false;
+          // return update to be processed by onChangeContent
+          return oldIssues.inactiveIssues[i];
+        }
+      }
+    }
+  }
+
+  // NEXT, if there is an issue, check to see if it needs updating
+  if (issue && issue !== "noIssues") {
+    // return the issue if it isn't already registered
+    if (!oldIssues.issue) {
+      return result;
+      // if the issue is registered but inactive, set active:true
+    } else if (!oldIssues.issue.active) {
+      oldIssues.issue.active = true;
+      return oldIssues.issue;
+      // otherwise return falsy => triggering no state update
+    } else return;
+  }
+}
+
+// NEXT task 300824: define the onChangeIssues function in Inputs and TEST!
+// NB: need to change to access issue with oldIssues[issue], rather than '.' ?
+
+// THIS IS GOOD! I'M LEARNING ABOUT OBJECTS etc.! I'm not just struggling pontlessly!!

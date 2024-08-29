@@ -4,12 +4,23 @@ import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 import Residency from "./subComponents/Residency";
 import Tasks from "./subComponents/Tasks/Tasks";
-import { checkForInputIssues } from "../../utilities/issuesUtils";
+import {
+  checkForInputIssues,
+  newCheckForInputIssues,
+} from "../../utilities/issuesUtils";
+import { useEffect } from "react";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   // Check for issues and push any to array
   const issues = [];
   checkForInputIssues(content, issues);
+
+  const testIssues = newCheckForInputIssues(content);
+  console.log(testIssues);
+
+  // Overwrite existing issues with new list of issues (in case issues have been resolved)
+  // PROBLEM: Need to save solutions to issues, and keep marking them as resolved
+  useEffect(() => {}, []);
 
   return (
     <div className={styles.inputsField}>
