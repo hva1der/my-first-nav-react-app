@@ -4,23 +4,21 @@ import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 import Residency from "./subComponents/Residency";
 import Tasks from "./subComponents/Tasks/Tasks";
-import {
-  checkForInputIssues,
-  newCheckForInputIssues,
-} from "../../utilities/issuesUtils";
+import { checkForInputIssues } from "../../utilities/issuesUtils";
 import { useEffect } from "react";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
-  // Check for issues and push any to array
-  const issues = [];
-  checkForInputIssues(content, issues);
-
-  const testIssues = newCheckForInputIssues(content);
-  console.log(testIssues);
-
-  // Overwrite existing issues with new list of issues (in case issues have been resolved)
-  // PROBLEM: Need to save solutions to issues, and keep marking them as resolved
-  useEffect(() => {}, []);
+  // Function to update content.issues
+  const activeIssues = { ...content.issues } || {};
+  function onUpdateIssues(testFunction) {
+    // check of issue updates: returns -falsy- or a new/updated issue object in format {issueName: {active, terminal, resolution}}
+    const issueUpdate = checkForInputIssues(content, testFunction);
+    if (issueUpdate) {
+      const issueName = Object.keys(issueUpdate)[0];
+      activeIssues[issueName] = issueUpdate[issueName];
+      onChangeContent({ activeIssues });
+    }
+  }
 
   return (
     <div className={styles.inputsField}>
@@ -98,12 +96,12 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
         <Incomes
           oldIncomes={content.incomes}
           onChangeContent={onChangeContent}
-          issues={issues}
+          onUpdateIssues={onUpdateIssues}
         />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
       {/* MODAL testing */}
-      <Tasks content={content} issues={issues} />
+      <Tasks content={content} />
     </div>
   );
 }

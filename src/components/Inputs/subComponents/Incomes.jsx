@@ -5,12 +5,16 @@ import { useState } from "react";
 import { addBlankIncome } from "../../../utilities/incomeUtils";
 import styles from "../Inputs.module.css";
 
-export default function Incomes({ oldIncomes, onChangeContent, issues }) {
+export default function Incomes({
+  oldIncomes,
+  onChangeContent,
+  onUpdateIssues,
+}) {
   let [incomes, setIncomes] = useState(
     oldIncomes ? oldIncomes : [addBlankIncome()]
   );
   /* Function updates parent state "content" with incomes  */
-  function updateIncomes(incomes) {
+  function onUpdateIncomes(incomes) {
     setIncomes(incomes);
     onChangeContent({ incomes });
   }
@@ -34,7 +38,7 @@ export default function Incomes({ oldIncomes, onChangeContent, issues }) {
                     value={income.type}
                     onChange={(e) => {
                       income.type = e.target.value;
-                      updateIncomes(incomes);
+                      onUpdateIncomes(incomes);
                     }}
                   >
                     <option value="Arbeidsinntekt">Arbeidsinntekt</option>
@@ -57,7 +61,7 @@ export default function Incomes({ oldIncomes, onChangeContent, issues }) {
                     placeholder={income.source}
                     onChange={(e) => {
                       income.source = e.target.value;
-                      updateIncomes(incomes);
+                      onUpdateIncomes(incomes);
                     }}
                   />
                 </label>
@@ -67,15 +71,16 @@ export default function Incomes({ oldIncomes, onChangeContent, issues }) {
                 <label>
                   Sum:
                   <input
-                    className={
+                    /* className={
                       issues[0].issue
                         ? styles.terminalIssue
                         : "placeholder no issues"
-                    }
+                    } */
                     placeholder={income.amount}
                     onChange={(e) => {
                       income.amount = e.target.value;
-                      updateIncomes(incomes);
+                      onUpdateIncomes(incomes);
+                      onUpdateIssues("checkIncomes");
                     }}
                   />
                 </label>
