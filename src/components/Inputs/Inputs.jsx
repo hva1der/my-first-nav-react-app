@@ -8,15 +8,15 @@ import { checkForInputIssues } from "../../utilities/issuesUtils";
 import { useEffect } from "react";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
-  // Function to update content.issues
-  const activeIssues = { ...content.issues } || {};
+  // Function to update content.issues - used at each user input
+  const issues = { ...content.issues } || {};
   function onUpdateIssues(testFunction) {
     // check of issue updates: returns -falsy- or a new/updated issue object in format {issueName: {active, terminal, resolution}}
     const issueUpdate = checkForInputIssues(content, testFunction);
     if (issueUpdate) {
       const issueName = Object.keys(issueUpdate)[0];
-      activeIssues[issueName] = issueUpdate[issueName];
-      onChangeContent({ activeIssues });
+      issues[issueName] = issueUpdate[issueName]; // this contains the 3 keys within each issue
+      onChangeContent({ issues });
     }
   }
 
