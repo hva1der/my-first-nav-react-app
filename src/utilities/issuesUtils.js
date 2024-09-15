@@ -4,6 +4,9 @@
 import { netAward, benefitYear } from "./incomeUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
+// Array of all issues (used for accessing issues in loops)
+export const allIssues = ["excessIncome", "lowAward"];
+// ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
 
 // New attempt using an Issues object, rather than array. AND checking individually at each Input
@@ -72,7 +75,3 @@ export function checkForInputIssues(content, testFunction = "allTests") {
     } else return;
   }
 }
-
-// 040924:  correct based on chad
-
-// THIS IS GOOD! I'M LEARNING ABOUT OBJECTS etc.! I'm not just struggling pontlessly!!
