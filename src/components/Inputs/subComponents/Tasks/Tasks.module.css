@@ -11,14 +11,49 @@ it is recommended to add autofocus to the close button inside the dialog, or the
 the user is expected to click/activate it to dismiss. */
 
 
-.redBtn {
-  background-color: red;
-}
+
 
 /* greying of rest of screen while modal is open */
 .modal::backdrop {
   background: hsl(0 0% 0% / 50%);
 }
+
+/* styling of the modal itself */
+.modalContent {
+  position: relative;
+  height: 30vh;
+  width: 70vw;
+}
+
+/* row of issues buttons */
+.selectIssueRow {
+  flex-direction: row;
+}
+
+/* CONTENT OF MODAL */
+.modalContent p {
+  margin-top: 1em;
+}
+
+/* BUTTONS */
+  /* close button */
+  .btnCloseModal {
+    background-color: lavender;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  /* button coloring */
+  .redBtn {
+    background-color: red;
+  }
+
+
+
+
+
+
 
 /* **** From guide/optional additions below **** */
 

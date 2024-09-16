@@ -39,10 +39,11 @@ export default function Tasks({ content }) {
         Oppgavemeny
       </button>
       {/* (Modal only appears on above button click) */}
-      <TasksModal isOpen={isTasksModalOpen} onClose={handleCloseTasksModal}>
-        <button>test btn</button>
-        <p>{content.applicationDate.getFullYear()}</p>
-      </TasksModal>
+      <TasksModal
+        isOpen={isTasksModalOpen}
+        onClose={handleCloseTasksModal}
+        content={content}
+      ></TasksModal>
     </div>
   );
 }

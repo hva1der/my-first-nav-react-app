@@ -100,7 +100,7 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
         />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
-      {/* MODAL testing */}
+      {/* Tasks modal for handling issues */}
       <Tasks content={content} />
     </div>
   );
