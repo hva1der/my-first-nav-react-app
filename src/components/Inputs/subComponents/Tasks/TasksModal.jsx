@@ -53,7 +53,7 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
   // State for rendering currently selected issue within the modal
   const [selectedIssue, setSelectedIssue] = useState("No issue selected"); // change to a blank issue?
 
-  // Array of currently ACTIVE issues
+  // Array of currently active issues
   let currentIssues = [];
   if (content.issues) {
     for (let i = 0; i < allIssues.length; i++) {

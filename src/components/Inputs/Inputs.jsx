@@ -15,7 +15,7 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
     const issueUpdate = checkForInputIssues(content, testFunction);
     if (issueUpdate) {
       const issueName = Object.keys(issueUpdate)[0];
-      issues[issueName] = issueUpdate[issueName]; // this contains the 3 keys within each issue
+      issues[issueName] = issueUpdate[issueName]; // this contains the 3 key:value pairs under each issueName
       onChangeContent({ issues });
     }
   }
@@ -40,7 +40,11 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           onChangeContent={onChangeContent}
         />
         {/* Right to Reside */}
-        <Residency content={content} onChangeContent={onChangeContent} />
+        <Residency
+          content={content}
+          onChangeContent={onChangeContent}
+          onUpdateIssues={onUpdateIssues}
+        />
         {/* INPUT start date of award period - rename to "Effective Date" */}
         <label>
           Virkningstidspunkt:

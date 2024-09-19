@@ -2,14 +2,15 @@
 // IMPORTS
 // ------------------------------------------------------------------
 import { netAward, benefitYear } from "./incomeUtils";
+import { findControlMonths } from "./dateUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
 // Array of all issues (used for accessing issues in loops)
 export const allIssues = ["excessIncome", "lowAward"];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
-
-// New attempt using an Issues object, rather than array. AND checking individually at each Input
+// -------------
+// Function checks for income issues (excess income, or award under 2%)
 export function checkIncomes(content) {
   const { rate, effectiveDate } = content;
   const incomes = content.incomes || [];
@@ -25,13 +26,46 @@ export function checkIncomes(content) {
   } else if (yearlyNet < Math.ceil(RATES[awardingYear]["EN"] * 0.02)) {
     return { lowAward: { active: true, terminal: true, resolution: false } };
   } else {
-    // else return names of potential issues (used by checker function to check for saved solutions)
+    // no issues detected: return names of potential issues (used by checker function to check for saved solutions)
     return { noIssues: ["excessIncome", "lowAward"] };
   }
 }
+// --------------
+// Function checks for residency issues (expired or soon to expire residency rights)
+export function checkResidency(content) {
+  const { applicationDate, effectiveDate } = content;
+  const residency = content?.residency;
+  const residencyExpiry = content?.residencyExpiry;
+  const nextControlMonth = findControlMonths(effectiveDate)[0]; // findControlMonths() returns array of 3 dates (1st of months) claimant has to appear for control after
+
+  if (residency === "none") {
+    // claimant has no right to reside
+    return {
+      noResidency: { active: true, terminal: true, resolution: false },
+    };
+  }
+  if (residency === "temporary") {
+    // residency is limited - handle depending on when it expires
+    if (residencyExpiry < applicationDate) {
+      // residency was expired at time of application => application is invalid
+      return {
+        expiredResidency: { active: true, terminal: true, resolution: false },
+      };
+    } else if (residencyExpiry <= nextControlMonth) {
+      // residency expires before next control month => user needs to apply for renewed residency prior to control
+      return {
+        lapsingResidency: { active: true, terminal: false, resolution: false },
+      };
+    }
+  }
+  // no issues detected: return names of potential issues (used by checker function to check for saved solutions)
+  return {
+    noIssues: ["noResidency", "expiredResidency", "lapsingResidency"],
+  };
+}
 
 // ********* Obejct of tests to be used in checker function *******************
-const tests = { checkIncomes };
+const tests = { checkIncomes, checkResidency };
 // ****************************************************************************
 
 // FUNCTION tests for issues using checkers defined above. NB to access 'testFunction' must be a string!

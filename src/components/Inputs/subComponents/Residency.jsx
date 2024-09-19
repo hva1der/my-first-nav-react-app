@@ -1,22 +1,30 @@
 //
 // COMPONENT checks right to reside for claimant.
 
-export default function Residency({ content, onChangeContent }) {
+export default function Residency({
+  content,
+  onChangeContent,
+  onUpdateIssues,
+}) {
   return (
     <div>
       <label>
         Lovlig opphold:
         <select
           value={content.residency || "--Velg--"}
-          onChange={(e) => onChangeContent({ residency: e.target.value })}
+          onChange={(e) => {
+            onChangeContent({ residency: e.target.value });
+            onUpdateIssues("checkResidency");
+          }}
         >
           <option disabled>--Velg--</option>
-          <option value={"Permanent"}>Permanent oppholdstillatelse</option>
-          <option value={"Temporary"}>Midlertidig oppholdstillatelse</option>
-          <option value={"None"}>Ikke gyldig opphold</option>
+          <option value={"permanent"}>Permanent oppholdstillatelse</option>
+          <option value={"temporary"}>Midlertidig oppholdstillatelse</option>
+          <option value={"none"}>Ikke gyldig opphold</option>
         </select>
       </label>
-      {content.residency === "Temporary" && (
+      {content.residency === "temporary" && (
+        // Residency is temporary - record expiry date
         <label>
           Utløpsdato:
           <input
