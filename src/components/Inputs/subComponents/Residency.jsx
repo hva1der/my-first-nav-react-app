@@ -13,8 +13,8 @@ export default function Residency({
         <select
           value={content.residency || "--Velg--"}
           onChange={(e) => {
-            onChangeContent({ residency: e.target.value });
-            onUpdateIssues("checkResidency");
+            onChangeContent({ residency: e.target.value }, "checkResidency");
+            // onUpdateIssues("checkResidency");
           }}
         >
           <option disabled>--Velg--</option>
