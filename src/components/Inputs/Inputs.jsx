@@ -3,9 +3,11 @@ import styles from "./Inputs.module.css";
 import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 import Residency from "./subComponents/Residency";
+import Savings from "./subComponents/Savings";
 import Tasks from "../Tasks/Tasks";
 import { checkForInputIssues } from "../../utilities/issuesUtils";
 import { useEffect } from "react";
+import Institutions from "./subComponents/Institutions";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   const issues = { ...content.issues } || {};
@@ -34,18 +36,7 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
             }}
           />
         </label>
-        {/* INPUT confirm attendance at application */}
-        <ApplicationAttendance
-          content={content}
-          onChangeContent={onChangeContent}
-        />
-        {/* Right to Reside */}
-        <Residency
-          content={content}
-          onChangeContent={onChangeContent}
-          onUpdateIssues={onUpdateIssues}
-        />
-        {/* INPUT start date of award period - rename to "Effective Date" */}
+        {/* INPUT start date of award period */}
         <label>
           Virkningstidspunkt:
           <input
@@ -72,6 +63,11 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           )}
         </label>
 
+        {/* INPUT confirm attendance at application */}
+        <ApplicationAttendance
+          content={content}
+          onChangeContent={onChangeContent}
+        />
         {/* Radio to select benefit rate */}
         <label>
           <input
@@ -95,6 +91,14 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           ></input>{" "}
           EN
         </label>
+        {/* Institution admittance */}
+        <Institutions content={content} onChangeContent={onChangeContent} />
+        {/* Right to Reside */}
+        <Residency
+          content={content}
+          onChangeContent={onChangeContent}
+          onUpdateIssues={onUpdateIssues}
+        />
 
         {/* INPUT Incomes COMPONENT */}
         <Incomes
@@ -102,6 +106,7 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           onChangeContent={onChangeContent}
           onUpdateIssues={onUpdateIssues}
         />
+        <Savings content={content} onChangeContent={onChangeContent} />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
       {/* Tasks modal for handling issues */}

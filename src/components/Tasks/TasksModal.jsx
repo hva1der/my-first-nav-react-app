@@ -82,10 +82,16 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
         </div>
         {/* Description of currently selected issue */}
         <p>
-          <b>{issuesTexts[selectedIssue]?.description || "error"}</b>
+          <b>
+            {issuesTexts[selectedIssue]?.description ||
+              "error: no description exists for this issue"}
+          </b>
         </p>
         {/* How to resolve issue, any mandatory actions etc. */}
-        <p>{issuesTexts[selectedIssue]?.resolution || "error"}</p>
+        <p>
+          {issuesTexts[selectedIssue]?.resolution ||
+            "error: no resolutiontext exists for this issue"}
+        </p>
       </div>
     </dialog>
   );
