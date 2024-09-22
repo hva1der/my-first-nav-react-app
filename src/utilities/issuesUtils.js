@@ -6,7 +6,15 @@ import { findControlMonths } from "./dateUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
 // Array of all issues (used for accessing issues in loops)
-export const allIssues = ["excessIncome", "lowAward"];
+export const allIssues = [
+  // Income issues
+  "excessIncome",
+  "lowAward",
+  // Residency issues
+  "noResidency",
+  "expiredResidency",
+  "lapsingResidency",
+];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
 // -------------

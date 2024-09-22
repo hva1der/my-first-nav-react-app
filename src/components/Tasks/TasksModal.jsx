@@ -3,8 +3,8 @@
 // *** Aim to make this reausable so I can replicate it in other projects...? ***
 
 import { useEffect, useRef, useState } from "react";
-import { allIssues } from "../../../../utilities/issuesUtils";
-import issuesTexts from "../../../../texts/issuestexts";
+import { allIssues } from "../../utilities/issuesUtils";
+import issuesTexts from "../../texts/issuestexts";
 import styles from "./Tasks.module.css";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
@@ -76,16 +76,16 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
         <div>
           {currentIssues.map((issue) => (
             <button onClick={() => setSelectedIssue(issue)} key={issue}>
-              {issuesTexts[issue].longName}
+              {issuesTexts[issue]?.longName || "error no longName"}
             </button>
           ))}
         </div>
         {/* Description of currently selected issue */}
         <p>
-          <b>{issuesTexts[selectedIssue]?.description}</b>
+          <b>{issuesTexts[selectedIssue]?.description || "error"}</b>
         </p>
         {/* How to resolve issue, any mandatory actions etc. */}
-        <p>{issuesTexts[selectedIssue]?.resolution}</p>
+        <p>{issuesTexts[selectedIssue]?.resolution || "error"}</p>
       </div>
     </dialog>
   );

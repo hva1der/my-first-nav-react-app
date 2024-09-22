@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import TasksModal from "./TasksModal";
-import { allIssues } from "../../../../utilities/issuesUtils";
+import { allIssues } from "../../utilities/issuesUtils";
 import styles from "./Tasks.module.css";
 
 export default function Tasks({ content }) {

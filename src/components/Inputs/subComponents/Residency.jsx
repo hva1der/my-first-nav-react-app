@@ -1,6 +1,8 @@
 //
 // COMPONENT checks right to reside for claimant.
 
+import { checkResidency } from "../../../utilities/issuesUtils";
+
 export default function Residency({
   content,
   onChangeContent,
@@ -30,7 +32,10 @@ export default function Residency({
           <input
             type="date"
             onChange={(e) =>
-              onChangeContent({ residencyExpiry: new Date(e.target.value) })
+              onChangeContent(
+                { residencyExpiry: new Date(e.target.value) },
+                "checkResidency"
+              )
             }
           />
         </label>

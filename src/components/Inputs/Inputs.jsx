@@ -3,7 +3,7 @@ import styles from "./Inputs.module.css";
 import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
 import Residency from "./subComponents/Residency";
-import Tasks from "./subComponents/Tasks/Tasks";
+import Tasks from "../Tasks/Tasks";
 import { checkForInputIssues } from "../../utilities/issuesUtils";
 import { useEffect } from "react";
 
