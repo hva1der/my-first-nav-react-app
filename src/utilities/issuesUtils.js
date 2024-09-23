@@ -14,6 +14,8 @@ export const allIssues = [
   "noResidency",
   "expiredResidency",
   "lapsingResidency",
+  // Institution issues - PLACEHOLDER
+  "institutionAdmittance",
 ];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
@@ -71,9 +73,26 @@ export function checkResidency(content) {
     noIssues: ["noResidency", "expiredResidency", "lapsingResidency"],
   };
 }
+// --------------
+// Function checks for institution issues
+// PLACEHOLDER - full functionality not implemented
+export function checkInstitutions(content) {
+  const { institution } = content;
+
+  if (institution === "yes") {
+    return {
+      institutionAdmittance: {
+        active: true,
+        terminal: true,
+        resolution: false,
+      },
+    };
+  }
+  return { noIssues: ["institutionAdmittance"] };
+}
 
 // ********* Obejct of tests to be used in checker function *******************
-const tests = { checkIncomes, checkResidency };
+const tests = { checkIncomes, checkResidency, checkInstitutions };
 // ****************************************************************************
 
 // FUNCTION tests for issues using checkers defined above. NB to access 'testFunction' must be a string!

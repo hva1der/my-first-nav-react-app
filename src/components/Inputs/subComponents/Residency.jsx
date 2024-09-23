@@ -1,8 +1,6 @@
 //
 // COMPONENT checks right to reside for claimant.
 
-import { checkResidency } from "../../../utilities/issuesUtils";
-
 export default function Residency({
   content,
   onChangeContent,
@@ -10,6 +8,7 @@ export default function Residency({
 }) {
   return (
     <div>
+      <h4>Lovlig opphold</h4>
       <label>
         Lovlig opphold:
         <select

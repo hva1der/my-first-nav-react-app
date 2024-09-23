@@ -12,7 +12,12 @@ export default function Institutions({ content, onChangeContent }) {
           type="radio"
           name="institutionRadio"
           value={"yes"}
-          onChange={(e) => onChangeContent({ institution: e.target.value })}
+          onChange={(e) =>
+            onChangeContent(
+              { institution: e.target.value },
+              "checkInstitutions"
+            )
+          }
         />
       </label>
       <label>
@@ -21,7 +26,12 @@ export default function Institutions({ content, onChangeContent }) {
           type="radio"
           name="institutionRadio"
           value={"no"}
-          onChange={(e) => onChangeContent({ institution: e.target.value })}
+          onChange={(e) =>
+            onChangeContent(
+              { institution: e.target.value },
+              "checkInstitutions"
+            )
+          }
         />
       </label>
     </div>
