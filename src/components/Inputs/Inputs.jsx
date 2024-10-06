@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import Institutions from "./subComponents/Institutions";
 import Passports from "./subComponents/Passports";
 import Travel from "./subComponents/Travel";
+import FinancialAid from "./subComponents/FinancialAid";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   const issues = { ...content.issues } || {};
@@ -113,9 +114,15 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           onChangeContent={onChangeContent}
           onUpdateIssues={onUpdateIssues}
         />
+
+        {/* Savings */}
         <Savings content={content} onChangeContent={onChangeContent} />
       </form>
       <button onClick={onShowLetter}>Show letter</button>
+
+      {/* Financial aid PLACEHOLDER */}
+      <FinancialAid content={content} onChangeContent={onChangeContent} />
+
       {/* Tasks modal for handling issues */}
       <Tasks content={content} />
     </div>
