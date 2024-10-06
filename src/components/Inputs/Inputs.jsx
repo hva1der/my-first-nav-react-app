@@ -9,6 +9,7 @@ import { checkForInputIssues } from "../../utilities/issuesUtils";
 import { useEffect } from "react";
 import Institutions from "./subComponents/Institutions";
 import Passports from "./subComponents/Passports";
+import Travel from "./subComponents/Travel";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   const issues = { ...content.issues } || {};
@@ -102,6 +103,9 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
         />
         {/* Travel documents PLACEHOLDER */}
         <Passports content={content} onChangeContent={onChangeContent} />
+
+        {/* Travel PLACEHOLDER */}
+        <Travel content={content} onChangeContent={onChangeContent} />
 
         {/* INPUT Incomes COMPONENT */}
         <Incomes
