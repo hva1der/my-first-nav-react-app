@@ -8,6 +8,7 @@ import Tasks from "../Tasks/Tasks";
 import { checkForInputIssues } from "../../utilities/issuesUtils";
 import { useEffect } from "react";
 import Institutions from "./subComponents/Institutions";
+import Passports from "./subComponents/Passports";
 
 export default function Inputs({ onShowLetter, onChangeContent, content }) {
   const issues = { ...content.issues } || {};
@@ -99,6 +100,8 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
           onChangeContent={onChangeContent}
           onUpdateIssues={onUpdateIssues}
         />
+        {/* Travel documents PLACEHOLDER */}
+        <Passports content={content} onChangeContent={onChangeContent} />
 
         {/* INPUT Incomes COMPONENT */}
         <Incomes
