@@ -11,7 +11,7 @@ export default function FinancialAid({ content, onChangeContent }) {
           type="radio"
           name="passportRadio"
           value={"yes"}
-          onChange={(e) => onChangeContent({ FinancialAid: e.target.value })}
+          onChange={(e) => onChangeContent({ financialAid: e.target.value })}
         />
       </label>
       <label>
@@ -20,7 +20,7 @@ export default function FinancialAid({ content, onChangeContent }) {
           type="radio"
           name="passportRadio"
           value={"no"}
-          onChange={(e) => onChangeContent({ FinancialAid: e.target.value })}
+          onChange={(e) => onChangeContent({ financialAid: e.target.value })}
         />
       </label>
     </div>

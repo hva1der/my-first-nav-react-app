@@ -9,7 +9,7 @@ export default function Travel({ content, onChangeContent }) {
         Ja
         <input
           type="radio"
-          name="passportRadio"
+          name="travelRadio"
           value={"yes"}
           onChange={(e) => onChangeContent({ travel: e.target.value })}
         />
@@ -18,7 +18,7 @@ export default function Travel({ content, onChangeContent }) {
         Nei
         <input
           type="radio"
-          name="passportRadio"
+          name="travelRadio"
           value={"no"}
           onChange={(e) => onChangeContent({ travel: e.target.value })}
         />
