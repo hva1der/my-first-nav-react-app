@@ -9,10 +9,12 @@
 
 ## Known issues (deliberately postponed)
 
+- Not implemented functionality to cross-check for related issues when changing inputs - namely when changing
+  effectiveDate
 - Tasks button coloring function is only returning red or grey/default (in Tasks.js). Missing functionality for
   non-terminal or resolved issues color coding
 - CSS in Tasks.module.css is affecting css in the rest of the app (namely button and certain input styling)
-- Issue checker for institutions is placeholder, issues not handled
+- Issue checkers for institutions, passport, financialAid are placeholders, issues not handled
 
 ## Possible issues
 

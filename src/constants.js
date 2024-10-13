@@ -8,3 +8,8 @@ export const RATES = {
   lastYear: { EV: 210420, EN: 227472, EU: 227472, EO: 210420 },
   thisYear: { EV: 216228, EN: 233748, EU: 233748, EO: 216228 },
 };
+
+export const SAVINGSLIMITS = {
+  lastYear: 59310,
+  thisYear: 62014,
+};

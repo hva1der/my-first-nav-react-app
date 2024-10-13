@@ -16,6 +16,8 @@ export const allIssues = [
   "lapsingResidency",
   // Institution issues - PLACEHOLDER
   "institutionAdmittance",
+  // Savings issues
+  "excessSavings",
 ];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
@@ -90,9 +92,33 @@ export function checkInstitutions(content) {
   }
   return { noIssues: ["institutionAdmittance"] };
 }
+// --------------
+// Function checks for savings issues
+import { SAVINGSLIMITS } from "../constants"; // Move import to top if used elsewhere also
+export function checkSavings(content) {
+  const { effectiveDate } = content;
+  const savings = +content.savings;
+  const partnerSavings = +content.partnerSavings || 0;
+
+  console.log(savings);
+  const combinedSavings = savings + partnerSavings; // need alt for before savings are defined?
+  console.log(combinedSavings);
+  const awardingYear = benefitYear(effectiveDate); // benefitYear returns the benefit year of the awarding period
+  // Need to get savings limit based on YEAR from CONSTANTS
+  if (combinedSavings > SAVINGSLIMITS[awardingYear]) {
+    return {
+      excessSavings: {
+        active: true,
+        terminal: true,
+        resolution: false,
+      },
+    };
+  }
+  return { noIssues: ["excessSavings"] };
+}
 
 // ********* Obejct of tests to be used in checker function *******************
-const tests = { checkIncomes, checkResidency, checkInstitutions };
+const tests = { checkIncomes, checkResidency, checkInstitutions, checkSavings };
 // ****************************************************************************
 
 // FUNCTION tests for issues using checkers defined above. NB to access 'testFunction' must be a string!
@@ -102,6 +128,7 @@ export function checkForInputIssues(content, testFunction = "allTests") {
   const test = tests[testFunction];
   // result should be an object in this format: {issueName: {active: boolean, terminal: boolean, resolution: false or string}}
   const result = test(content);
+  console.log(result);
   // Object.keys returns an array of keys. result will always only have a single object, so [0] will be the issueName as a string (or undefined if the tesfunction hasn't detected any issues and returned an empty object {})
   const issue = Object.keys(result)[0];
 
