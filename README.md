@@ -19,3 +19,7 @@
 ## Possible issues
 
 - Not tested if 2 % rounding is working correctly
+
+## Issues not (currently) causing errors
+
+- Input for Savings taken as string - could be handled better?

@@ -23,6 +23,7 @@ export default function Savings({ content, onChangeContent }) {
       <label>
         Ektefelles totale formue
         <input
+          type="number"
           placeholder={content.partnerSavings}
           onChange={(e) =>
             onChangeContent({ partnerSavings: e.target.value }, "checkSavings")

@@ -9,6 +9,7 @@ export const RATES = {
   thisYear: { EV: 216228, EN: 233748, EU: 233748, EO: 216228 },
 };
 
+// Limit to savings for claimant(s)
 export const SAVINGSLIMITS = {
   lastYear: 59310,
   thisYear: 62014,

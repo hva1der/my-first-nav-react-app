@@ -54,7 +54,7 @@ export default function Notes({ content }) {
         Utenlandsopphold: <b>{travelTexts[travel] || ""}</b>
       </p>
       {/* Savings */}
-      <p>Formue: $$$</p>
+      <p>Formue: {(+content.savings || 0) + (+content.partnerSavings || 0)}</p>
 
       {/* Incomes */}
       <h4>Inntekter</h4>

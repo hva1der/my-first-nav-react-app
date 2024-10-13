@@ -99,12 +99,9 @@ export function checkSavings(content) {
   const { effectiveDate } = content;
   const savings = +content.savings;
   const partnerSavings = +content.partnerSavings || 0;
-
-  console.log(savings);
   const combinedSavings = savings + partnerSavings; // need alt for before savings are defined?
-  console.log(combinedSavings);
   const awardingYear = benefitYear(effectiveDate); // benefitYear returns the benefit year of the awarding period
-  // Need to get savings limit based on YEAR from CONSTANTS
+
   if (combinedSavings > SAVINGSLIMITS[awardingYear]) {
     return {
       excessSavings: {
