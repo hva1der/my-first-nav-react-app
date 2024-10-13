@@ -125,7 +125,6 @@ export function checkForInputIssues(content, testFunction = "allTests") {
   const test = tests[testFunction];
   // result should be an object in this format: {issueName: {active: boolean, terminal: boolean, resolution: false or string}}
   const result = test(content);
-  console.log(result);
   // Object.keys returns an array of keys. result will always only have a single object, so [0] will be the issueName as a string (or undefined if the tesfunction hasn't detected any issues and returned an empty object {})
   const issue = Object.keys(result)[0];
 

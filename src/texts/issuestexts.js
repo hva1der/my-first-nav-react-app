@@ -15,6 +15,14 @@ const issuesTexts = {
     resolution:
       "Vurder om det er sannsynlig at inntekt vil reduseres i fremtiden. Eller, om det evt. skal vurderes å innvilge fra et tidligere tidspunkt.",
   },
+  // Savings issues
+  excessSavings: {
+    longName: "Formue over 0,5G",
+    description:
+      "Ved formue over 0,5G, for tiden 62 014, skal søknaden avslås etter §8.",
+    resolution:
+      "Bruk excell arket -navn på excel ark- for formuesvurdering. Det må evt. vurderes tilpasning og utestengelse.",
+  },
   // PLACEHOLDER issues texts
   // Institution issues
   institutionAdmittance: {
