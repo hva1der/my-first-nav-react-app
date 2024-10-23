@@ -100,12 +100,6 @@ export default function Incomes({
       >
         Ny inntekt
       </button>
-
-      {/* TESTING */}
-
-      <button type="button" onClick={() => console.log(incomes)}>
-        log incomes
-      </button>
     </div>
   );
 }

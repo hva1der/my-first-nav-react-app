@@ -118,13 +118,15 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
         {/* Savings */}
         <Savings content={content} onChangeContent={onChangeContent} />
       </form>
-      <button onClick={onShowLetter}>Show letter</button>
 
       {/* Financial aid PLACEHOLDER */}
       <FinancialAid content={content} onChangeContent={onChangeContent} />
 
       {/* Tasks modal for handling issues */}
       <Tasks content={content} />
+
+      {/* ARCHAIC - button to hide letter - remove?  */}
+      <button onClick={onShowLetter}>Show letter</button>
     </div>
   );
 }

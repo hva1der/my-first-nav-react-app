@@ -1,24 +1,17 @@
 import styles from "./Letters.module.css";
-import {
-  formatDates,
-  awardPeriod,
-  canApplyAgain,
-} from "../../utilities/dateUtils";
+import { formatLetterDates } from "../../utilities/dateUtils";
 import ControlClashText from "./subComponents/ControlClashText";
 import IncomesText from "./subComponents/IncomesText";
+import { allowedTexts } from "../../texts/Letters/AllowedTexts";
 
 export default function Letters({ content }) {
+  // currently set to format dates as dd.mm.yyyy
+  const letterDates = formatLetterDates(content);
+
   return (
     <div className={styles.letterGlobal}>
       {/* Initial text detailing award period */}
-      <p>
-        Søknaden din av {formatDates(content.applicationDate).join(".")} er
-        innvilget. Du får supplerende stønad i perioden{" "}
-        {awardPeriod(content.effectiveDate).periodStart.join(".")} til{" "}
-        {awardPeriod(content.effectiveDate).periodEnd.join(".")}. Du kan søke ny
-        periode i {canApplyAgain(content.effectiveDate).newApplicationMonth}{" "}
-        {canApplyAgain(content.effectiveDate).newApplicationYear}.
-      </p>
+      <p>{allowedTexts.appAwardPeriod(letterDates)}</p>
       {/* "Important" default instructions for user. 2 options: first time applicants and recurring periods */}
       <p>
         VIKTIG <br />

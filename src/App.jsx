@@ -3,6 +3,7 @@ import styles from "./App.module.css";
 import Inputs from "./components/Inputs/Inputs";
 import Notes from "./components/Notes/Notes";
 import Letters from "./components/Letters/Letters";
+import Refusal from "./components/Letters/Refusal";
 import { checkForInputIssues } from "./utilities/issuesUtils";
 
 export default function App() {
@@ -52,7 +53,7 @@ export default function App() {
         {/* Letter */}
         <div className={styles.textBox}>
           {/* Button to hide content (in case people find it distracting to have live updates) */}
-          {showLetter && <Letters content={content} />}
+          {showLetter && <Refusal content={content} />}
         </div>
       </div>
     </div>

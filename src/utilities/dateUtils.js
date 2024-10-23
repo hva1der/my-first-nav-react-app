@@ -65,7 +65,7 @@ export function awardPeriod(startOfPeriod) {
   const periodStart = formatDates(startDate);
   const periodEnd = formatDates(endDate);
 
-  // using arrays so I can easily convert to display in other formats, ex: periodEnd.join("") for ddmmyyyy
+  // return arrays for easy conversion to display in other formats, ex: periodEnd.join("") for ddmmyyyy
   return { periodStart, periodEnd };
 }
 // -----------------------
@@ -80,7 +80,26 @@ export function canApplyAgain(startOfPeriod) {
 
   return { newApplicationMonth, newApplicationYear };
 }
+// -----------------------
+// FUNCTION combines the above functions to return object with all values formatted for output
+// to be used at initial part of award allowed letters to display award period info.
+// *DATE FORMAT: set to dd.mm.yyyy
+export function formatLetterDates(content) {
+  const { applicationDate, effectiveDate } = content;
+  const formattedAppDate = formatDates(applicationDate).join(".");
+  const formattedStartDate = awardPeriod(effectiveDate).periodStart.join(".");
+  const formattedEndDate = awardPeriod(effectiveDate).periodEnd.join(".");
+  const { newApplicationMonth, newApplicationYear } =
+    canApplyAgain(effectiveDate);
 
+  return {
+    formattedAppDate,
+    formattedStartDate,
+    formattedEndDate,
+    newApplicationMonth,
+    newApplicationYear,
+  };
+}
 // ------------------------
 // FUNCTION to determine control period expiry months
 // returns array of 3 dates: 4, 8 and 11 months after startDate
