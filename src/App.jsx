@@ -2,9 +2,9 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import Inputs from "./components/Inputs/Inputs";
 import Notes from "./components/Notes/Notes";
-import Letters from "./components/Letters/Letters";
+import Allowance from "./components/Letters/Allowance";
 import Refusal from "./components/Letters/Refusal";
-import { checkForInputIssues } from "./utilities/issuesUtils";
+import { checkForInputIssues, terminalIssues } from "./utilities/issuesUtils";
 
 export default function App() {
   const [content, setContent] = useState({
@@ -32,16 +32,13 @@ export default function App() {
     setContent(updatedContent);
   }
 
-  const [showLetter, setShowLetter] = useState(true);
+  // testing
+  terminalIssues(content);
 
   return (
     <div className={styles.mainContent}>
       {/* INPUT FIELDS */}
-      <Inputs
-        content={content}
-        onChangeContent={onChangeContent}
-        onShowLetter={() => setShowLetter(!showLetter)}
-      />
+      <Inputs content={content} onChangeContent={onChangeContent} />
 
       {/* OUTPUT FIELDS */}
       <div className={styles.outputsField}>
@@ -52,8 +49,13 @@ export default function App() {
 
         {/* Letter */}
         <div className={styles.textBox}>
-          {/* Button to hide content (in case people find it distracting to have live updates) */}
-          {showLetter && <Refusal content={content} />}
+          {terminalIssues(content) ? (
+            // At least one terminal issue is present => render Refusal letter
+            <Refusal content={content} />
+          ) : (
+            // No terminal issues => render Allowance letter
+            <Allowance content={content} />
+          )}
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import ControlClashText from "./subComponents/ControlClashText";
 import IncomesText from "./subComponents/IncomesText";
 import { allowedTexts } from "../../texts/Letters/AllowedTexts";
 
-export default function Letters({ content }) {
+export default function Allowance({ content }) {
   // currently set to format dates as dd.mm.yyyy
   const letterDates = formatLetterDates(content);
 

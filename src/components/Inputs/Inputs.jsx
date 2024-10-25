@@ -12,7 +12,7 @@ import Passports from "./subComponents/Passports";
 import Travel from "./subComponents/Travel";
 import FinancialAid from "./subComponents/FinancialAid";
 
-export default function Inputs({ onShowLetter, onChangeContent, content }) {
+export default function Inputs({ onChangeContent, content }) {
   const issues = { ...content.issues } || {};
   // Function to update content.issues - used at each user input
   function onUpdateIssues(testFunction) {
@@ -124,9 +124,6 @@ export default function Inputs({ onShowLetter, onChangeContent, content }) {
 
       {/* Tasks modal for handling issues */}
       <Tasks content={content} />
-
-      {/* ARCHAIC - button to hide letter - remove?  */}
-      <button onClick={onShowLetter}>Show letter</button>
     </div>
   );
 }

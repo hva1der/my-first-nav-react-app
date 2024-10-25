@@ -26,7 +26,7 @@ export default function Refusal({ content }) {
       <p>
         <br />
         {baseTexts.close} <br />
-        {baseTexts.orgSignature}
+        {baseTexts.department}
       </p>
     </div>
   );

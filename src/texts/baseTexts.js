@@ -18,5 +18,5 @@ export const baseTexts = {
 
   // Closing salutation
   close: "Med vennlig hilsen",
-  orgSignature: "Nav familie- og pensjonsytelser Ålesund",
+  department: "Nav familie- og pensjonsytelser Ålesund",
 };
