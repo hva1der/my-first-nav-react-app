@@ -162,6 +162,7 @@ export function checkForInputIssues(content, testFunction = "allTests") {
 
 // FUNCTION checks for presence of issues to conditionally render Allowance or Refusal letters
 export function terminalIssues(content) {
+  let activeTerminal = [];
   if (content.issues) {
     // get array of issueNames to loop through issues
     const issueNames = Object.keys(content.issues);
@@ -170,9 +171,13 @@ export function terminalIssues(content) {
         content.issues[issueNames[i]].terminal &&
         content.issues[issueNames[i]].active
       ) {
-        // at least 1 issue is both terminal and active
-        return true;
+        // Push active issues to array
+        activeTerminal.push(issueNames[i]);
       }
+    }
+    if (activeTerminal.length !== 0) {
+      // active and terminal issues are present, return names of those issues
+      return activeTerminal;
     }
   }
   return false;

@@ -8,12 +8,16 @@ const issuesTexts = {
     description: "Inntekt for høy for innvilgelse elns...",
     resolution:
       "Vurder om det er sannsynlig at inntekt vil reduseres i fremtiden. Eller, om det evt. skal vurderes å innvilge fra et tidligere tidspunkt.",
+    refusalGrounds:
+      "Vedtaket er fattet etter §6 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
   lowAward: {
     longName: "Under 2 prosent",
     description: "Stønad er under 2 prosent av høy sats... osv ...",
     resolution:
       "Vurder om det er sannsynlig at inntekt vil reduseres i fremtiden. Eller, om det evt. skal vurderes å innvilge fra et tidligere tidspunkt.",
+    refusalGrounds:
+      "Vedtaket er fattet etter §6 og 9 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
   // Savings issues
   excessSavings: {
@@ -22,6 +26,8 @@ const issuesTexts = {
       "Ved formue over 0,5G, for tiden 62 014, skal søknaden avslås etter §8.",
     resolution:
       "Bruk excell arket -navn på excel ark- for formuesvurdering. Det må evt. vurderes tilpasning og utestengelse.",
+    refusalGrounds:
+      "Vedtaket er fattet etter §8 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
   // PLACEHOLDER issues texts
   // Institution issues

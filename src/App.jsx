@@ -33,7 +33,7 @@ export default function App() {
   }
 
   // testing
-  terminalIssues(content);
+  const liveIssues = terminalIssues(content);
 
   return (
     <div className={styles.mainContent}>
@@ -49,9 +49,9 @@ export default function App() {
 
         {/* Letter */}
         <div className={styles.textBox}>
-          {terminalIssues(content) ? (
+          {liveIssues != [] ? (
             // At least one terminal issue is present => render Refusal letter
-            <Refusal content={content} />
+            <Refusal content={content} liveIssues={liveIssues} />
           ) : (
             // No terminal issues => render Allowance letter
             <Allowance content={content} />
