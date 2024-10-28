@@ -2,7 +2,7 @@ import styles from "./Letters.module.css";
 import { formatLetterDates } from "../../utilities/dateUtils";
 import ControlClashText from "./subComponents/ControlClashText";
 import IncomesText from "./subComponents/IncomesText";
-import { allowanceTexts } from "../../texts/letters_temp/allowanceTexts";
+import { allowanceTexts } from "../../texts/letters/allowanceTexts";
 
 export default function Allowance({ content }) {
   // currently set to format dates as dd.mm.yyyy
