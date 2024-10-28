@@ -1,7 +1,7 @@
 // Texts used in Allowance letter for new period and first time applications
 // NB: Some of the old texts are still in 'Letters/subComponents/' (old format)
 
-export const allowedTexts = {
+export const allowanceTexts = {
   // Initial text specifies applicaton date and award period.
   appAwardPeriod: (letterDates) => {
     return `Søknaden din av ${letterDates.formattedAppDate} er innvilget. 

@@ -1,6 +1,6 @@
 import { baseTexts } from "../../texts/baseTexts";
 import issuesTexts from "../../texts/issuestexts";
-import { refusalTexts } from "../../texts/Letters/refusaltexts";
+import { refusalTexts } from "../../texts/Letters/refusalTexts";
 import { formatLetterDates } from "../../utilities/dateUtils";
 import styles from "./Letters.module.css";
 

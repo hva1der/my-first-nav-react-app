@@ -2,7 +2,7 @@ import styles from "./Letters.module.css";
 import { formatLetterDates } from "../../utilities/dateUtils";
 import ControlClashText from "./subComponents/ControlClashText";
 import IncomesText from "./subComponents/IncomesText";
-import { allowedTexts } from "../../texts/Letters/AllowedTexts";
+import { allowanceTexts } from "../../texts/Letters/allowanceTexts";
 
 export default function Allowance({ content }) {
   // currently set to format dates as dd.mm.yyyy
@@ -11,7 +11,7 @@ export default function Allowance({ content }) {
   return (
     <div className={styles.letterGlobal}>
       {/* Initial text detailing award period */}
-      <p>{allowedTexts.appAwardPeriod(letterDates)}</p>
+      <p>{allowanceTexts.appAwardPeriod(letterDates)}</p>
       {/* "Important" default instructions for user. 2 options: first time applicants and recurring periods */}
       <p>
         VIKTIG <br />
