@@ -78,7 +78,7 @@ export default function Inputs({ onChangeContent, content }) {
             name="rateSelector"
             value="EV"
             onChange={(e) => {
-              onChangeContent({ rate: e.target.value });
+              onChangeContent({ rate: e.target.value }, "checkIncomes");
             }}
           ></input>{" "}
           EV
@@ -89,7 +89,7 @@ export default function Inputs({ onChangeContent, content }) {
             name="rateSelector"
             value="EN"
             onChange={(e) => {
-              onChangeContent({ rate: e.target.value });
+              onChangeContent({ rate: e.target.value }, "checkIncomes");
             }}
           ></input>{" "}
           EN
