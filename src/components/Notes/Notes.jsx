@@ -12,19 +12,25 @@ import {
 
 export default function Notes({ content }) {
   // contents destructured for accessing texts
-  const { institution, residency, validPassport, travel, financialAid } =
-    content;
+  const {
+    applicationDate,
+    effectiveDate,
+    institution,
+    residency,
+    validPassport,
+    travel,
+    financialAid,
+  } = content;
 
   return (
     <div className={styles.notesText}>
       {/* Application date */}
       <p>
-        Søknadsdato: <b>{formatDates(content.applicationDate).join(".")}</b>
+        Søknadsdato: <b>{formatDates(applicationDate).join(".")}</b>
       </p>
       {/* Effective date */}
       <p>
-        Virkningstidspunkt:{" "}
-        <b>{formatDates(content.effectiveDate).join(".")}</b>
+        Virkningstidspunkt: <b>{formatDates(effectiveDate).join(".")}</b>
       </p>
       {/* Personal attendance at application */}
       <p>
@@ -69,7 +75,7 @@ export default function Notes({ content }) {
 
       {/* Financial aid */}
       <p>
-        Sosialstønad: <b>{financialAidTexts[financialAid] || ""}</b>
+        Sosialstønad: <b>{financialAidTexts(financialAid, effectiveDate)}</b>
       </p>
 
       {/* TESTING */}

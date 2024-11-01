@@ -1,5 +1,8 @@
 //
 // Any longer texts for notes are stored here
+// ISSUE: Consider reformatting to match format of letter texts (i.e. having a parent object)
+
+import { formatDates } from "../utilities/dateUtils";
 
 // Application Attendance Texts for actions taken where a claimant has failed to attend personally to apply for the benefit
 // OLD VERSION - keep until update to below format
@@ -34,5 +37,17 @@ export const travelTexts = { yes: "Ja", no: "Nei" };
 // Savings
 // Incomes
 // Financial aid
-export const financialAidTexts = { yes: "Ja", no: "Nei" };
+export const financialAidTexts = (financialAid, effectiveDate) => {
+  switch (financialAid) {
+    case "no":
+      return `Nei`;
+    case "fetching":
+      return `Innhenter sosialstønad fra ${formatDates(effectiveDate).join(
+        "."
+      )}`;
+    // PLACEHOLDER pending implementation of financial Aid calculation
+    case "yes":
+      return `Ja`;
+  }
+};
 // Confirmation questions (checked for foreign pension, council pensions etc. - tick boxes)

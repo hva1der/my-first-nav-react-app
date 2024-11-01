@@ -103,21 +103,20 @@ export function formatLetterDates(content) {
 // ------------------------
 // FUNCTION to determine control period expiry months
 // returns array of 3 dates: 4, 8 and 11 months after startDate
-export function findControlMonths(startOfPeriod) {
-  const startDate = new Date(startOfPeriod);
+export function findControlMonths(effectiveDate) {
   const controlMonths = [
-    addMonths(startDate, 4),
-    addMonths(startDate, 8),
-    addMonths(startDate, 11),
+    addMonths(effectiveDate, 4),
+    addMonths(effectiveDate, 8),
+    addMonths(effectiveDate, 11),
   ];
   return controlMonths;
 }
 // -------------------------
 // FUNCTION to see if a backdated award causes a control meeting to be called the same date as the award letter is issued
 // returns a "clash" object either false or specifying a clash with a control meeting (or in rarer case needing to apply for a new award period altogether - i.e. backdating cases)
-export function controlClash(startOfPeriod) {
+export function controlClash(effectiveDate) {
   const today = new Date();
-  const controlMonths = findControlMonths(startOfPeriod);
+  const controlMonths = findControlMonths(effectiveDate);
 
   if (today >= controlMonths[2]) {
     return { clash: "applyAgain" };

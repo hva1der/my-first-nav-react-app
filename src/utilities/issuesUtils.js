@@ -1,7 +1,7 @@
 //
 // IMPORTS
 // ------------------------------------------------------------------
-import { netAward, benefitYear } from "./incomeUtils";
+import { netAward, benefitYear, incomeSum, monthlyAid } from "./incomeUtils";
 import { findControlMonths } from "./dateUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
@@ -18,6 +18,9 @@ export const allIssues = [
   "institutionAdmittance",
   // Savings issues
   "excessSavings",
+  // Financial Aid issues
+  "excessFinancialAid",
+  "financialAidDeductions",
 ];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
@@ -100,7 +103,7 @@ export function checkSavings(content) {
   const savings = +content.savings;
   const partnerSavings = +content.partnerSavings || 0;
   const combinedSavings = savings + partnerSavings; // need alt for before savings are defined?
-  const awardingYear = benefitYear(effectiveDate); // benefitYear returns the benefit year of the awarding period
+  const awardingYear = benefitYear(effectiveDate); // benefitYear returns the benefit year (01.05-30.04.yy) of the awarding period
 
   if (combinedSavings > SAVINGSLIMITS[awardingYear]) {
     return {
@@ -113,9 +116,44 @@ export function checkSavings(content) {
   }
   return { noIssues: ["excessSavings"] };
 }
+// --------------
+// Function checks for financial aid issues (all(?) non-terminal)
+export function checkFinancialAid(content) {
+  const { rate, effectiveDate, financialAidAmount, incomes } = content;
+  const yearlyAward = netAward(incomes, rate, effectiveDate).yearly;
+  const yearlyAid = monthlyAid(financialAidAmount, effectiveDate) * 12;
+  const awardingYear = benefitYear(effectiveDate);
+  const awardLowerLimit = Math.ceil(RATES[awardingYear]["EN"] * 0.02);
+
+  if (yearlyAward - yearlyAid <= awardLowerLimit) {
+    // can't add financial Aid to incomes deductions in Infotrygd if award would be < 2% of EN rate
+    return {
+      excessFinancialAid: { active: true, terminal: false, resolved: false },
+    };
+  } else if (yearlyAid > 12) {
+    // Issue to handle financial aid deductions from award
+    return {
+      financialAidDeductions: {
+        active: true,
+        terminal: false,
+        resolved: false,
+      },
+    };
+  }
+  // No financial Aid issues detected
+  return {
+    noIssues: ["excessFinancialAid", "financialAidDeductions"],
+  };
+}
 
 // ********* Obejct of tests to be used in checker function *******************
-const tests = { checkIncomes, checkResidency, checkInstitutions, checkSavings };
+const tests = {
+  checkIncomes,
+  checkResidency,
+  checkInstitutions,
+  checkSavings,
+  checkFinancialAid,
+};
 // ****************************************************************************
 
 // FUNCTION tests for issues using checkers defined above. NB to access 'testFunction' must be a string!

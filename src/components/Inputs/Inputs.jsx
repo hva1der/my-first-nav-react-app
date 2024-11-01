@@ -35,7 +35,7 @@ export default function Inputs({ onChangeContent, content }) {
             type="date"
             id="applicationDate"
             onChange={(e) => {
-              onChangeContent({ applicationDate: e.target.value });
+              onChangeContent({ applicationDate: new Date(e.target.value) });
             }}
           />
         </label>
@@ -46,7 +46,7 @@ export default function Inputs({ onChangeContent, content }) {
             type="date"
             id="effectiveDate"
             onChange={(e) => {
-              onChangeContent({ effectiveDate: e.target.value });
+              onChangeContent({ effectiveDate: new Date(e.target.value) });
             }}
           />
           {/* IF controlClash -> adds button to ask IF user has to attend for control */}

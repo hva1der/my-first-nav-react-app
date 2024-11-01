@@ -9,8 +9,8 @@
 
 ## Known issues (deliberately postponed)
 
-- Not implemented functionality to cross-check for related issues when changing inputs - namely when changing
-  effectiveDate
+- Not implemented functionality to cross-check for related issues when changing inputs - namely when changing effectiveDate or rate
+- Updating some input values repeatedly causes some issues with Letters display (ex: showing both "§6" and "§6 + 9" refusal grounds at the same time, after chaning rate and incomes inputs multiple times)
 - Tasks button coloring function is only returning red or grey/default (in Tasks.js). Missing functionality for
   non-terminal or resolved issues color coding
 - CSS in Tasks.module.css is affecting css in the rest of the app (namely button and certain input styling)
@@ -19,6 +19,8 @@
 ## Possible issues
 
 - Not tested if 2 % rounding is working correctly
+- Not handling situations where the award period crosses annual uprating in May
+  o Applies ex for backdating and financialAid deductions.
 
 ## Issues not (currently) causing errors
 

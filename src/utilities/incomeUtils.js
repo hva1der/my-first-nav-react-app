@@ -43,6 +43,11 @@ export function yearlyIncome(income) {
 // FUNCTION sums incomes of same type (or all incomes) Expects an array of income objects as input (i.e. content.incomes) and a type of income sum to return
 // Rounds sum to nearest integer
 export function incomeSum(incomes, type) {
+  // Handle incomes being 'undefined' in event that function runs before an income has been registerd (i.e. when calculating financialAid where there is no other income)
+  if (!incomes) {
+    return 0;
+  }
+
   let sum = 0;
   // IF type is "Sum" -> returns yearly sum of all incomes combined, regardless of type
   if (type === "Sum") {
@@ -93,16 +98,15 @@ export function padIncome(incomes, type) {
 
 // FUNCTION returns the benefit year of the awarding period
 export function benefitYear(effectiveDate) {
-  const effDate = new Date(effectiveDate);
   // Determines what year's benefit rates to use. These values have to be updated in constants.js each May
   const currentYear = new Date().getFullYear();
   let awardStartYear;
   // check if the effective date is before or after 30/04/xx, where xx is the current, last, or year before last
-  if (effDate > new Date(currentYear, 3, 30)) {
+  if (effectiveDate > new Date(currentYear, 3, 30)) {
     awardStartYear = "thisYear";
-  } else if (effDate > new Date(currentYear - 1, 3, 30)) {
+  } else if (effectiveDate > new Date(currentYear - 1, 3, 30)) {
     awardStartYear = "lastYear";
-  } else if (effDate > new Date(currentYear - 2, 3, 30)) {
+  } else if (effectiveDate > new Date(currentYear - 2, 3, 30)) {
     awardStartYear = "yearBeforeLast";
   }
   return awardStartYear;
@@ -117,7 +121,7 @@ export function grossAward(rate, effectiveDate) {
 }
 
 // ----------------------------------------------------------------------------------
-// FUNCTION  returns object with yearly and monthly net award amount
+// FUNCTION  returns object with yearly and monthly net award amount ()
 // NOTE: due to wokrings of Infotrygd montly rate will be rounded UP to nearest integer
 // PROBLEM: Unsure of workings of Infotrygd - what is actually logged as the yearly award??
 export function netAward(incomes, rate, effectiveDate) {
@@ -135,6 +139,19 @@ export function netAward(incomes, rate, effectiveDate) {
   return { yearly: yearlyNet, monthly: monthlyNet };
 }
 // ----------------------------------------------------------------------------------
+// FUNCTION returns average monthly financialAid from effectiveDate to (and including) current month
+export function monthlyAid(financialAidAmount, effectiveDate) {
+  const effMonth = effectiveDate.getMonth();
+  const thisMonth = new Date().getMonth();
+  let difference = 0;
+  if (thisMonth > effMonth) {
+    // awarding month is in the previous year
+    difference = 12 - effMonth + thisMonth + 1;
+  } else {
+    difference = thisMonth - effMonth + 1;
+  }
+  return financialAidAmount / difference;
+}
 
 // testing
 
