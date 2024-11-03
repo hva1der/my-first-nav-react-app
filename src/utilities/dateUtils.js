@@ -38,6 +38,12 @@ export function formatDates(date) {
     ensureDate.getFullYear(),
   ];
 }
+// -------------
+// Function related to formatDates above. returns date in format dd.mm.yyyy
+export function defaultDateFormat(date) {
+  const formattedDate = formatDates(date);
+  return formattedDate.join(".");
+}
 // -------------------------
 // Function to increase a date by X months. Defaults  to 1st day of month, but can set day to 0 to get last day of previous month
 // ref: https://www.w3resource.com/javascript-exercises/javascript-date-exercise-9.php
@@ -127,6 +133,7 @@ export function controlClash(effectiveDate) {
 // ----------------------------
 // FUNCTION finds difference in months between 2 dates (including both start and end months)
 // Important: dates need to be in consecutive order. date2 defaults to date Today
+// PROBLEM?: returns 0 if date1 is 1 month into the future
 export function monthlyDiff(startDate, endDate = new Date()) {
   const startYear = startDate.getFullYear();
   const startMonth = startDate.getMonth();
@@ -142,6 +149,3 @@ export function monthlyDiff(startDate, endDate = new Date()) {
   const difference = yearDifference * 12 + monthDifference + 1;
   return difference;
 }
-
-// TESTING
-console.log(monthlyDiff(new Date(2025, 5, 1)));

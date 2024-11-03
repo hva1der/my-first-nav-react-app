@@ -9,6 +9,7 @@ import {
   travelTexts,
   financialAidTexts,
 } from "../../texts/notesTexts";
+import FinancialAidNotes from "./subComponents/FinancialAidNotes";
 
 export default function Notes({ content }) {
   // contents destructured for accessing texts
@@ -74,9 +75,8 @@ export default function Notes({ content }) {
       </ul>
 
       {/* Financial aid */}
-      <p>
-        Sosialstønad: <b>{financialAidTexts(financialAid, effectiveDate)}</b>
-      </p>
+      <h4>Sosialstønad</h4>
+      <FinancialAidNotes content={content} />
 
       {/* TESTING */}
       <button type="button" onClick={() => console.log(content)}>

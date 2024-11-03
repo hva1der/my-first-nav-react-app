@@ -20,7 +20,6 @@ export const allIssues = [
   "excessSavings",
   // Financial Aid issues
   "excessFinancialAid",
-  "financialAidDeductions",
 ];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
@@ -126,23 +125,15 @@ export function checkFinancialAid(content) {
   const awardLowerLimit = Math.ceil(RATES[awardingYear]["EN"] * 0.02);
 
   if (yearlyAward - yearlyAid <= awardLowerLimit) {
+    console.log("detected issue");
     // can't add financial Aid to incomes deductions in Infotrygd if award would be < 2% of EN rate
     return {
       excessFinancialAid: { active: true, terminal: false, resolved: false },
     };
-  } else if (yearlyAid > 12) {
-    // Issue to handle financial aid deductions from award
-    return {
-      financialAidDeductions: {
-        active: true,
-        terminal: false,
-        resolved: false,
-      },
-    };
   }
   // No financial Aid issues detected
   return {
-    noIssues: ["excessFinancialAid", "financialAidDeductions"],
+    noIssues: ["excessFinancialAid"],
   };
 }
 

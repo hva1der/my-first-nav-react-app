@@ -1,6 +1,8 @@
 // Descriptive names of issues, descriptions of issues etc. Sorted by issueName as defined in the issue checker functions
 // In NORWEGIAN
 
+// NB file name and imports etc should be updated to "tasksTexts.js" - will cause issues with Vercel deployment so deal with later (guidance saved in word doc on repos)
+
 const issuesTexts = {
   // Income issues
   excessIncome: {

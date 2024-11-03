@@ -37,17 +37,22 @@ export const travelTexts = { yes: "Ja", no: "Nei" };
 // Savings
 // Incomes
 // Financial aid
-export const financialAidTexts = (financialAid, effectiveDate) => {
-  switch (financialAid) {
-    case "no":
-      return `Nei`;
-    case "fetching":
-      return `Innhenter sosialstønad fra ${formatDates(effectiveDate).join(
-        "."
-      )}`;
-    // PLACEHOLDER pending implementation of financial Aid calculation
-    case "yes":
-      return `Ja`;
-  }
+export const financialAidTexts = {
+  noBackdate: "Ikke aktuelt, ingen tilbakedatering.",
+  no: "Nei, bekreftet av:",
+  fetching: (effectiveDate) => `Innhenter sosialstønad fra ${effectiveDate}:`,
+  yes: {
+    calculation: (
+      effectiveDate,
+      financialAidAmount,
+      averageFinancialAid
+    ) => `Bruker har mottatt sosialstønad på
+   ${financialAidAmount} kroner i perioden ${effectiveDate} til dags dato. I snitt utgjør dette
+   ${averageFinancialAid} per måned.`,
+    excessAid: `Utbetalt SU etter fradrag for inntekt og sosialstønad er under 2% av sats for EN.
+    Bruker innvilges derfor utsatt periode SU.`,
+    noExcess: `Beløpet trekkes fra utbetalt SU.  FI fra neste måned uten fradrag for sos. `,
+  },
 };
+
 // Confirmation questions (checked for foreign pension, council pensions etc. - tick boxes)
