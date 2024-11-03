@@ -23,9 +23,13 @@ export default function Tasks({ content }) {
   const tasksBtnColor = () => {
     if (content.issues) {
       for (let i = 0; i < allIssues.length; i++) {
-        if (content.issues[allIssues[i]]?.active) {
+        const issue = content.issues[allIssues[i]];
+        if (issue?.active && issue?.terminal) {
           // Terminal issues present, alert user with red button
           return styles.redBtn;
+        } else if (issue?.active) {
+          // non-terminal issues present - yellow button
+          return styles.yellowBtn;
         }
       }
     }

@@ -124,5 +124,24 @@ export function controlClash(effectiveDate) {
     return { clash: "controlClash" };
   } else return { clash: false };
 }
+// ----------------------------
+// FUNCTION finds difference in months between 2 dates (including both start and end months)
+// Important: dates need to be in consecutive order. date2 defaults to date Today
+export function monthlyDiff(startDate, endDate = new Date()) {
+  const startYear = startDate.getFullYear();
+  const startMonth = startDate.getMonth();
+
+  const endYear = endDate.getFullYear();
+  const endMonth = endDate.getMonth();
+
+  // Calculate the difference in years and months
+  const yearDifference = endYear - startYear;
+  const monthDifference = endMonth - startMonth;
+
+  // Total difference in months, including start and end months
+  const difference = yearDifference * 12 + monthDifference + 1;
+  return difference;
+}
 
 // TESTING
+console.log(monthlyDiff(new Date(2025, 5, 1)));

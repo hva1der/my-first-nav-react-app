@@ -138,20 +138,6 @@ export function netAward(incomes, rate, effectiveDate) {
 
   return { yearly: yearlyNet, monthly: monthlyNet };
 }
-// ----------------------------------------------------------------------------------
-// FUNCTION returns average monthly financialAid from effectiveDate to (and including) current month
-export function monthlyAid(financialAidAmount, effectiveDate) {
-  const effMonth = effectiveDate.getMonth();
-  const thisMonth = new Date().getMonth();
-  let difference = 0;
-  if (thisMonth > effMonth) {
-    // awarding month is in the previous year
-    difference = 12 - effMonth + thisMonth + 1;
-  } else {
-    difference = thisMonth - effMonth + 1;
-  }
-  return financialAidAmount / difference;
-}
 
 // testing
 

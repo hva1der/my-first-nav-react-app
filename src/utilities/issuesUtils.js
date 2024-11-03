@@ -1,8 +1,8 @@
 //
 // IMPORTS
 // ------------------------------------------------------------------
-import { netAward, benefitYear, incomeSum, monthlyAid } from "./incomeUtils";
-import { findControlMonths } from "./dateUtils";
+import { netAward, benefitYear, incomeSum } from "./incomeUtils";
+import { findControlMonths, monthlyDiff } from "./dateUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
 // Array of all issues (used for accessing issues in loops)
@@ -121,7 +121,7 @@ export function checkSavings(content) {
 export function checkFinancialAid(content) {
   const { rate, effectiveDate, financialAidAmount, incomes } = content;
   const yearlyAward = netAward(incomes, rate, effectiveDate).yearly;
-  const yearlyAid = monthlyAid(financialAidAmount, effectiveDate) * 12;
+  const yearlyAid = (financialAidAmount / monthlyDiff(effectiveDate)) * 12;
   const awardingYear = benefitYear(effectiveDate);
   const awardLowerLimit = Math.ceil(RATES[awardingYear]["EN"] * 0.02);
 

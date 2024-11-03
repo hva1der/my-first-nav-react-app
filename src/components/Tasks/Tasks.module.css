@@ -48,6 +48,9 @@ the user is expected to click/activate it to dismiss. */
   .redBtn {
     background-color: red;
   }
+  .yellowBtn {
+    background-color: yellow;
+  }
 
 
 
