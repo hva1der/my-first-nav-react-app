@@ -47,7 +47,7 @@ export function defaultDateFormat(date) {
 // -------------------------
 // Function to increase a date by X months. Defaults  to 1st day of month, but can set day to 0 to get last day of previous month
 // ref: https://www.w3resource.com/javascript-exercises/javascript-date-exercise-9.php
-function addMonths(date, numOfMonths, day = 1) {
+export function addMonths(date, numOfMonths, day = 1) {
   !day && numOfMonths++;
   const currentDate = new Date(date);
   const newDate = new Date(

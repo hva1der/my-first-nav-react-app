@@ -125,7 +125,6 @@ export function checkFinancialAid(content) {
   const awardLowerLimit = Math.ceil(RATES[awardingYear]["EN"] * 0.02);
 
   if (yearlyAward - yearlyAid <= awardLowerLimit) {
-    console.log("detected issue");
     // can't add financial Aid to incomes deductions in Infotrygd if award would be < 2% of EN rate
     return {
       excessFinancialAid: { active: true, terminal: false, resolved: false },

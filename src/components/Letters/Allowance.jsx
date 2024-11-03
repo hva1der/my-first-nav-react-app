@@ -3,6 +3,7 @@ import { formatLetterDates } from "../../utilities/dateUtils";
 import ControlClashText from "./subComponents/ControlClashText";
 import IncomesText from "./subComponents/IncomesText";
 import { allowanceTexts } from "../../texts/letters/allowanceTexts";
+import FinancialAidDeductions from "./subComponents/FinancialAidDeductions";
 
 export default function Allowance({ content }) {
   // currently set to format dates as dd.mm.yyyy
@@ -40,6 +41,8 @@ export default function Allowance({ content }) {
         effectiveDate={content.effectiveDate}
         attendance={content.controlClashAttendance}
       />
+      {/* Deductions for financial aid (if applicable) */}
+      <FinancialAidDeductions content={content} />
 
       {/* Decision grounds */}
       <p>
