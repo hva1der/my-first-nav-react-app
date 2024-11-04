@@ -31,6 +31,16 @@ const issuesTexts = {
     refusalGrounds:
       "Vedtaket er fattet etter §8 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
+  // Financial aid issues (all non-terminal)
+  fetchingFinancialAid: {
+    longName: "Innhenting av sosialstønad fra Nav lokal",
+    description:
+      "Opprett Vurder henvendelse oppgave til Nav lokal med tema SU og frist 1 uke.",
+    resolution: `Bruker har satt frem krav om supplerende stønad. Dersom bruker eller eventuell 
+      ektefelle har mottatt økonomisk sosialhjelp skal denne gå til fradrag i en evt. etterbetaling. 
+      Vi ber derfor om at det oppgis hva de evt. har mottatt i økonomisk sosialhjelp per måned i 
+      perioden 01xxxx til og med dags dato. Dersom det ikke er utbealt noe så bes også dette bekreftet.`,
+  },
   // PLACEHOLDER issues texts
   // Institution issues
   institutionAdmittance: {

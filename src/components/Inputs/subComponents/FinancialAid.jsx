@@ -2,6 +2,7 @@
 // *PLACEHOLDER*
 
 import { monthlyDiff } from "../../../utilities/dateUtils";
+import { checkFinancialAid } from "../../../utilities/issuesUtils";
 
 export default function FinancialAid({ content, onChangeContent }) {
   // Render only IF backdating the award
@@ -15,7 +16,12 @@ export default function FinancialAid({ content, onChangeContent }) {
             type="radio"
             name="financialAidRadio"
             value={"yes"}
-            onChange={(e) => onChangeContent({ financialAid: e.target.value })}
+            onChange={(e) =>
+              onChangeContent(
+                { financialAid: e.target.value },
+                "checkFinancialAid"
+              )
+            }
           />
         </label>
         <label>
@@ -24,7 +30,12 @@ export default function FinancialAid({ content, onChangeContent }) {
             type="radio"
             name="financialAidRadio"
             value={"no"}
-            onChange={(e) => onChangeContent({ financialAid: e.target.value })}
+            onChange={(e) =>
+              onChangeContent(
+                { financialAid: e.target.value },
+                "checkFinancialAid"
+              )
+            }
           />
         </label>
         <label>
@@ -33,7 +44,12 @@ export default function FinancialAid({ content, onChangeContent }) {
             type="radio"
             name="financialAidRadio"
             value={"fetching"}
-            onChange={(e) => onChangeContent({ financialAid: e.target.value })}
+            onChange={(e) =>
+              onChangeContent(
+                { financialAid: e.target.value },
+                "checkFinancialAid"
+              )
+            }
           />
         </label>
         {content.financialAid === "yes" && (

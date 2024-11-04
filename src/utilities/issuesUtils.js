@@ -20,6 +20,7 @@ export const allIssues = [
   "excessSavings",
   // Financial Aid issues
   "excessFinancialAid",
+  "fetchingFinancialAid",
 ];
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
@@ -118,7 +119,8 @@ export function checkSavings(content) {
 // --------------
 // Function checks for financial aid issues (all(?) non-terminal)
 export function checkFinancialAid(content) {
-  const { rate, effectiveDate, financialAidAmount, incomes } = content;
+  const { rate, effectiveDate, financialAid, financialAidAmount, incomes } =
+    content;
   const yearlyAward = netAward(incomes, rate, effectiveDate).yearly;
   const yearlyAid = (financialAidAmount / monthlyDiff(effectiveDate)) * 12;
   const awardingYear = benefitYear(effectiveDate);
@@ -128,6 +130,12 @@ export function checkFinancialAid(content) {
     // can't add financial Aid to incomes deductions in Infotrygd if award would be < 2% of EN rate
     return {
       excessFinancialAid: { active: true, terminal: false, resolved: false },
+    };
+  }
+  if (financialAid === "fetching") {
+    // used to create task for case manager to fetch FA info from Nav local offices
+    return {
+      fetchingFinancialAid: { active: true, terminal: false, resolved: false },
     };
   }
   // No financial Aid issues detected
