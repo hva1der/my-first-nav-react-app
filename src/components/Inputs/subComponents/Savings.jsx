@@ -1,7 +1,5 @@
 // COMPONENT summarises users savgins
 
-import { checkSavings } from "../../../utilities/issuesUtils";
-
 // QUICK FIX: Start this off as a single input field for total savings, but in future add:
 //      - Inputs for different types of savings (cars, property etc)
 //      - Alternative/competing sources of info, ex: user statement vs Skattemelding

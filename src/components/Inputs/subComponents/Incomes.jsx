@@ -19,9 +19,6 @@ export default function Incomes({
     onChangeContent({ incomes });
   }
 
-  // *** for 130724:
-  // I need the "log content" button in notes to -from the start- log a content with an "incomes" object
-
   return (
     <div>
       {/* List of income input fields */}
