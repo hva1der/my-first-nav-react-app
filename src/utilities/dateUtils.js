@@ -60,6 +60,35 @@ export function addMonths(date, numOfMonths, day = 1) {
 // --------------------------
 // ### Exported functions ###
 // ---------------------------------------------------------------------------
+// FUNCTION Takes 2 Date objects as input and returns difference in days
+export function daysBetween(date1, date2) {
+  const difference = date1 - date2;
+  const numOfDays = difference / 1000 / 60 / 60 / 24; // convert ms to days
+  return Math.abs(numOfDays) + 1; // +1 to include both dates in # of days
+}
+// ---------------------
+// FUNCTION determines # of net travel days (subtracting departure and arrival days (if they are within the award period))
+// Returns a travel details object: { departure: "formatted date", arrival, grossDuration, netDuration };
+// Travels crossing into next award period are rare, so not covered
+export function travelDetails(effectiveDate, date1, date2) {
+  const departure = defaultDateFormat(date1);
+  const arrival = defaultDateFormat(date2);
+  const grossDuration = daysBetween(date1, date2);
+  const details = { departure, arrival, grossDuration };
+  if (date1 < effectiveDate && date2 < effectiveDate) {
+    // whole stay is before effectiveDate
+    details.netDuration = 0;
+  } else if (date1 < effectiveDate) {
+    // departure is before effectiveDate
+    details.netDuration = grossDuration - 1;
+  } else {
+    // whole stay is within current award period
+    details.netDuration = grossDuration - 2;
+  }
+  console.log(details);
+  return details;
+}
+// ---------------------
 // FUNCTION to determine 12 month award period
 // returns 2 array objects: periodStart: ["dd", "mm", yyyy] and periodEnd: ["dd", "mm", yyyy]
 export function awardPeriod(startOfPeriod) {

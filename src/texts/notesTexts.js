@@ -33,7 +33,13 @@ export const residencyTexts = {
 // Passport
 export const passportTexts = { yes: "Ja", no: "Nei" };
 // Travel
-export const travelTexts = { yes: "Ja", no: "Nei" };
+export const travelTexts = {
+  simpleStay: (departure, arrival, netDuration) =>
+    `Utenlandsopphold ${departure} - ${arrival}, ${netDuration} dager.`,
+  acrossPeriods: (departure, arrival, grossDuration, netDuration) =>
+    `Utenlandsopphold ${departure} - ${arrival}, ${grossDuration} dager totalt. 
+    ${netDuration} dager i ny periode.`,
+};
 // Savings
 // Incomes
 // Financial aid

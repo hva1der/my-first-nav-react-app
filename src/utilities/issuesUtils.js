@@ -116,6 +116,17 @@ export function checkSavings(content) {
   }
   return { noIssues: ["excessSavings"] };
 }
+// ------------------
+// Function checks for Travel/stays abroad issues
+export function checkTravels(content) {
+  const { effectiveDate, staysAbroad } = content;
+  for (let i = 0; i < staysAbroad.length; i++) {
+    if (staysAbroad[i].date1 < effectiveDate) {
+      // departure is prior to effectiveDate
+    }
+  }
+}
+
 // --------------
 // Function checks for financial aid issues (all(?) non-terminal)
 export function checkFinancialAid(content) {

@@ -10,6 +10,7 @@ import {
   financialAidTexts,
 } from "../../texts/notesTexts";
 import FinancialAidNotes from "./subComponents/FinancialAidNotes";
+import TravelNotes from "./subComponents/TravelNotes";
 
 export default function Notes({ content }) {
   // contents destructured for accessing texts
@@ -57,9 +58,8 @@ export default function Notes({ content }) {
         Gyldig pass: <b>{passportTexts[validPassport] || ""}</b>
       </p>
       {/* Travel */}
-      <p>
-        Utenlandsopphold: <b>{travelTexts[travel] || ""}</b>
-      </p>
+      <h4>Utenlandsopphold</h4>
+      <TravelNotes content={content} />
       {/* Savings */}
       <p>Formue: {(+content.savings || 0) + (+content.partnerSavings || 0)}</p>
 
