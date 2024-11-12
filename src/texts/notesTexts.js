@@ -34,11 +34,12 @@ export const residencyTexts = {
 export const passportTexts = { yes: "Ja", no: "Nei" };
 // Travel
 export const travelTexts = {
-  simpleStay: (departure, arrival, netDuration) =>
+  withinPeriod: (departure, arrival, grossDuration, netDuration) =>
     `Utenlandsopphold ${departure} - ${arrival}, ${netDuration} dager.`,
   acrossPeriods: (departure, arrival, grossDuration, netDuration) =>
-    `Utenlandsopphold ${departure} - ${arrival}, ${grossDuration} dager totalt. 
-    ${netDuration} dager i ny periode.`,
+    `Utenlandsopphold ${departure} - ${arrival}, 
+  ${grossDuration - 2} dager totalt. ${netDuration} dager i ny periode.`,
+  noStaysAbroad: "Ingen utenlandsopphold.",
 };
 // Savings
 // Incomes

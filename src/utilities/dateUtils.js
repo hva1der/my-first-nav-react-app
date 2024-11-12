@@ -74,18 +74,19 @@ export function travelDetails(effectiveDate, date1, date2) {
   const departure = defaultDateFormat(date1);
   const arrival = defaultDateFormat(date2);
   const grossDuration = daysBetween(date1, date2);
-  const details = { departure, arrival, grossDuration };
+  let type = "acrossPeriods";
+  const details = { type, departure, arrival, grossDuration };
   if (date1 < effectiveDate && date2 < effectiveDate) {
-    // whole stay is before effectiveDate
+    // whole stay is before effectiveDate => 0 days in new award period
     details.netDuration = 0;
   } else if (date1 < effectiveDate) {
-    // departure is before effectiveDate
-    details.netDuration = grossDuration - 1;
+    // departure is before effectiveDate => subtract all days before effDate
+    details.netDuration = grossDuration - daysBetween(date1, effectiveDate);
   } else {
-    // whole stay is within current award period
+    // whole stay is within current award period => subtract dep and arr days
     details.netDuration = grossDuration - 2;
+    details.type = "withinPeriod";
   }
-  console.log(details);
   return details;
 }
 // ---------------------
