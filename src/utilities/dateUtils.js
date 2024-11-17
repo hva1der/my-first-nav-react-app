@@ -61,27 +61,45 @@ export function addMonths(date, numOfMonths, day = 1) {
 // ### Exported functions ###
 // ---------------------------------------------------------------------------
 // FUNCTION Takes 2 Date objects as input and returns difference in days
-export function daysBetween(date1, date2) {
-  const difference = date1 - date2;
+export function daysBetween(departure, arrival) {
+  const difference = departure - arrival;
   const numOfDays = difference / 1000 / 60 / 60 / 24; // convert ms to days
   return Math.abs(numOfDays) + 1; // +1 to include both dates in # of days
 }
 // ---------------------
+// FUNCTION takes 3 travel related dates: departure, arrival and (optional?) relevantDate
+// relevantDate will be the applicationDate or effectiveDate - used to determine which side
+// of that date the journey falls, or whether it crosses it
+// Returns: a string describing the journey
+export function travelType(departure, arrival, relevantDate) {
+  if (departure < relevantDate && arrival < relevantDate) {
+    // whole stay is before relevantDate
+    return "beforeDate";
+  } else if (departure < relevantDate) {
+    // departure is before relevantDate
+    return "acrossDate";
+  } else {
+    // whole stay is after relevantDate
+    return "afterDate";
+  }
+}
+// ---------------------
+// ***NOTE: Below to be refactured to use above "travelType" function -> Also then need to refactor notesTexts to use altered "type" names
 // FUNCTION determines # of net travel days (subtracting departure and arrival days (if they are within the award period))
 // Returns a travel details object: { departure: "formatted date", arrival, grossDuration, netDuration };
 // Travels crossing into next award period are rare, so not covered
-export function travelDetails(effectiveDate, date1, date2) {
-  const departure = defaultDateFormat(date1);
-  const arrival = defaultDateFormat(date2);
-  const grossDuration = daysBetween(date1, date2);
+export function travelDetails(departure, arrival, relevantDate) {
+  const formatDeparture = defaultDateFormat(departure);
+  const formatArrival = defaultDateFormat(arrival);
+  const grossDuration = daysBetween(departure, arrival);
   let type = "acrossPeriods";
-  const details = { type, departure, arrival, grossDuration };
-  if (date1 < effectiveDate && date2 < effectiveDate) {
+  const details = { type, formatDeparture, formatArrival, grossDuration };
+  if (departure < relevantDate && arrival < relevantDate) {
     // whole stay is before effectiveDate => 0 days in new award period
     details.netDuration = 0;
-  } else if (date1 < effectiveDate) {
+  } else if (departure < relevantDate) {
     // departure is before effectiveDate => subtract all days before effDate
-    details.netDuration = grossDuration - daysBetween(date1, effectiveDate);
+    details.netDuration = grossDuration - daysBetween(departure, relevantDate);
   } else {
     // whole stay is within current award period => subtract dep and arr days
     details.netDuration = grossDuration - 2;

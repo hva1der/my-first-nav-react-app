@@ -15,15 +15,15 @@ export default function Travel({ content, onChangeContent }) {
     }
   }
 
-  // Function adds travel dates to content, in format {id:, date1(departure):, date2(arrival):}
-  function handleDateChange(id, dateX, newDate) {
+  // Function adds travel dates to content, in format {id:, departure, arrival}
+  function handleDateChange(id, depOrArr, newDate) {
     stays = stays.map((stay) => {
       if (id === stay.id) {
-        return { ...stay, [dateX]: newDate };
+        return { ...stay, [depOrArr]: newDate };
       }
       return stay;
     });
-    onChangeContent({ staysAbroad: stays });
+    onChangeContent({ staysAbroad: stays }, "checkTravel");
   }
 
   return (
@@ -46,13 +46,13 @@ export default function Travel({ content, onChangeContent }) {
             <input
               type="date"
               onChange={(e) =>
-                handleDateChange(stay.id, "date1", new Date(e.target.value))
+                handleDateChange(stay.id, "departure", new Date(e.target.value))
               }
             />
             <input
               type="date"
               onChange={(e) =>
-                handleDateChange(stay.id, "date2", new Date(e.target.value))
+                handleDateChange(stay.id, "arrival", new Date(e.target.value))
               }
             />
           </li>

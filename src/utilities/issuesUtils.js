@@ -2,7 +2,13 @@
 // IMPORTS
 // ------------------------------------------------------------------
 import { netAward, benefitYear, incomeSum } from "./incomeUtils";
-import { findControlMonths, monthlyDiff } from "./dateUtils";
+import {
+  addMonths,
+  daysBetween,
+  findControlMonths,
+  monthlyDiff,
+  travelDetails,
+} from "./dateUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
 // Array of all issues (used for accessing issues in loops)
@@ -18,6 +24,12 @@ export const allIssues = [
   "institutionAdmittance",
   // Savings issues
   "excessSavings",
+  // Travel issues
+  "pastLongStay",
+  "pastShortStay",
+  "plannedLongStay",
+  "plannedShortStay",
+  "willMissControl",
   // Financial Aid issues
   "excessFinancialAid",
   "fetchingFinancialAid",
@@ -117,17 +129,81 @@ export function checkSavings(content) {
   return { noIssues: ["excessSavings"] };
 }
 // ------------------
-// Function checks for Travel/stays abroad issues
-export function checkTravels(content) {
-  const { effectiveDate, staysAbroad } = content;
+// NEW
+// Need to add a button/option to note that all travels have been recorded/handled prior to new application (= no issues)
+// *** This function can return lots of issues -> Need to process in prioritised order - i.e. terminal issues first!
+import { travelType } from "./dateUtils";
+export function checkTravel(content) {
+  const { applicationDate, effectiveDate, staysAbroad } = content;
   for (let i = 0; i < staysAbroad.length; i++) {
-    if (staysAbroad[i].date1 < effectiveDate) {
-      // departure is prior to effectiveDate
+    const { departure, arrival } = staysAbroad[i];
+    // which letter to send is dependant on when journey falls in relation to applicationDate aka the travel "type"
+    const type = travelType(departure, arrival, applicationDate);
+    if (type === "beforeDate") {
+      const netDuration = daysBetween(departure, arrival) - 2; // subtracting both dep and arr dates
+      // claimant has returned from a journey - need to confirm if docs have been submitted, else send fetch docs letter
+      if (netDuration > 90) {
+        // claimant has been abroad for 90+ consecutive days in the past
+        // Trigger PLACEHOLDER Task - issue not yet supported
+        return {
+          pastLongStay: { active: true, terminal: false, resolution: false },
+        };
+      } else
+        return {
+          // claimant has past stay of less than 90 consecutive day
+          // trigger Task to confirm if docs are submitted - else fetch docs
+          pastShortStay: { active: true, terminal: false, resolution: false },
+        };
+    } else if (type === "afterDate") {
+      // claimant has reported a planned journey
+      const netDuration = daysBetween(departure, arrival) - 2;
+
+      if (netDuration > 90) {
+        // claimant has reported a planned journey of 90+ consecutive days
+        // Should trigge Task "warning of termination of award"
+        return {
+          plannedLongStay: { active: true, terminal: false, resolution: false },
+        };
+      }
+      // Handle issues related to journeys under 90d
+      // Check if journey will mean C misses either of the 2 control meetings in a year
+      const controlMonths = findControlMonths(effectiveDate);
+      for (let i = 0; i < 2; i++) {
+        const startControlMonth = controlMonths[i];
+        const endControlMonth = addMonths(startControlMonth, 1, 0); // add 1 month and return last day of month before (= last day of current month)
+        if (departure < startControlMonth && arrival > endControlMonth) {
+          // journey starts before 1st of controlMonth, and ends after last day of controlmonth => User will miss control
+          // Should trigger Task to send appropriate letter
+          return {
+            willMissControl: {
+              active: true,
+              terminal: false,
+              resolution: false,
+            },
+          };
+        }
+      }
+      // short stay after applicationDate
+      return {
+        plannedShortStay: { active: true, terminal: false, resolution: false },
+      };
+      // * For future (SU FI etc) use - event of a long journey ending after time for new periode application
+      // (if (arrival > last day (or +20d?) of controlMonths[2]))
     }
   }
+  // no issues detected
+  return {
+    noIssues: [
+      "pastLongStay",
+      "pastShortStay",
+      "plannedLongStay",
+      "plannedShortStay",
+      "willMissControl",
+    ],
+  };
 }
 
-// --------------
+// ----------------
 // Function checks for financial aid issues (all(?) non-terminal)
 export function checkFinancialAid(content) {
   const { rate, effectiveDate, financialAid, financialAidAmount, incomes } =
@@ -155,6 +231,7 @@ export function checkFinancialAid(content) {
   };
 }
 
+// -------------------
 // ********* Obejct of tests to be used in checker function *******************
 const tests = {
   checkIncomes,
@@ -162,6 +239,7 @@ const tests = {
   checkInstitutions,
   checkSavings,
   checkFinancialAid,
+  checkTravel,
 };
 // ****************************************************************************
 

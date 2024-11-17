@@ -7,20 +7,25 @@ export default function TravelNotes({ content }) {
   const { effectiveDate, staysAbroad } = content;
 
   if (staysAbroad?.length > 0) {
-    if (staysAbroad?.[0].date1 && staysAbroad?.[0].date2) {
+    if (staysAbroad?.[0].departure && staysAbroad?.[0].arrival) {
       // render only once both dates are entered
       return (
         <ul>
           {staysAbroad.map((stay) => {
             // travelDetails returns an object with journey details
-            const { type, departure, arrival, grossDuration, netDuration } =
-              travelDetails(effectiveDate, stay.date1, stay.date2);
+            const {
+              type,
+              formatDeparture,
+              formatArrival,
+              grossDuration,
+              netDuration,
+            } = travelDetails(stay.departure, stay.arrival, effectiveDate);
             return (
               <li key={stay.id}>
                 {/* Access the relevant text in travelTexts using the `type` property */}
                 {travelTexts[type](
-                  departure,
-                  arrival,
+                  formatDeparture,
+                  formatArrival,
                   grossDuration,
                   netDuration
                 )}
