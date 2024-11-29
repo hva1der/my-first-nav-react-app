@@ -47,7 +47,7 @@ export default function Tasks({ content }) {
         isOpen={isTasksModalOpen}
         onClose={handleCloseTasksModal}
         content={content}
-      ></TasksModal>
+      />
     </div>
   );
 }

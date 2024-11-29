@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { allIssues } from "../../utilities/issuesUtils";
 import issuesTexts from "../../texts/issuestexts";
 import styles from "./Tasks.module.css";
+import TaskResolution from "./subComponents/TaskResolution";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
 /* 
@@ -33,7 +34,7 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
       handleCloseModal();
     }
   };
-  // The meat of the matter *** Delete comment once understood ***
+  // The meat of the matter *** Delete comment once below fully understood ***
   useEffect(() => {
     setIsModalOpen(isOpen);
   }, [isOpen]);
@@ -51,7 +52,7 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
   }, [isModalOpen]);
 
   // State for rendering currently selected issue within the modal
-  const [selectedIssue, setSelectedIssue] = useState("No issue selected"); // change to a blank issue?
+  const [selectedIssue, setSelectedIssue] = useState("dummyIssue"); // change to a blank issue?
 
   // Array of currently active issues
   let currentIssues = [];
@@ -71,7 +72,7 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
         <button className={styles.btnCloseModal} onClick={handleCloseModal}>
           Lukk
         </button>
-        {children}
+
         {/* Row of buttons to select issue out of currently active issues */}
         <div>
           {currentIssues.map((issue) => (
@@ -80,18 +81,9 @@ export default function TasksModal({ isOpen, onClose, content, children }) {
             </button>
           ))}
         </div>
-        {/* Description of currently selected issue */}
-        <p>
-          <b>
-            {issuesTexts[selectedIssue]?.description ||
-              "error: no description exists for this issue"}
-          </b>
-        </p>
-        {/* How to resolve issue, any mandatory actions etc. */}
-        <p>
-          {issuesTexts[selectedIssue]?.resolution ||
-            "error: no resolutiontext exists for this issue"}
-        </p>
+
+        {/* Issue solution options */}
+        <TaskResolution content={content} selectedIssue={selectedIssue} />
       </div>
     </dialog>
   );

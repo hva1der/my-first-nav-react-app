@@ -83,28 +83,30 @@ export function travelType(departure, arrival, relevantDate) {
     return "afterDate";
   }
 }
+
 // ---------------------
 // ***NOTE: Below to be refactured to use above "travelType" function -> Also then need to refactor notesTexts to use altered "type" names
 // FUNCTION determines # of net travel days (subtracting departure and arrival days (if they are within the award period))
 // Returns a travel details object: { departure: "formatted date", arrival, grossDuration, netDuration };
-// Travels crossing into next award period are rare, so not covered
+// Issue: Not covering travel dates into future award period - relevant for SU FI
 export function travelDetails(departure, arrival, relevantDate) {
   const formatDeparture = defaultDateFormat(departure);
   const formatArrival = defaultDateFormat(arrival);
-  const grossDuration = daysBetween(departure, arrival);
-  let type = "acrossPeriods";
+  const grossDuration = daysBetween(departure, arrival) - 2; // -2 to exclude dep and arr dates.
+  let type = travelType(departure, arrival, relevantDate);
   const details = { type, formatDeparture, formatArrival, grossDuration };
-  if (departure < relevantDate && arrival < relevantDate) {
+  if (type === "beforeDate") {
     // whole stay is before effectiveDate => 0 days in new award period
     details.netDuration = 0;
-  } else if (departure < relevantDate) {
-    // departure is before effectiveDate => subtract all days before effDate
-    details.netDuration = grossDuration - daysBetween(departure, relevantDate);
-  } else {
+  } else if (type === "acrossDate") {
+    // departure is before effectiveDate => subtract all days before effDate. +2 avoids double counting dep and arr dates
+    details.netDuration =
+      grossDuration - daysBetween(departure, relevantDate) + 2;
+  } else if (type === "afterDate") {
     // whole stay is within current award period => subtract dep and arr days
-    details.netDuration = grossDuration - 2;
-    details.type = "withinPeriod";
-  }
+    details.netDuration = grossDuration;
+  } else alert("Error: travel type not found, in travelDetails.js");
+  // return object with travel details
   return details;
 }
 // ---------------------

@@ -34,11 +34,18 @@ export const residencyTexts = {
 export const passportTexts = { yes: "Ja", no: "Nei" };
 // Travel
 export const travelTexts = {
-  withinPeriod: (departure, arrival, grossDuration, netDuration) =>
+  // Entire stay is after effectiveDate (within new award period)
+  afterDate: (departure, arrival, grossDuration, netDuration) =>
     `Utenlandsopphold ${departure} - ${arrival}, ${netDuration} dager.`,
-  acrossPeriods: (departure, arrival, grossDuration, netDuration) =>
+  // Departure date is before effectiveDate
+  acrossDate: (departure, arrival, grossDuration, netDuration) =>
     `Utenlandsopphold ${departure} - ${arrival}, 
-  ${grossDuration - 2} dager totalt. ${netDuration} dager i ny periode.`,
+  ${grossDuration} dager totalt. ${netDuration} dager i ny periode.`,
+  // Whole stay is before effecttiveDate (before award period, so not relevant) // ? Refactor? Duplictes code with "acrossDate" above
+  beforeDate: (departure, arrival, grossDuration, netDuration) =>
+    `Utenlandsopphold ${departure} - ${arrival}, 
+  ${grossDuration} dager totalt. ${netDuration} dager i ny periode.`,
+  // Default text when no stays have been registered
   noStaysAbroad: "Ingen utenlandsopphold.",
 };
 // Savings

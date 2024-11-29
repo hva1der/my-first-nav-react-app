@@ -7,7 +7,6 @@ import {
   daysBetween,
   findControlMonths,
   monthlyDiff,
-  travelDetails,
 } from "./dateUtils";
 import { RATES } from "../constants";
 // ------------------------------------------------------------------

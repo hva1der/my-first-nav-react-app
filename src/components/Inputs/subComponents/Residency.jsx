@@ -1,6 +1,8 @@
 //
 // COMPONENT checks right to reside for claimant.
 
+// ! This is a placeholder/not fully implemented
+
 export default function Residency({
   content,
   onChangeContent,
