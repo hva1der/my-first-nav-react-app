@@ -34,6 +34,10 @@ the user is expected to click/activate it to dismiss. */
 .modalContent p {
   margin-top: 1em;
 }
+  /* issue/solution text formatting */
+  .boldSolution {
+    font-weight: bold;
+  }
 
 /* BUTTONS */
   /* close button */

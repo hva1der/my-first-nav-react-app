@@ -21,16 +21,19 @@ const issuesTexts = {
         inputText: "Dummy Solution input text",
         title: "This is a dummy solution.",
         paragraphs: (params) => [
-          `This is for testing. ${params.dummyParam}`,
-          "consider changing to proper placeholder text.",
+          {
+            style: "boldSolution",
+            text: `This is for testing. ${params.dummyParam}`,
+          },
+          { text: "consider changing to proper placeholder text." },
         ],
       },
       dummySolution2: {
         inputText: "Dummy Solution input text 2",
         title: "This is a dummy solution. 2",
         paragraphs: (params) => [
-          "This is for testing. 2",
-          "consider changing to proper placeholder text. 2",
+          { text: "This is for testing. 2" },
+          { text: "consider changing to proper placeholder text. 2" },
         ],
       },
     },
@@ -84,26 +87,36 @@ const issuesTexts = {
         inputText: "Dokumentert",
         title: "Utenlandsoppholdet er dokumentert.",
         paragraphs: (params) => [
-          "Du trenger ikke gjøre noe annet. Husk å lagre.",
+          { text: "Du trenger ikke gjøre noe annet. Husk å lagre." },
         ],
       },
       probable: {
         inputText: "Sannsynliggjort",
         title: "Utenlandsoppholdet er sannsynliggjort.",
         paragraphs: (params) => [
-          "Du trenger ikke gjøre noe annet. Husk å lagre.",
+          { text: "Du trenger ikke gjøre noe annet. Husk å lagre." },
         ],
       },
       fetchDocs: {
         inputText: "Innhent opplysninger",
         title: "Utenlandsoppholdet er ikke dokumentert. Gjør følgende:",
         paragraphs: (params) => [
-          "Opprett fremleggsoppgave i Mappe 2 med frist 1 mnd.",
-          "Send brev til bruker med følgende tekst: ",
-          `Du har opplyst om utenlandsopphold i perioden ${params.formatDeparture} til ${params.formatArrival}. 
+          {
+            style: "boldSolution",
+            text: `Opprett fremleggsoppgave i Mappe 2 med frist 1 mnd.`,
+          },
+          {
+            style: "boldSolution",
+            text: `Send brev til bruker med følgende tekst:`,
+          },
+          {
+            text: `Du har opplyst om utenlandsopphold i perioden ${params.formatDeparture} til ${params.formatArrival}. 
           Dette blir ${params.grossDuration} dager når vi trekker fra ut og innreisedato`,
-          `Vi ber om at du leverer dokumentasjon innen 14 dager. Hvis vi ikke mottar 
+          },
+          {
+            text: `Vi ber om at du leverer dokumentasjon innen 14 dager. Hvis vi ikke mottar 
           dokumentasjon innen fristen vi stønaden opphøre etter §18.`,
+          },
         ],
       },
     },

@@ -1,5 +1,6 @@
 // COMPONENT renders travel issue descriptions and solutions
 
+import styles from "../Tasks.module.css";
 import { useState } from "react";
 import issuesTexts from "../../../texts/issuestexts";
 import { solutionParams } from "../../../utilities/textUtils";
@@ -45,7 +46,10 @@ export default function TaskResolution({ content, selectedIssue }) {
           {solutionTexts[selectedSolution]
             ?.paragraphs(params)
             ?.map((para, index) => (
-              <p key={index}>{para}</p>
+              // Apply a style if the "style" prop exists; otherwise, no styling is applied.
+              <p key={index} className={styles[para?.style]}>
+                {para.text}
+              </p>
             ))}
         </div>
       )}
@@ -54,4 +58,4 @@ export default function TaskResolution({ content, selectedIssue }) {
 }
 
 // ! Remember: The paragraphs will have dates, amounts etc. in them => need to be functions/dynamic render
-// TODO: Add new prop to "paragraphs": isBold:boolean - for formatting of text
+// TODO: Add new prop to "paragraphs": isBold:boolean or className for CSS - for formatting of text
