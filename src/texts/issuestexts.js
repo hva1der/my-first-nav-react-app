@@ -15,14 +15,22 @@ const issuesTexts = {
     longName: "No issues",
     description: "Ingen problemer funnet eller valgt",
     hasSolutions: true,
-    possibleSolutions: ["dummySolution"],
+    possibleSolutions: ["dummySolution", "dummySolution2"],
     solutionTexts: {
       dummySolution: {
         inputText: "Dummy Solution input text",
         title: "This is a dummy solution.",
-        paragraphs: () => [
-          "This is for testing.",
+        paragraphs: (params) => [
+          `This is for testing. ${params.dummyParam}`,
           "consider changing to proper placeholder text.",
+        ],
+      },
+      dummySolution2: {
+        inputText: "Dummy Solution input text 2",
+        title: "This is a dummy solution. 2",
+        paragraphs: (params) => [
+          "This is for testing. 2",
+          "consider changing to proper placeholder text. 2",
         ],
       },
     },
@@ -75,12 +83,16 @@ const issuesTexts = {
       documented: {
         inputText: "Dokumentert",
         title: "Utenlandsoppholdet er dokumentert.",
-        paragraphs: () => ["Du trenger ikke gjøre noe annet. Husk å lagre."],
+        paragraphs: (params) => [
+          "Du trenger ikke gjøre noe annet. Husk å lagre.",
+        ],
       },
       probable: {
         inputText: "Sannsynliggjort",
         title: "Utenlandsoppholdet er sannsynliggjort.",
-        paragraphs: () => ["Du trenger ikke gjøre noe annet. Husk å lagre."],
+        paragraphs: (params) => [
+          "Du trenger ikke gjøre noe annet. Husk å lagre.",
+        ],
       },
       fetchDocs: {
         inputText: "Innhent opplysninger",

@@ -11,6 +11,7 @@ import {
 import { RATES } from "../constants";
 // ------------------------------------------------------------------
 // Array of all issues (used for accessing issues in loops)
+// TODO remember to also update issueTypes below - should refactor to combined/better solution (?)
 export const allIssues = [
   // Income issues
   "excessIncome",
@@ -33,6 +34,32 @@ export const allIssues = [
   "excessFinancialAid",
   "fetchingFinancialAid",
 ];
+// ------------
+// Object of issues with their type - used ex. in textUtils: findIssueType
+export const issueTypes = {
+  // Dummy type / placeholder type
+  dummyIssue: "dummyIssue",
+  // Income type
+  excessIncome: "incomeIssue",
+  lowAward: "incomeIssue",
+  // Residency type
+  noResidency: "residencyIssue",
+  expiredResidency: "residencyIssue",
+  lapsingResidency: "residencyIssue",
+  // Institution type - (Placeholder)
+  institutionAdmittance: "institutionIssue",
+  // Savings type
+  excessSavings: "savingsIssue",
+  // Travel type
+  pastLongStay: "travelIssue",
+  pastShortStay: "travelIssue",
+  plannedLongStay: "travelIssue",
+  plannedShortStay: "travelIssue",
+  willMissControl: "travelIssue",
+  // Financial aid type
+  excessFinancialAid: "financialAidIssue",
+  fetchingFinancialAid: "financialAidIssue",
+};
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
 // -------------

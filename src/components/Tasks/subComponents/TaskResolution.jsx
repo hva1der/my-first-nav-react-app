@@ -12,7 +12,7 @@ export default function TaskResolution({ content, selectedIssue }) {
   );
 
   //* SolutionParams returns data used to dynamically render solutions for the selected issue.
-  const params = solutionParams(content, "travelIssues");
+  const params = solutionParams(content, selectedIssue);
 
   return (
     <div>
