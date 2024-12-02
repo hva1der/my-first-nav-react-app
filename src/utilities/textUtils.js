@@ -20,10 +20,9 @@ export function solutionParams(content, issue = "dummyIssue") {
       params = { dummyParam: "***test dummy param***" };
       break;
     case "travelIssue":
-      //* Solution texts for travel issues require departure and arrival dates
-      //* formatted as  "dd.mm.yyyy", along with duration in days without dep and arr dates (-2)
+      // Solution texts for travel issues require departure and arrival dates
+      // formatted as  "dd.mm.yyyy", along with duration in days without dep and arr dates (-2)
       //! Placeholder: currently only implemented to work with the first registered stay - expect errors
-      console.log("travel issue selected"); // TESTING
       const stay = content.staysAbroad?.[0] || {
         departure: new Date(),
         arrival: new Date(),

@@ -1,3 +1,5 @@
+
+/* CSS covering whole Component */
 .inputsField {
     border-right: 1px solid grey;
     flex: 1;    
@@ -20,4 +22,22 @@
 /* Denotes input fields with issues that are terminal to the application */
 .terminalIssue {
     background-color: red;
+}
+
+/* Form selector buttons row */
+.selectFormBtnsRow {
+    border: 2px, solid, black;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.selectFormBtnsRow button {
+    border-radius: 4px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    
+    margin-right: 1em;
 }

@@ -11,6 +11,7 @@ import Institutions from "./subComponents/Institutions";
 import Passports from "./subComponents/Passports";
 import Travel from "./subComponents/Travel";
 import FinancialAid from "./subComponents/FinancialAid";
+import { inputLabels } from "../../texts/inputTexts";
 
 export default function Inputs({ onChangeContent, content }) {
   const issues = { ...content.issues } || {};
@@ -25,9 +26,30 @@ export default function Inputs({ onChangeContent, content }) {
     }
   }
 
+  // Function handle select form type
+  function handleFormSelect(e) {
+    onChangeContent({ formType: e.target.value });
+  }
+
   return (
     <div className={styles.inputsField}>
       <form>
+        {/* Form type selectors. In a div for rendering as a row of buttons */}
+        <div className={styles.selectFormBtnsRow}>
+          <button
+            type="button"
+            value="firstTimeApply"
+            onClick={handleFormSelect}
+          >
+            {inputLabels.selectFormBtns.firstTimeApply}
+          </button>
+          <button type="button" value="newPeriod" onClick={handleFormSelect}>
+            {inputLabels.selectFormBtns.newPeriod}
+          </button>
+          <button type="button" value="control" onClick={handleFormSelect}>
+            {inputLabels.selectFormBtns.control}
+          </button>
+        </div>
         {/* INPUT application date */}
         <label>
           Søknadsdato:
