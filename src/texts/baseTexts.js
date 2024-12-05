@@ -1,5 +1,9 @@
 // Texts that are shared between all types of letters (Refusal, Allowance etc.)
 
+export const baseHeaders = {
+  importantHeader: { style: `capsHeader`, text: `VIKTIG` },
+};
+
 export const baseTexts = {
   // Complaints guidance
   complaints: {

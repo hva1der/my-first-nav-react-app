@@ -25,3 +25,7 @@
 ## Issues not (currently) causing errors
 
 - Input for Savings taken as string - could be handled better?
+
+## Future improvements
+
+- Explore better/more reliable/neater ways of storing and manipulating text. Such as JSON, and/or libraries, such as Moustache

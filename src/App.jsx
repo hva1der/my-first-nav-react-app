@@ -8,9 +8,11 @@ import { checkForInputIssues, terminalIssues } from "./utilities/issuesUtils";
 
 export default function App() {
   const [content, setContent] = useState({
+    // initial values enables using the app for basic calculations, without having to fill in these (otherwise mandatory) details
     applicationDate: new Date(),
     effectiveDate: new Date(),
     rate: "EV",
+    formType: "firstApplication",
   });
 
   // Function updates content, and optionally checks for application issues

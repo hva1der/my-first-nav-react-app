@@ -6,7 +6,6 @@ import Residency from "./subComponents/Residency";
 import Savings from "./subComponents/Savings";
 import Tasks from "../Tasks/Tasks";
 import { checkForInputIssues } from "../../utilities/issuesUtils";
-import { useEffect } from "react";
 import Institutions from "./subComponents/Institutions";
 import Passports from "./subComponents/Passports";
 import Travel from "./subComponents/Travel";
@@ -16,6 +15,7 @@ import { inputLabels } from "../../texts/inputTexts";
 export default function Inputs({ onChangeContent, content }) {
   const issues = { ...content.issues } || {};
   // Function to update content.issues - used at each user input
+  //? Is this outdated/no longer used?
   function onUpdateIssues(testFunction) {
     // check for issue updates: returns -falsy- or a new/updated issue object in format {issueName: {active, terminal, resolution}}
     const issueUpdate = checkForInputIssues(content, testFunction);
@@ -36,9 +36,10 @@ export default function Inputs({ onChangeContent, content }) {
       <form>
         {/* Form type selectors. In a div for rendering as a row of buttons */}
         <div className={styles.selectFormBtnsRow}>
+          {/* 3 options for form: first time applicants, new period, and control */}
           <button
             type="button"
-            value="firstTimeApply"
+            value="firstApplication"
             onClick={handleFormSelect}
           >
             {inputLabels.selectFormBtns.firstTimeApply}

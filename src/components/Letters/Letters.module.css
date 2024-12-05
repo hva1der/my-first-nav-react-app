@@ -1,5 +1,17 @@
 
+/* Font to match InfoTrygd - for accurate representation of letters */
 /* NOTE: Confirm that monospace is the font/compatible with Infotrygd */
 .letterGlobal {
     font-family: monospace;
 }
+
+/* Paragraphs formatting */
+    /* capitalised headers with no spacing to the next paragraph below */
+    .capsHeader {
+        margin-bottom: 0;
+    }
+
+    /* top paragraph under header has no spacing above */
+    .firstPara {
+        margin-top: 0;
+    }

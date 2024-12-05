@@ -1,4 +1,4 @@
-// COMPONENT renders travel issue descriptions and solutions
+// COMPONENT renders issue descriptions and solutions
 
 import styles from "../Tasks.module.css";
 import { useState } from "react";
