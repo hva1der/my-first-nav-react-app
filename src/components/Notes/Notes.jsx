@@ -17,6 +17,7 @@ export default function Notes({ content }) {
   const {
     applicationDate,
     effectiveDate,
+    rate,
     institution,
     residency,
     validPassport,
@@ -41,8 +42,12 @@ export default function Notes({ content }) {
       {content.attendance === "Nei" && <p>{content.noAttGrounds}</p>}
       {/* Benefit rate */}
       <p>
-        Sats: <b>{content.rate}</b>
+        Sats: <b>{rate}</b>
       </p>
+      {/* Registered address (reminder for caseworker to add this to final note before saving) */}
+      {rate === "EV" && <p>***Lim inn adressesøk i behandle sak oppgave***</p>}
+      {rate === "EN" && <p>***Lim inn kopi av adressesøk her***</p>}
+      {/* Date of last address change */}
       {/* Stays at institutions */}
       <p>
         Institusjonsopphold: <b>{institutionTexts[institution] || ""}</b>

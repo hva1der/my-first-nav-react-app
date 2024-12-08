@@ -26,7 +26,7 @@ export const allowanceTexts = {
   introHighlights: {
     // First time applicants get a longer version with additional info
     firstApplication: [
-      { style: "capsHeader", text: "VIKTIG" },
+      { ...importantHeader },
       {
         style: "firstPara",
         text: `Vi ber deg om å lese veiledningen... Lorem Ipsum is simply dummy text of
@@ -49,7 +49,7 @@ export const allowanceTexts = {
     ],
     // repeat applicants get shorter version with additional header
     newPeriod: [
-      { style: "capsHeader", text: "VIKTIG" },
+      { ...importantHeader },
       {
         style: "firstPara",
         text: `Vi ber deg om å lese veiledningen... Lorem Ipsum is simply dummy text of
@@ -72,6 +72,9 @@ export const allowanceTexts = {
   // -------------------------
   // SECTION texts detailing what claimant must do in cases of late applications causing potential clashes with control meetings
   // TODO: Convert current component form (ControlClashText.jsx) to new objec form
+  controlClashes: {
+    applyAgain: [{ style: `capsHeader`, text: `` }],
+  },
   // -------------------------
   // SECTION detailing deductions (if any) due to Financial Aid
   // TODO: Convert current component form (FinancialAidDeductions.jsx) to new object form

@@ -1,5 +1,5 @@
 import styles from "./Letters.module.css";
-import { formatLetterDates } from "../../utilities/dateUtils";
+import { controlClash, formatLetterDates } from "../../utilities/dateUtils";
 import ControlClashText from "./subComponents/ControlClashText";
 import IncomesText from "./subComponents/IncomesText";
 import {
@@ -11,7 +11,8 @@ import FinancialAidDeductions from "./subComponents/FinancialAidDeductions";
 export default function Allowance({ content }) {
   // currently set to format dates as dd.mm.yyyy
   const letterDates = formatLetterDates(content);
-  const { rate, formType } = content;
+  const { effectiveDate, rate, formType } = content;
+  const clash = controlClash(effectiveDate);
 
   return (
     <div className={styles.letterGlobal}>
@@ -27,7 +28,7 @@ export default function Allowance({ content }) {
 
       {/* Instructions to handle control attendance when backdating applications */}
       <ControlClashText
-        effectiveDate={content.effectiveDate}
+        effectiveDate={effectiveDate}
         attendance={content.controlClashAttendance}
       />
       {/* Deductions for financial aid (if applicable) */}

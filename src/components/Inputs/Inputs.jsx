@@ -11,9 +11,11 @@ import Passports from "./subComponents/Passports";
 import Travel from "./subComponents/Travel";
 import FinancialAid from "./subComponents/FinancialAid";
 import { inputLabels } from "../../texts/inputTexts";
+import FirstResidency from "./subComponents/FirstResidency";
 
 export default function Inputs({ onChangeContent, content }) {
   const issues = { ...content.issues } || {};
+  const { formType } = content;
   // Function to update content.issues - used at each user input
   //? Is this outdated/no longer used?
   function onUpdateIssues(testFunction) {
@@ -117,9 +119,26 @@ export default function Inputs({ onChangeContent, content }) {
           ></input>{" "}
           EN
         </label>
+        {/* Date of last adress change */}
+        {formType !== "control" && (
+          <label>
+            Siste adresseendring:
+            <input
+              type="date"
+              id="addressChange"
+              onChange={(e) => {
+                onChangeContent({ addressChange: new Date(e.target.value) });
+              }}
+            />
+          </label>
+        )}
         {/* Institution admittance */}
         <Institutions content={content} onChangeContent={onChangeContent} />
-        {/* Right to Reside */}
+        {/* Original right to reside - only for first time applications */}
+        {formType === "firstApplication" && (
+          <FirstResidency content={content} onChangeContent={onChangeContent} />
+        )}
+        {/* Current right to Reside */}
         <Residency
           content={content}
           onChangeContent={onChangeContent}
