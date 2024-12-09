@@ -16,6 +16,7 @@ import ApplicationDate from "./subComponents/ApplicationDate";
 import EffectiveDate from "./subComponents/EffectiveDate";
 import Rates from "./subComponents/Rates";
 import AddressChange from "./subComponents/AddressChange";
+import ControlDates from "./subComponents/ControlDates";
 
 export default function Inputs({ onChangeContent, content }) {
   const issues = { ...content.issues } || {};
@@ -33,48 +34,48 @@ export default function Inputs({ onChangeContent, content }) {
 
   return (
     <div className={styles.inputsField}>
-      <form>
-        {/* Select form type: First time application, new period or control forms */}
-        <FormSelector onChangeContent={onChangeContent} />
-        {/* INPUT application date */}
-        <ApplicationDate onChangeContent={onChangeContent} />
-        {/* INPUT start date of award period */}
-        <EffectiveDate content={content} onChangeContent={onChangeContent} />
-        {/* INPUT confirm attendance at application */}
-        <ApplicationAttendance
-          content={content}
-          onChangeContent={onChangeContent}
-        />
-        {/* Radio to select benefit rate */}
-        <Rates content={content} onChangeContent={onChangeContent} />
-        {/* Date of last adress change */}
-        <AddressChange content={content} onChangeContent={onChangeContent} />
-        {/* Institution admittance */}
-        <Institutions content={content} onChangeContent={onChangeContent} />
-        {/* Original right to reside - only for first time applications */}
-        <FirstResidency content={content} onChangeContent={onChangeContent} />
-        {/* Current right to Reside */}
-        <Residency
-          content={content}
-          onChangeContent={onChangeContent}
-          onUpdateIssues={onUpdateIssues}
-        />
-        {/* Travel documents PLACEHOLDER */}
-        <Passports content={content} onChangeContent={onChangeContent} />
+      {/* Select form type: First time application, new period or control forms */}
+      <FormSelector onChangeContent={onChangeContent} />
+      {/* INPUT application date (if formType is an application) */}
+      <ApplicationDate content={content} onChangeContent={onChangeContent} />
+      {/* INPUT start date of award period */}
+      <EffectiveDate content={content} onChangeContent={onChangeContent} />
+      {/* INPUT dates relevant for control forms (renders only for formType: control) */}
+      <ControlDates content={content} onChangeContent={onChangeContent} />
+      {/* INPUT confirm attendance at application */}
+      <ApplicationAttendance
+        content={content}
+        onChangeContent={onChangeContent}
+      />
+      {/* Radio to select benefit rate */}
+      <Rates content={content} onChangeContent={onChangeContent} />
+      {/* Date of last adress change */}
+      <AddressChange content={content} onChangeContent={onChangeContent} />
+      {/* Institution admittance */}
+      <Institutions content={content} onChangeContent={onChangeContent} />
+      {/* Original right to reside - only for first time applications */}
+      <FirstResidency content={content} onChangeContent={onChangeContent} />
+      {/* Current right to Reside */}
+      <Residency
+        content={content}
+        onChangeContent={onChangeContent}
+        onUpdateIssues={onUpdateIssues}
+      />
+      {/* Travel documents PLACEHOLDER */}
+      <Passports content={content} onChangeContent={onChangeContent} />
 
-        {/* Travel PLACEHOLDER */}
-        <Travel content={content} onChangeContent={onChangeContent} />
+      {/* Travel PLACEHOLDER */}
+      <Travel content={content} onChangeContent={onChangeContent} />
 
-        {/* INPUT Incomes COMPONENT */}
-        <Incomes
-          oldIncomes={content.incomes}
-          onChangeContent={onChangeContent}
-          onUpdateIssues={onUpdateIssues}
-        />
+      {/* INPUT Incomes COMPONENT */}
+      <Incomes
+        oldIncomes={content.incomes}
+        onChangeContent={onChangeContent}
+        onUpdateIssues={onUpdateIssues}
+      />
 
-        {/* Savings */}
-        <Savings content={content} onChangeContent={onChangeContent} />
-      </form>
+      {/* Savings */}
+      <Savings content={content} onChangeContent={onChangeContent} />
 
       {/* Financial aid PLACEHOLDER */}
       <FinancialAid content={content} onChangeContent={onChangeContent} />

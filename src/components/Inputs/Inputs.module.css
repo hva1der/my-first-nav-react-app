@@ -2,22 +2,29 @@
 /* CSS covering whole Component */
 .inputsField {
     border-right: 1px solid grey;
-    flex: 1;    
+    flex: 1;
     height: 100vh;
 }
 
-.inputsField form {
-    display: flex;
-    flex-direction: column;
-}
+    .inputsField form {
+        display: flex;
+        flex-direction: column;
+    }
 
-.inputsField label {
-    margin-bottom: 10px;  
-}
+    .inputsField label {
+        margin-bottom: 10px;  
+    }
 
-.inputsField input {
-    margin-left: 5px;
-}
+    .inputsField input {
+        margin-left: 5px;
+    }
+
+    /* styling for separate sections of inputs within the main field */
+    .inputSection {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
 
 /* Denotes input fields with issues that are terminal to the application */
 .terminalIssue {
