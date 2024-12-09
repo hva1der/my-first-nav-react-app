@@ -1,4 +1,3 @@
-import { controlClash } from "../../utilities/dateUtils";
 import styles from "./Inputs.module.css";
 import ApplicationAttendance from "./subComponents/ApplicationAttendance";
 import Incomes from "./subComponents/Incomes";
@@ -12,10 +11,14 @@ import Travel from "./subComponents/Travel";
 import FinancialAid from "./subComponents/FinancialAid";
 import { inputLabels } from "../../texts/inputTexts";
 import FirstResidency from "./subComponents/FirstResidency";
+import FormSelector from "./subComponents/FormSelector";
+import ApplicationDate from "./subComponents/ApplicationDate";
+import EffectiveDate from "./subComponents/EffectiveDate";
+import Rates from "./subComponents/Rates";
+import AddressChange from "./subComponents/AddressChange";
 
 export default function Inputs({ onChangeContent, content }) {
   const issues = { ...content.issues } || {};
-  const { formType } = content;
   // Function to update content.issues - used at each user input
   //? Is this outdated/no longer used?
   function onUpdateIssues(testFunction) {
@@ -28,116 +31,28 @@ export default function Inputs({ onChangeContent, content }) {
     }
   }
 
-  // Function handle select form type
-  function handleFormSelect(e) {
-    onChangeContent({ formType: e.target.value });
-  }
-
   return (
     <div className={styles.inputsField}>
       <form>
-        {/* Form type selectors. In a div for rendering as a row of buttons */}
-        <div className={styles.selectFormBtnsRow}>
-          {/* 3 options for form: first time applicants, new period, and control */}
-          <button
-            type="button"
-            value="firstApplication"
-            onClick={handleFormSelect}
-          >
-            {inputLabels.selectFormBtns.firstTimeApply}
-          </button>
-          <button type="button" value="newPeriod" onClick={handleFormSelect}>
-            {inputLabels.selectFormBtns.newPeriod}
-          </button>
-          <button type="button" value="control" onClick={handleFormSelect}>
-            {inputLabels.selectFormBtns.control}
-          </button>
-        </div>
+        {/* Select form type: First time application, new period or control forms */}
+        <FormSelector onChangeContent={onChangeContent} />
         {/* INPUT application date */}
-        <label>
-          Søknadsdato:
-          <input
-            type="date"
-            id="applicationDate"
-            onChange={(e) => {
-              onChangeContent({ applicationDate: new Date(e.target.value) });
-            }}
-          />
-        </label>
+        <ApplicationDate onChangeContent={onChangeContent} />
         {/* INPUT start date of award period */}
-        <label>
-          Virkningstidspunkt:
-          <input
-            type="date"
-            id="effectiveDate"
-            onChange={(e) => {
-              onChangeContent({ effectiveDate: new Date(e.target.value) });
-            }}
-          />
-          {/* IF controlClash -> adds button to ask IF user has to attend for control */}
-          {controlClash(content.effectiveDate).clash === "controlClash" && (
-            <button
-              type="button"
-              onClick={() => {
-                onChangeContent({
-                  controlClashAttendance: !content.controlClashAttendance,
-                });
-              }}
-            >
-              {content.controlClashAttendance
-                ? "Må møte til samtale"
-                : "Må ikke møte"}
-            </button>
-          )}
-        </label>
-
+        <EffectiveDate content={content} onChangeContent={onChangeContent} />
         {/* INPUT confirm attendance at application */}
         <ApplicationAttendance
           content={content}
           onChangeContent={onChangeContent}
         />
         {/* Radio to select benefit rate */}
-        <label>
-          <input
-            type="radio"
-            name="rateSelector"
-            value="EV"
-            onChange={(e) => {
-              onChangeContent({ rate: e.target.value }, "checkIncomes");
-            }}
-          ></input>{" "}
-          EV
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="rateSelector"
-            value="EN"
-            onChange={(e) => {
-              onChangeContent({ rate: e.target.value }, "checkIncomes");
-            }}
-          ></input>{" "}
-          EN
-        </label>
+        <Rates content={content} onChangeContent={onChangeContent} />
         {/* Date of last adress change */}
-        {formType !== "control" && (
-          <label>
-            Siste adresseendring:
-            <input
-              type="date"
-              id="addressChange"
-              onChange={(e) => {
-                onChangeContent({ addressChange: new Date(e.target.value) });
-              }}
-            />
-          </label>
-        )}
+        <AddressChange content={content} onChangeContent={onChangeContent} />
         {/* Institution admittance */}
         <Institutions content={content} onChangeContent={onChangeContent} />
         {/* Original right to reside - only for first time applications */}
-        {formType === "firstApplication" && (
-          <FirstResidency content={content} onChangeContent={onChangeContent} />
-        )}
+        <FirstResidency content={content} onChangeContent={onChangeContent} />
         {/* Current right to Reside */}
         <Residency
           content={content}
