@@ -2,7 +2,7 @@
 
 import {
   addMonths,
-  defaultDateFormat,
+  formatDates,
   monthlyDiff,
 } from "../../../utilities/dateUtils";
 
@@ -13,7 +13,7 @@ export default function FinancialAidDeductions({ content }) {
     currency: "NOK",
   });
   const { issues, effectiveDate, financialAidAmount } = content;
-  const formattedEffDate = defaultDateFormat(effectiveDate);
+  const formattedEffDate = formatDates(effectiveDate);
   const today = new Date();
   const thisMonthEnd = new Date(
     today.getFullYear(),
@@ -21,8 +21,8 @@ export default function FinancialAidDeductions({ content }) {
     0 // zero makes it last day of previous month
   );
   const nextMonth = addMonths(today, 1);
-  const formattedThisMonthEnd = defaultDateFormat(thisMonthEnd);
-  const formattedNextMonth = defaultDateFormat(nextMonth);
+  const formattedThisMonthEnd = formatDates(thisMonthEnd);
+  const formattedNextMonth = formatDates(nextMonth);
   const formattedFAidamount = formatter.format(financialAidAmount);
   const formattedAvgAid = formatter.format(
     financialAidAmount / monthlyDiff(effectiveDate)

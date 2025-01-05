@@ -11,10 +11,12 @@ import {
 } from "../../texts/notesTexts";
 import FinancialAidNotes from "./subComponents/FinancialAidNotes";
 import TravelNotes from "./subComponents/TravelNotes";
+import KeyDatesNotes from "./subComponents/KeyDatesNotes";
 
 export default function Notes({ content }) {
   // contents destructured for accessing texts
   const {
+    formType,
     applicationDate,
     effectiveDate,
     rate,
@@ -27,14 +29,8 @@ export default function Notes({ content }) {
 
   return (
     <div className={styles.notesText}>
-      {/* Application date */}
-      <p>
-        Søknadsdato: <b>{formatDates(applicationDate).join(".")}</b>
-      </p>
-      {/* Effective date */}
-      <p>
-        Virkningstidspunkt: <b>{formatDates(effectiveDate).join(".")}</b>
-      </p>
+      {/* Key dates: application date, effective date, and control dates */}
+      <KeyDatesNotes content={content} />
       {/* Personal attendance at application */}
       <p>
         Personlig fremmøte: <b>{content.attendance}</b>

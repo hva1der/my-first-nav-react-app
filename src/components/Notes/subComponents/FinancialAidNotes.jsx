@@ -1,11 +1,11 @@
 // COMPONENT handles rendering of financialAid notes
 
-import { defaultDateFormat, monthlyDiff } from "../../../utilities/dateUtils";
+import { formatDates, monthlyDiff } from "../../../utilities/dateUtils";
 import { financialAidTexts } from "../../../texts/notesTexts";
 
 export default function FinancialAidNotes({ content }) {
   const { effectiveDate, financialAid, financialAidAmount, issues } = content;
-  const formattedEffDate = defaultDateFormat(effectiveDate);
+  const formattedEffDate = formatDates(effectiveDate);
   const monthsOfBackdating = monthlyDiff(effectiveDate);
   const averageFinancialAid = financialAidAmount / monthsOfBackdating;
   if (monthsOfBackdating <= 1) {

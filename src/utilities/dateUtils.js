@@ -22,28 +22,34 @@ const months = [
 //-----------------------------------------------------------------------------
 // FUNCTIONS
 // ----------------------------------------------------------------------------
-// # Internal functions #
-//--------------------------
-// Function to convert JS Dates to display format dd.mm.yyyy - takes a JS Date string and returns an array ["dd", "mm", yyyy]
-// NB: also exported!
-export function formatDates(date) {
-  // ensure format of date is JS Date
-  const ensureDate = new Date(date);
-  // "pad" dates so the appear in format 01.01.2024, rather than 1.1.2024
-  const padZero = (date) => date.toString().padStart(2, "0");
+// # Internal functions (used in latter functions, but often also exported) #
+// -------------------------
+// Function "pads" dates, adding zeros, so they appear in format 01.01.2024, rather than 1.1.2024
+const padZero = (date) => date.toString().padStart(2, "0");
 
-  return [
-    padZero(ensureDate.getDate()),
-    padZero(ensureDate.getMonth() + 1),
-    ensureDate.getFullYear(),
-  ];
+// ---------------------
+// Function converts JS Dates to either format "dd.mm.yyyy" or "ddmmyy" (the former is used primarily in notes, and the latter in letters)
+export function formatDates(date, outputFormat = "dd.mm.yyyy") {
+  // enable input dates in multiple formats, ex: htmlDate, by converting to jsDate
+  const jsDate = new Date(date);
+
+  if (isNaN(jsDate.getTime())) {
+    // date entry is invalid, or not yet inputted by user
+    return outputFormat; // as a placeholder for the actual date
+  }
+
+  const day = padZero(jsDate.getDate());
+  const month = padZero(jsDate.getMonth() + 1); // + 1 because months are 0-indexed
+  const longYear = jsDate.getFullYear();
+  const shortYear = longYear.toString().slice(-2); // last 2 digits of year
+
+  if (outputFormat === "dd.mm.yyyy" || outputFormat === "notesDate") {
+    return `${day}.${month}.${longYear}`;
+  } else if (outputFormat === "ddmmyy" || outputFormat === "letterDate") {
+    return `${day}.${month}.${shortYear}`;
+  }
 }
-// -------------
-// Function related to formatDates above. returns date in format dd.mm.yyyy
-export function defaultDateFormat(date) {
-  const formattedDate = formatDates(date);
-  return formattedDate.join(".");
-}
+
 // -------------------------
 // Function to increase a date by X months. Defaults  to 1st day of month, but can set day to 0 to get last day of previous month
 // ref: https://www.w3resource.com/javascript-exercises/javascript-date-exercise-9.php
@@ -90,8 +96,8 @@ export function travelType(departure, arrival, relevantDate) {
 // Returns a travel details object: { departure: "formatted date", arrival, grossDuration, netDuration };
 // Issue: Not covering travel dates into future award period - relevant for SU FI
 export function travelDetails(departure, arrival, relevantDate) {
-  const formatDeparture = defaultDateFormat(departure);
-  const formatArrival = defaultDateFormat(arrival);
+  const formatDeparture = formatDates(departure);
+  const formatArrival = formatDates(arrival);
   const grossDuration = daysBetween(departure, arrival) - 2; // -2 to exclude dep and arr dates.
   let type = travelType(departure, arrival, relevantDate);
   const details = { type, formatDeparture, formatArrival, grossDuration };
@@ -111,15 +117,15 @@ export function travelDetails(departure, arrival, relevantDate) {
 }
 // ---------------------
 // FUNCTION to determine 12 month award period
-// returns 2 array objects: periodStart: ["dd", "mm", yyyy] and periodEnd: ["dd", "mm", yyyy]
+// returns 2 string objects: periodStart and End, in format "dd.mm.yyyy"
 export function awardPeriod(startOfPeriod) {
   // convert HTML date format to JS Date format
   const startDate = new Date(startOfPeriod);
   // Calculate the end date by adding 11 months and setting the date to the last day of that month
   const endDate = addMonths(startDate, 11, 0);
 
-  const periodStart = formatDates(startDate);
-  const periodEnd = formatDates(endDate);
+  const periodStart = formatDates(startDate, "letterDate");
+  const periodEnd = formatDates(endDate, "letterDate");
 
   // return arrays for easy conversion to display in other formats, ex: periodEnd.join("") for ddmmyyyy
   return { periodStart, periodEnd };
@@ -142,9 +148,9 @@ export function canApplyAgain(startOfPeriod) {
 // *DATE FORMAT: set to dd.mm.yyyy
 export function formatLetterDates(content) {
   const { applicationDate, effectiveDate } = content;
-  const formattedAppDate = formatDates(applicationDate).join(".");
-  const formattedStartDate = awardPeriod(effectiveDate).periodStart.join(".");
-  const formattedEndDate = awardPeriod(effectiveDate).periodEnd.join(".");
+  const formattedAppDate = formatDates(applicationDate);
+  const formattedStartDate = awardPeriod(effectiveDate).periodStart;
+  const formattedEndDate = awardPeriod(effectiveDate).periodEnd;
   const { newApplicationMonth, newApplicationYear } =
     canApplyAgain(effectiveDate);
 

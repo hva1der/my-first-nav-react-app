@@ -28,6 +28,7 @@ export default function FirstResidency({ content, onChangeContent }) {
             <option value={"noFamilyReunion"}>IKKE familegjenforening</option>
             <option value={"familyReunion"}>Familiegjenforening</option>
             <option value={"EEA"}>EØS</option>
+            <option value={"nordic"}>Nordisk statsborger</option>
           </select>
         </label>
         {firstResidency === "EEA" && (
