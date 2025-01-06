@@ -19,11 +19,21 @@
         margin-left: 5px;
     }
 
+    .inputsField ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
     /* styling for separate sections of inputs within the main field */
     .inputSection {
         display: flex;
         flex-direction: column;
         gap: 5px;
+    }
+    
+    /* stlying for single input lines - such as simple radios ! TEMPORARY/PLACEHOLDER FOR MORE ELEGANT SOLUTION */
+    .inputLine {
+        margin-top: 0.8vh;
     }
 
 /* Denotes input fields with issues that are terminal to the application */

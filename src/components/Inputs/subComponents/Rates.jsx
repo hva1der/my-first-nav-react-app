@@ -1,12 +1,12 @@
 // COMPONENT: radio input to select benefit rate
 
+import styles from "../Inputs.module.css";
+
 export default function Rates({ content, onChangeContent }) {
   return (
-    <div>
-      <p>
-        <b>Sats</b>
-      </p>
+    <div className={styles.inputLine}>
       <label>
+        Sats:
         <input
           type="radio"
           name="rateSelector"

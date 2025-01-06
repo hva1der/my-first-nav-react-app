@@ -1,6 +1,8 @@
 //
 // COMPONENT checks right to reside for claimant.
 
+import styles from "../Inputs.module.css";
+
 // ! This is a placeholder/not fully implemented
 
 export default function Residency({
@@ -12,8 +14,7 @@ export default function Residency({
 
   if (formType !== "control") {
     return (
-      <div>
-        <h4>Lovlig opphold</h4>
+      <div className={styles.inputLine}>
         <label>
           Lovlig opphold:
           <select

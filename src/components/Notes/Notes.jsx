@@ -49,9 +49,11 @@ export default function Notes({ content }) {
       )}
       {/* Date of last address change */}
       {/* Stays at institutions */}
-      <p>
-        Institusjonsopphold: <b>{institutionTexts[institution] || ""}</b>
-      </p>
+      {formType !== "control" && (
+        <p>
+          Institusjonsopphold: <b>{institutionTexts[institution] || ""}</b>
+        </p>
+      )}
 
       {/* Right to reside */}
       {formType !== "control" && (

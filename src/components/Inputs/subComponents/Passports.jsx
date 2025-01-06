@@ -1,27 +1,29 @@
 // COMPONENT checks for valid passport(s)
 // *PLACEHOLDER*
 
+import styles from "../Inputs.module.css";
+
 export default function Passports({ content, onChangeContent }) {
   return (
-    <div>
-      <h4>Gyldig pass</h4>
+    <div className={styles.inputLine}>
       <label>
-        Ja
+        Gyldig pass:
         <input
           type="radio"
           name="passportRadio"
           value={"yes"}
           onChange={(e) => onChangeContent({ validPassport: e.target.value })}
         />
+        Ja
       </label>
       <label>
-        Nei
         <input
           type="radio"
           name="passportRadio"
           value={"no"}
           onChange={(e) => onChangeContent({ validPassport: e.target.value })}
         />
+        Nei
       </label>
     </div>
   );

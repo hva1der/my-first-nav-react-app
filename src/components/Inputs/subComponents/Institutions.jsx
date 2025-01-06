@@ -1,39 +1,45 @@
 // COMPONENT registers claimant stays at institution
 
-// PROBLEM: No checker function
+import styles from "../Inputs.module.css";
+
+//! PROBLEM: No checker function
 
 export default function Institutions({ content, onChangeContent }) {
-  return (
-    <div>
-      <h4>Institusjonsopphold</h4>
-      <label>
-        Ja
-        <input
-          type="radio"
-          name="institutionRadio"
-          value={"yes"}
-          onChange={(e) =>
-            onChangeContent(
-              { institution: e.target.value },
-              "checkInstitutions"
-            )
-          }
-        />
-      </label>
-      <label>
-        Nei
-        <input
-          type="radio"
-          name="institutionRadio"
-          value={"no"}
-          onChange={(e) =>
-            onChangeContent(
-              { institution: e.target.value },
-              "checkInstitutions"
-            )
-          }
-        />
-      </label>
-    </div>
-  );
+  const { formType } = content;
+
+  if (formType !== "control") {
+    return (
+      <div className={styles.inputLine}>
+        <label>
+          Institusjonsopphold:
+          <input
+            type="radio"
+            name="institutionRadio"
+            value={"yes"}
+            onChange={(e) =>
+              onChangeContent(
+                { institution: e.target.value },
+                "checkInstitutions"
+              )
+            }
+          />
+          Ja
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="institutionRadio"
+            value={"no"}
+            onChange={(e) =>
+              onChangeContent(
+                { institution: e.target.value },
+                "checkInstitutions"
+              )
+            }
+          />
+          Nei
+        </label>
+      </div>
+    );
+  }
 }

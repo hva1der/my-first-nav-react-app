@@ -1,6 +1,7 @@
 // COMPONENT input dropdown menu to select claimants first right to reside in Norway
 
 import { useState } from "react";
+import styles from "../Inputs.module.css";
 
 export default function FirstResidency({ content, onChangeContent }) {
   const { formType, firstResidency } = content;
@@ -14,7 +15,7 @@ export default function FirstResidency({ content, onChangeContent }) {
 
   if (formType === "firstApplication") {
     return (
-      <div>
+      <div className={styles.inputLine}>
         <label>
           Første oppholdstillatelse:
           <select
