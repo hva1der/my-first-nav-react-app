@@ -41,8 +41,12 @@ export default function Notes({ content }) {
         Sats: <b>{rate}</b>
       </p>
       {/* Registered address (reminder for caseworker to add this to final note before saving) */}
-      {rate === "EV" && <p>***Lim inn adressesøk i behandle sak oppgave***</p>}
-      {rate === "EN" && <p>***Lim inn kopi av adressesøk her***</p>}
+      {formType !== "control" && rate === "EV" && (
+        <p>***Lim inn adressesøk i behandle sak oppgave***</p>
+      )}
+      {formType !== "control" && rate === "EN" && (
+        <p>***Lim inn kopi av adressesøk her***</p>
+      )}
       {/* Date of last address change */}
       {/* Stays at institutions */}
       <p>
@@ -61,7 +65,7 @@ export default function Notes({ content }) {
       {/* Travel */}
       <h4>Utenlandsopphold</h4>
       <TravelNotes content={content} />
-      {/* Savings */}
+      {/* Savings - PLACEHOLDER functionality */}
       <p>Formue: {(+content.savings || 0) + (+content.partnerSavings || 0)}</p>
 
       {/* Incomes */}

@@ -9,7 +9,7 @@ export default function FinancialAidNotes({ content }) {
   const monthsOfBackdating = monthlyDiff(effectiveDate);
   const averageFinancialAid = financialAidAmount / monthsOfBackdating;
   if (monthsOfBackdating <= 1) {
-    // No backdating, can't make deductions for FA
+    // No backdating, can't make deductions for financial aid
     return <p>{financialAidTexts.noBackdate}</p>;
   }
   if (financialAid) {

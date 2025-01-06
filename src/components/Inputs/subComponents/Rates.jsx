@@ -3,6 +3,9 @@
 export default function Rates({ content, onChangeContent }) {
   return (
     <div>
+      <p>
+        <b>Sats</b>
+      </p>
       <label>
         <input
           type="radio"

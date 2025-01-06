@@ -34,8 +34,8 @@ export function formatDates(date, outputFormat = "dd.mm.yyyy") {
   const jsDate = new Date(date);
 
   if (isNaN(jsDate.getTime())) {
-    // date entry is invalid, or not yet inputted by user
-    return outputFormat; // as a placeholder for the actual date
+    // date entry is invalid, or not yet defined (by user)
+    return undefined;
   }
 
   const day = padZero(jsDate.getDate());
@@ -46,14 +46,25 @@ export function formatDates(date, outputFormat = "dd.mm.yyyy") {
   if (outputFormat === "dd.mm.yyyy" || outputFormat === "notesDate") {
     return `${day}.${month}.${longYear}`;
   } else if (outputFormat === "ddmmyy" || outputFormat === "letterDate") {
-    return `${day}.${month}.${shortYear}`;
+    return `${day}${month}${shortYear}`;
   }
+}
+// -------------------------
+// Function prints dates as formatted by formatDates(), or prints the intended date format (i.e. if the date is invalid or not yet defined)
+export function printDate(date, outputFormat) {
+  const formattedDate = formatDates(date, outputFormat);
+  if (!formattedDate) {
+    // missing (valid) date, render placeholder
+    return outputFormat;
+  } else return formattedDate;
 }
 
 // -------------------------
+// ? Should this function should be refactored to make clearer (ex: change "day" param using 0 and 1, to use "first" and "lastDay")?
 // Function to increase a date by X months. Defaults  to 1st day of month, but can set day to 0 to get last day of previous month
 // ref: https://www.w3resource.com/javascript-exercises/javascript-date-exercise-9.php
 export function addMonths(date, numOfMonths, day = 1) {
+  // if day is falsy (i.e zero) need to add 1 month to the calc, to avoid confusion when desired return is last day of month
   !day && numOfMonths++;
   const currentDate = new Date(date);
   const newDate = new Date(
@@ -61,6 +72,7 @@ export function addMonths(date, numOfMonths, day = 1) {
     currentDate.getMonth() + numOfMonths,
     day
   );
+  // return updated date object X months later
   return newDate;
 }
 // --------------------------
@@ -145,10 +157,10 @@ export function canApplyAgain(startOfPeriod) {
 // -----------------------
 // FUNCTION combines the above functions to return object with all values formatted for output
 // to be used at initial part of award allowed letters to display award period info.
-// *DATE FORMAT: set to dd.mm.yyyy
+// * Date format set to "ddmmyy"
 export function formatLetterDates(content) {
   const { applicationDate, effectiveDate } = content;
-  const formattedAppDate = formatDates(applicationDate);
+  const formattedAppDate = formatDates(applicationDate, "ddmmyy");
   const formattedStartDate = awardPeriod(effectiveDate).periodStart;
   const formattedEndDate = awardPeriod(effectiveDate).periodEnd;
   const { newApplicationMonth, newApplicationYear } =

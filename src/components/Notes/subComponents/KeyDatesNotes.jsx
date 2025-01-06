@@ -1,6 +1,6 @@
 // COMPONENT renders key dates for the various form types for Notes
 
-import { formatDates } from "../../../utilities/dateUtils";
+import { addMonths, formatDates } from "../../../utilities/dateUtils";
 
 export default function KeyDatesNotes({ content }) {
   const {
@@ -11,6 +11,13 @@ export default function KeyDatesNotes({ content }) {
     controlSummonsDate,
     awardTerminatedDate,
   } = content;
+
+  let defaultTerminationDate = addMonths(controlSummonsDate, 0, 0);
+  // if (formatDates(controlSummonsDate)) {
+
+  //   // a valid summons date has been inputted by caseworker -> award automatically terminates on last day of same month
+  //   terminationDate = addMonths(controlSummonsDate, 0, 0)
+  // }
 
   if (formType !== "control") {
     return (
@@ -32,10 +39,14 @@ export default function KeyDatesNotes({ content }) {
           Virkningstidspunkt: <b>{formatDates(effectiveDate)}</b>
         </p>
         <p>
-          Kontrollnotat sendt: <b>{formatDates(controlSummonsDate)}</b>
+          Innkalling sendt: <b>{formatDates(controlSummonsDate)}</b>
         </p>
         <p>
-          Stønad opphørt: <b>{formatDates(awardTerminatedDate)}</b>
+          Stønad opphørt:{" "}
+          <b>
+            {formatDates(awardTerminatedDate) ||
+              formatDates(defaultTerminationDate)}
+          </b>
         </p>
         <p>
           Kontrollnotat mottatt: <b>{formatDates(controlFormDate)}</b>
