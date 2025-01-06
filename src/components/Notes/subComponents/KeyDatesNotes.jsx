@@ -12,12 +12,8 @@ export default function KeyDatesNotes({ content }) {
     awardTerminatedDate,
   } = content;
 
+  // termination date for failure to attend for control defaults to end of same month the summons was sent
   let defaultTerminationDate = addMonths(controlSummonsDate, 0, 0);
-  // if (formatDates(controlSummonsDate)) {
-
-  //   // a valid summons date has been inputted by caseworker -> award automatically terminates on last day of same month
-  //   terminationDate = addMonths(controlSummonsDate, 0, 0)
-  // }
 
   if (formType !== "control") {
     return (

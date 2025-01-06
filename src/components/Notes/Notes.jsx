@@ -54,10 +54,12 @@ export default function Notes({ content }) {
       </p>
 
       {/* Right to reside */}
-      <p>
-        Lovlig opphold: <b>{residencyTexts[residency] || ""}</b>
-        {residency === "temporary" && `, utløper: "dato"`}
-      </p>
+      {formType !== "control" && (
+        <p>
+          Lovlig opphold: <b>{residencyTexts[residency] || ""}</b>
+          {residency === "temporary" && `, utløper: "dato"`}
+        </p>
+      )}
       {/* Passport */}
       <p>
         Gyldig pass: <b>{passportTexts[validPassport] || ""}</b>
