@@ -15,7 +15,7 @@ export default function AddressChange({ content, onChangeContent }) {
             type="date"
             id="addressChange"
             onChange={(e) => {
-              onChangeContent({ addressChange: new Date(e.target.value) });
+              onChangeContent({ addressChangedDate: new Date(e.target.value) });
             }}
           />
         </label>

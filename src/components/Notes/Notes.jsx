@@ -25,6 +25,7 @@ export default function Notes({ content }) {
     validPassport,
     travel,
     financialAid,
+    addressChangedDate,
   } = content;
 
   return (
@@ -48,6 +49,11 @@ export default function Notes({ content }) {
         <p>***Lim inn kopi av adressesøk her***</p>
       )}
       {/* Date of last address change */}
+      {formType !== "control" && (
+        <p>
+          Siste adresseendring: <b>{formatDates(addressChangedDate)}</b>
+        </p>
+      )}
       {/* Stays at institutions */}
       {formType !== "control" && (
         <p>

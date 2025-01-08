@@ -13,7 +13,9 @@ export default function KeyDatesNotes({ content }) {
   } = content;
 
   // termination date for failure to attend for control defaults to end of same month the summons was sent
-  let defaultTerminationDate = addMonths(controlSummonsDate, 0, 0);
+  const defaultTerminationDate = addMonths(controlSummonsDate, 0, 0);
+
+  const defaultStartDate = addMonths(controlSummonsDate, 1, 1);
 
   if (formType !== "control") {
     return (
@@ -31,12 +33,11 @@ export default function KeyDatesNotes({ content }) {
   } else if (formType === "control") {
     return (
       <div>
-        <p>
-          Virkningstidspunkt: <b>{formatDates(effectiveDate)}</b>
-        </p>
+        {/* Control summons sent date */}
         <p>
           Innkalling sendt: <b>{formatDates(controlSummonsDate)}</b>
         </p>
+        {/* Date of automated termination due to failure to attende for control */}
         <p>
           Stønad opphørt:{" "}
           <b>
@@ -44,8 +45,13 @@ export default function KeyDatesNotes({ content }) {
               formatDates(defaultTerminationDate)}
           </b>
         </p>
+        {/* Control form received date */}
         <p>
           Kontrollnotat mottatt: <b>{formatDates(controlFormDate)}</b>
+        </p>
+        {/* Award reinstated from date */}
+        <p>
+          Setter i gang stønad fra: <b>{formatDates(defaultStartDate)}</b>{" "}
         </p>
       </div>
     );
