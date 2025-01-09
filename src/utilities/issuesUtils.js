@@ -16,10 +16,14 @@ export const allIssues = [
   // Income issues
   "excessIncome",
   "lowAward",
-  // Residency issues
+  // First residency rights issues
+  "familyReunion",
+  "noResidencyBasis",
+  // Current esidency rights issues
   "noResidency",
   "expiredResidency",
   "lapsingResidency",
+
   // Institution issues - PLACEHOLDER
   "institutionAdmittance",
   // Savings issues
@@ -83,6 +87,27 @@ export function checkIncomes(content) {
     return { noIssues: ["excessIncome", "lowAward"] };
   }
 }
+// --------------------
+// Function checks for issues related to a claimants original right to reside in Norway
+export function checkFirstResidency(content) {
+  const { firstResidency, EEAPermanentResidency } = content;
+
+  switch (firstResidency) {
+    case "familyReunion":
+      // claimants can never get Supplerende Stønad if their original right to reside was based on family reunion (with certain family members) AND there was a requirement that that family member supported them financially
+      return {
+        familyReunion: { active: true, terminal: true, resolution: false },
+      };
+    case "noResidencyBasis":
+      // claimant's first right to reside was not one that gave basis for a future permanent right to reside
+      return {
+        noResidencyBasis: { active: true, terminal: true, resolution: false },
+      };
+    // no issues detected: return names of potential issues (used by checker function to check for saved solutions)
+    default:
+      return { noIssues: ["familyReunion", "noResidencyBasis"] };
+  }
+}
 // --------------
 // Function checks for residency issues (expired or soon to expire residency rights)
 export function checkResidency(content) {
@@ -116,6 +141,7 @@ export function checkResidency(content) {
     noIssues: ["noResidency", "expiredResidency", "lapsingResidency"],
   };
 }
+
 // --------------
 // Function checks for institution issues
 // PLACEHOLDER - full functionality not implemented
@@ -262,6 +288,7 @@ export function checkFinancialAid(content) {
 const tests = {
   checkIncomes,
   checkResidency,
+  checkFirstResidency,
   checkInstitutions,
   checkSavings,
   checkFinancialAid,

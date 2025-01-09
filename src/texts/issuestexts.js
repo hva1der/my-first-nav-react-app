@@ -56,6 +56,30 @@ const issuesTexts = {
     refusalGrounds:
       "Vedtaket er fattet etter §6 og 9 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
+  // ----------------------
+  // Original residency rights issues (all terminal)
+  familyReunion: {
+    longName: "Familieinnvandring",
+    description:
+      "Brukers første oppholdstillatelse var etter familieinnvandring med krav om underhold",
+    resolution: "Ingen løsning. Bruker er utestengt fra SU.",
+    refusalGrounds:
+      "Vedtaket er fattet etter §3 i lov om supplerende stønad for personar med kort butid i Noreg.",
+  },
+  noResidencyBasis: {
+    longName: "Ikke grunnlag for opphold",
+    description:
+      "Brukers første oppholdstillatelse var ikke etter hjemmel som danner grunnlag for permanent oppholdstillatelse",
+    resolution: "Ingen løsning. Bruker er utestengt fra SU.",
+    refusalGrounds:
+      "Vedtaket er fattet etter §3 i lov om supplerende stønad for personar med kort butid i Noreg.",
+  },
+  // ---------------------
+  // Ongoing residency issues
+  // EEA, but not permanent => terminal
+  // Expired
+  //
+  // ---------------------
   // Savings issues
   excessSavings: {
     longName: "Formue over 0,5G",

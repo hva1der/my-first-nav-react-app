@@ -21,15 +21,21 @@ export default function FirstResidency({ content, onChangeContent }) {
           <select
             value={firstResidency || "--Velg--"}
             onChange={(e) => {
-              onChangeContent({ firstResidency: e.target.value }); //! Missing issue checker
+              onChangeContent(
+                { firstResidency: e.target.value },
+                "checkFirstResidency"
+              );
             }}
           >
             <option disabled>--Velg--</option>
+            <option value={"nordic"}>Nordisk statsborger</option>
+            <option value={"EEA"}>EØS</option>
             <option value={"refugee"}>Flyktning</option>
             <option value={"noFamilyReunion"}>IKKE familegjenforening</option>
             <option value={"familyReunion"}>Familiegjenforening</option>
-            <option value={"EEA"}>EØS</option>
-            <option value={"nordic"}>Nordisk statsborger</option>
+            <option value={"noResidencyBasis"}>
+              Ikke grunnlag for varig oppholdstillatelse
+            </option>
           </select>
         </label>
         {firstResidency === "EEA" && (
