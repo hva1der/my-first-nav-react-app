@@ -42,7 +42,9 @@ const issuesTexts = {
   // Income issues
   excessIncome: {
     longName: "Høy inntekt",
-    description: "Inntekt for høy for innvilgelse elns...",
+    description:
+      "Brukers inntekt overstiger stønadssats og skal avslås etter §6.",
+    hasSolutions: false,
     resolution:
       "Vurder om det er sannsynlig at inntekt vil reduseres i fremtiden. Eller, om det evt. skal vurderes å innvilge fra et tidligere tidspunkt.",
     refusalGrounds:
@@ -50,7 +52,8 @@ const issuesTexts = {
   },
   lowAward: {
     longName: "Under 2 prosent",
-    description: "Stønad er under 2 prosent av høy sats... osv ...",
+    description:
+      "Etter fradrag for inntekter utgjør SU til utbetaling under 2% av høy sats, og skal derfor avslås etter §6.",
     resolution:
       "Vurder om det er sannsynlig at inntekt vil reduseres i fremtiden. Eller, om det evt. skal vurderes å innvilge fra et tidligere tidspunkt.",
     refusalGrounds:
