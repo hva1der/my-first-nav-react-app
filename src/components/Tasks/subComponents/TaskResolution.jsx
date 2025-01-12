@@ -9,10 +9,10 @@ export default function TaskResolution({ content, selectedIssue }) {
   const { description, hasSolutions, possibleSolutions, solutionTexts } =
     issuesTexts[selectedIssue] || issuesTexts.dummyIssue; // * hasSolutions is set to "false" in the dummy issue
   const [selectedSolution, setSelectedSolution] = useState(
-    "No solution selected"
+    possibleSolutions[0]
   );
 
-  //* SolutionParams returns data used to dynamically render solutions for the selected issue.
+  //* SolutionParams returns data used to dynamically render solution parameters for the selected issue.
   const params = solutionParams(content, selectedIssue);
 
   return (

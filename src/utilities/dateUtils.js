@@ -103,7 +103,7 @@ export function travelType(departure, arrival, relevantDate) {
 }
 
 // ---------------------
-// ***NOTE: Below to be refactured to use above "travelType" function -> Also then need to refactor notesTexts to use altered "type" names
+// ***NOTE: Below to be refactored to use above "travelType" function -> Also then need to refactor notesTexts to use altered "type" names
 // FUNCTION determines # of net travel days (subtracting departure and arrival days (if they are within the award period))
 // Returns a travel details object: { departure: "formatted date", arrival, grossDuration, netDuration };
 // Issue: Not covering travel dates into future award period - relevant for SU FI

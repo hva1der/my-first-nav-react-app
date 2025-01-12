@@ -14,7 +14,7 @@ const issuesTexts = {
   dummyIssue: {
     longName: "No issues",
     description: "Ingen problemer funnet eller valgt",
-    hasSolutions: true,
+    hasSolutions: false,
     possibleSolutions: ["dummySolution", "dummySolution2"],
     solutionTexts: {
       dummySolution: {
@@ -92,13 +92,33 @@ const issuesTexts = {
   },
   // Financial aid issues (all non-terminal)
   fetchingFinancialAid: {
-    longName: "Innhenting av sosialstønad fra Nav lokal",
-    description:
-      "Opprett Vurder henvendelse oppgave til Nav lokal med tema SU og frist 1 uke.",
-    resolution: `Bruker har satt frem krav om supplerende stønad. Dersom bruker eller eventuell 
-      ektefelle har mottatt økonomisk sosialhjelp skal denne gå til fradrag i en evt. etterbetaling. 
-      Vi ber derfor om at det oppgis hva de evt. har mottatt i økonomisk sosialhjelp per måned i 
-      perioden 01xxxx til og med dags dato. Dersom det ikke er utbealt noe så bes også dette bekreftet.`,
+    longName: "Sosialstønad",
+    description: "Ved tilbakedatert SU skal sosialstønad gå til fradrag",
+    hasSolutions: true,
+    possibleSolutions: ["fetchFinancialAid"],
+    solutionTexts: {
+      fetchFinancialAid: {
+        inputText: "Innhent sosialstønad",
+        title: "Innhent sosialstønad fra Nav lokal slik:",
+        paragraphs: (params) => [
+          // ! Missing param for date of financial aid period
+          {
+            style: `boldSolution`,
+            text: `Opprett vurder henvendelse oppgave til Nav lokal med frist 1 uke, og følgende tekst:`,
+          },
+          {
+            text: `Bruker har satt frem krav om supplerende stønad. Dersom bruker eller eventuell 
+          ektefelle har mottatt økonomisk sosialhjelp skal denne gå til fradrag i en evt. etterbetaling. 
+          Vi ber derfor om at det oppgis hva de evt. har mottatt i økonomisk sosialhjelp per måned i 
+          perioden 01xxxx til og med dags dato. Dersom det ikke er utbealt noe så bes også dette bekreftet.`,
+          },
+          {
+            style: `boldSolution`,
+            text: `Flytt frist på behandle sak oppgaven 1 uke frem i tid. La den ligge på din benk i påvente av svar.`,
+          },
+        ],
+      },
+    },
   },
   // Travel issues
   pastShortStay: {
