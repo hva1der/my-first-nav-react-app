@@ -96,26 +96,26 @@ export function padIncome(incomes, type) {
   return longType + formattedYearly;
 }
 
-// FUNCTION returns the benefit year of the awarding period
+// FUNCTION returns the benefit year in the first month of the award period. The benefit year runs from 1st of May to 30th of April
+// takes effectiveDate as a js date as input
 export function benefitYear(effectiveDate) {
-  // Determines what year's benefit rates to use. These values have to be updated in constants.js each May
-  const currentYear = new Date().getFullYear();
-  let awardStartYear;
-  // check if the effective date is before or after 30/04/xx, where xx is the current, last, or year before last
-  if (effectiveDate > new Date(currentYear, 3, 30)) {
-    awardStartYear = "thisYear";
-  } else if (effectiveDate > new Date(currentYear - 1, 3, 30)) {
-    awardStartYear = "lastYear";
-  } else if (effectiveDate > new Date(currentYear - 2, 3, 30)) {
-    awardStartYear = "yearBeforeLast";
+  const awardingYear = effectiveDate.getFullYear();
+  const awardingMonth = effectiveDate.getMonth();
+  const awardingShortFormYear = awardingYear.toString().slice(-2);
+
+  if (awardingMonth > 3) {
+    // award starts after 30 april => use benefit rates effective from May
+    return "startingMay20" + awardingShortFormYear;
+  } else {
+    // award starts before 01 May => use last years rates
+    return "startingMay20" + (awardingShortFormYear - 1);
   }
-  return awardStartYear;
 }
 
 // FUNCTION returns yearly gross award (before deducting incomes)
 export function grossAward(rate, effectiveDate) {
   const awardStartYear = benefitYear(effectiveDate);
-  // RATES = {lastYear: { EV: 210420, EN: 227472 ...
+  // RATES = {startingMay2023: { EV: 210420, EN: 227472 ...
   const grossRate = RATES[awardStartYear][rate];
   return grossRate;
 }
@@ -124,6 +124,7 @@ export function grossAward(rate, effectiveDate) {
 // FUNCTION  returns object with yearly and monthly net award amount ()
 // NOTE: due to wokrings of Infotrygd montly rate will be rounded UP to nearest integer
 // PROBLEM: Unsure of workings of Infotrygd - what is actually logged as the yearly award??
+// ! Missing error handler (namely for where the RATE is not specified in constants.js)
 export function netAward(incomes, rate, effectiveDate) {
   const grossRate = grossAward(rate, effectiveDate);
   const sumOfIncomes = incomeSum(incomes, "Sum");

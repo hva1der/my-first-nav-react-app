@@ -53,7 +53,7 @@ const issuesTexts = {
   lowAward: {
     longName: "Under 2 prosent",
     description:
-      "Etter fradrag for inntekter utgjør SU til utbetaling under 2% av høy sats, og skal derfor avslås etter §6.",
+      "Etter fradrag for inntekter utgjør SU til utbetaling under 2% av høy sats, og skal derfor avslås etter §6 og 9.",
     resolution:
       "Vurder om det er sannsynlig at inntekt vil reduseres i fremtiden. Eller, om det evt. skal vurderes å innvilge fra et tidligere tidspunkt.",
     refusalGrounds:
