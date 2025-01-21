@@ -16,7 +16,7 @@ export default function Incomes({
   /* Function updates parent state "content" with incomes  */
   function onUpdateIncomes(incomes) {
     setIncomes(incomes);
-    onChangeContent({ incomes });
+    onChangeContent({ incomes }, "checkIncomes");
   }
 
   return (
@@ -77,7 +77,6 @@ export default function Incomes({
                     onChange={(e) => {
                       income.amount = e.target.value;
                       onUpdateIncomes(incomes);
-                      onUpdateIssues("checkIncomes");
                     }}
                   />
                 </label>
