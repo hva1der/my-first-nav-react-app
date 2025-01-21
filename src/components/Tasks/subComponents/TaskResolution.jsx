@@ -21,7 +21,18 @@ export default function TaskResolution({ content, selectedIssue }) {
       <p>
         <b>{issuesTexts[selectedIssue].description}</b>
       </p>
-      {/*  */}
+      {/* TERMINAL issues - no solutions. Renders explanation, § etc. */}
+      {!hasSolutions && (
+        <div>
+          {issuesTexts[selectedIssue]?.info?.map((paragraph, index) => (
+            <p key={index} className={styles[paragraph?.style]}>
+              {paragraph.text}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {/* NON-TERMINAL issues - renders with possible solutions selector etc.  */}
       {/* Select field for possible solutions */}
       {hasSolutions && (
         <select

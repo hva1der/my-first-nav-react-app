@@ -12,6 +12,6 @@ export const RATES = {
 
 // Limit to savings for claimant(s)
 export const SAVINGSLIMITS = {
-  lastYear: 59310,
-  thisYear: 62014,
+  startingMay2023: 59310,
+  startingMay2024: 62014,
 };

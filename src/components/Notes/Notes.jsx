@@ -12,6 +12,7 @@ import {
 import FinancialAidNotes from "./subComponents/FinancialAidNotes";
 import TravelNotes from "./subComponents/TravelNotes";
 import KeyDatesNotes from "./subComponents/KeyDatesNotes";
+import IncomesNotes from "./subComponents/IncomesNotes";
 
 export default function Notes({ content }) {
   // contents destructured for accessing texts
@@ -79,15 +80,7 @@ export default function Notes({ content }) {
       <p>Formue: {(+content.savings || 0) + (+content.partnerSavings || 0)}</p>
 
       {/* Incomes */}
-      <h4>Inntekter</h4>
-      <ul>
-        {content.incomes &&
-          content.incomes.map((income) => (
-            <li key={income.id}>
-              {income.source}: {yearlyIncome(income.amount)}
-            </li>
-          ))}
-      </ul>
+      <IncomesNotes content={content} />
 
       {/* Financial aid */}
       <h4>Sosialstønad</h4>

@@ -34,9 +34,14 @@ the user is expected to click/activate it to dismiss. */
 .modalContent p {
   margin-top: 1em;
 }
-  /* issue/solution text formatting */
+  /* bold/emphasis paragraphs for solution texts */
   .boldSolution {
     font-weight: bold;
+  }
+
+  /* Italics for legal § quotes */
+  .italicsLegal {
+    font-style: italic;
   }
 
 /* BUTTONS */

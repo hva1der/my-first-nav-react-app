@@ -17,7 +17,7 @@ export default function Refusal({ content, liveIssues }) {
         BEGRUNNELSE <br />
         {/* Map through array of issues that are both active and terminal - prints grounds from issuesTexts */}
         {liveIssues.map((issue, index) => (
-          <div key={index}>{issuesTexts[issue].refusalGrounds}</div>
+          <div key={index}>{issuesTexts[issue]?.refusalGrounds}</div>
         ))}
       </div>
       {/* Complaints guidance */}

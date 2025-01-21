@@ -113,7 +113,7 @@ export function checkFirstResidency(content) {
 export function checkResidency(content) {
   const { applicationDate, effectiveDate } = content;
   const residency = content?.residency;
-  const residencyExpiry = content?.residencyExpiry;
+  const residencyExpiry = content?.residencyExpiry; // only defined where residency is not permanent.
   const nextControlMonth = findControlMonths(effectiveDate)[0]; // findControlMonths() returns array of 3 dates (1st of months) claimant has to appear for control after
 
   if (residency === "none") {
@@ -167,9 +167,10 @@ export function checkSavings(content) {
   const savings = +content.savings;
   const partnerSavings = +content.partnerSavings || 0;
   const combinedSavings = savings + partnerSavings; // need alt for before savings are defined?
-  const awardingYear = benefitYear(effectiveDate); // benefitYear returns the benefit year (01.05-30.04.yy) of the awarding period
+  const awardingYear = benefitYear(effectiveDate); // benefitYear returns the benefit year (1st May - 30th April) of the awarding period
 
   if (combinedSavings > SAVINGSLIMITS[awardingYear]) {
+    // Combined savings of claimant and partner exceeds savings limit (varies by year, defined in constants.js)
     return {
       excessSavings: {
         active: true,
@@ -181,9 +182,8 @@ export function checkSavings(content) {
   return { noIssues: ["excessSavings"] };
 }
 // ------------------
-// NEW
 // Need to add a button/option to note that all travels have been recorded/handled prior to new application (= no issues)
-// *** This function can return lots of issues -> Need to process in prioritised order - i.e. terminal issues first!
+// * This function can return lots of issues -> Need to process in prioritised order - i.e. terminal issues first!
 import { travelType } from "./dateUtils";
 export function checkTravel(content) {
   const { applicationDate, effectiveDate, staysAbroad } = content;

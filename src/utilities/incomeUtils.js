@@ -12,7 +12,7 @@ export function addBlankIncome(incomeArray = []) {
 // Income calculations
 // -------------------------------------------------------------------
 // FUNCTION takes an imcome in the format d/m/y + num, ex: "d1000" and returns annual income as a number
-// Important: Function assumes *correct* user input in above format.
+// ! Function assumes *correct* user input in above format. Missing error handler
 export function yearlyIncome(income) {
   if (!income) {
     return 0;

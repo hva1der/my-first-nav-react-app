@@ -78,7 +78,44 @@ const issuesTexts = {
       "Vedtaket er fattet etter §3 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
   // ---------------------
+
+  // TODO add styling "italicsLegal" to paras with legal quotes etc (simple italics)
   // Ongoing residency issues
+  noResidency: {
+    // Claimant has no right to reside in Norway. Benefit refused permanently, unless this is awarded
+    longName: `Ikke oppholdstillatelse`,
+    description: `Bruker har ikke oppholdstillatelse i Norge. Stønad skal avslås etter §3, første ledd.`,
+    hasSolutions: false,
+    info: [
+      {
+        style: `italicsLegal`,
+        text: `Supplerande stønad vert gitt til personar som er busette i Noreg og som anten har fylt 67 år eller er uføre flyktningar. Ein person vert rekna som busett dersom han eller ho er registrert i folkeregisteret og har norsk statsborgarskap, eller med heimel i utlendingslova har fått permanent opphaldsløyve eller mellombels opphaldsløyve som gir grunnlag for permanent opphaldsløyve`,
+      },
+      {
+        text: `Bruker kan tidligst få SU fra måned etter oppholdstillatelse evt. blir innvilget.`,
+      },
+    ],
+    refusalGrounds: `Vedtaket er fattet etter §3 i lov om supplerende stønad for personar med kort butid i Noreg.`,
+  },
+  expiredResidency: {
+    // Expirer R2R. Benefit refused until renewed.
+    longName: `Utløpt oppholdstillatelse`,
+    description: `Bruker har ikke gyldig oppholdstillatelse i Norge. Stønad skal avslås etter §3, første ledd.`,
+    hasSolutions: false,
+    info: [
+      {
+        style: `italicsLegal`,
+        text: `Supplerande stønad vert gitt til personar som er busette i Noreg og som anten har fylt 67 år eller er uføre flyktningar. Ein person vert rekna som busett dersom han eller ho er registrert i folkeregisteret og har norsk statsborgarskap, eller med heimel i utlendingslova har fått permanent opphaldsløyve eller mellombels opphaldsløyve som gir grunnlag for permanent opphaldsløyve`,
+      },
+      {
+        text: `Bruker kan tidligst få SU fra måned etter oppholdstillatelse evt. blir fornyet, eller innvilget på nytt grunnlag.`,
+      },
+    ],
+    refusalGrounds: `Vedtaket er fattet etter §3 i lov om supplerende stønad for personar med kort butid i Noreg.`,
+  },
+  lapsingResidency: {
+    // * Non terminal issue*. Should trigger task creation w/ reminder to check residency rights have been renewed by next control meeting
+  },
   // EEA, but not permanent => terminal
   // Expired
   //
@@ -86,8 +123,7 @@ const issuesTexts = {
   // Savings issues
   excessSavings: {
     longName: "Formue over 0,5G",
-    description:
-      "Ved formue over 0,5G, for tiden 62 014, skal søknaden avslås etter §8.",
+    description: "Ved formue over 0,5G skal søknaden avslås etter §8.",
     resolution:
       "Bruk excell arket -navn på excel ark- for formuesvurdering. Det må evt. vurderes tilpasning og utestengelse.",
     refusalGrounds:
