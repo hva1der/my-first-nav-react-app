@@ -4,18 +4,7 @@
 
 import { formatDates } from "../utilities/dateUtils";
 
-// Application Attendance Texts for actions taken where a claimant has failed to attend personally to apply for the benefit
-// OLD VERSION - keep until update to below format
-export const appAttTexts = {
-  validFail: "Det foreligger både gyldig legeerklæring og fullmakt.",
-  noRep: "Personen som leverte søknad har ikke fullmakt. ",
-  noMedEv: "Ikke gyldig legeerklæring.",
-  noGrounds: "Det foreligger hverken fullmakt eller legeerklæring.",
-};
-
-// NEW FORMAT
-
-// Attendance at application
+// Application Attendance: possible grounds for failing to attend
 export const attendanceTexts = {
   validFail: "Det foreligger både gyldig legeerklæring og fullmakt.",
   noRep: "Personen som leverte søknad har ikke fullmakt. ",

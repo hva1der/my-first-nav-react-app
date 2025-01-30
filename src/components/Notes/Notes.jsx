@@ -27,6 +27,8 @@ export default function Notes({ content }) {
     travel,
     financialAid,
     addressChangedDate,
+    attendance,
+    noAttGrounds,
   } = content;
 
   return (
@@ -35,7 +37,8 @@ export default function Notes({ content }) {
       <KeyDatesNotes content={content} />
       {/* Personal attendance at application */}
       <p>
-        Personlig fremmøte: <b>{content.attendance}</b>
+        Personlig fremmøte:{" "}
+        <b>{attendance ? "Ja" : attendanceTexts[noAttGrounds]}</b>
       </p>
       {content.attendance === "Nei" && <p>{content.noAttGrounds}</p>}
       {/* Benefit rate */}

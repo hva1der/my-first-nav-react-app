@@ -1,9 +1,12 @@
 //
 // COMPONENT: Input options for attendance at application.
 // - Namely for handling actions where user has not attended in person for application
-import { appAttTexts } from "../../../texts/notesTexts";
+import { defaultValues, noAttendanceGrounds } from "../../../texts/inputTexts";
 
 export default function ApplicationAttendance({ content, onChangeContent }) {
+  // possible grounds for failing to attend at application
+  const noAttGrounds = ["validFail", "noRep", "noMedEv", "noGrounds"];
+
   return (
     <div>
       {/* Radio button to select whether claimant attended yes/no */}
@@ -12,36 +15,46 @@ export default function ApplicationAttendance({ content, onChangeContent }) {
         <input
           type="radio"
           name="attendanceRadio"
-          onChange={() => onChangeContent({ attendance: "Ja" })}
+          onChange={() =>
+            onChangeContent(
+              { attendance: true, noAttGrounds: undefined },
+              "checkAttendance"
+            )
+          }
         />{" "}
-        Ja
+        {defaultValues.capsYes}
       </label>
       <label>
         <input
           type="radio"
           name="attendanceRadio"
-          onChange={() => onChangeContent({ attendance: "Nei" })}
+          onChange={() =>
+            onChangeContent({ attendance: false }, "checkAttendance")
+          }
         />{" "}
-        Nei
+        {defaultValues.capsNo}
       </label>
 
       {/* If NO attendance, render dropdown with possible grounds */}
-      {content.attendance === "Nei" && (
+      {content.attendance === false && ( // "=== false" to avoid this rendering before attendance has been defined
         <select
-          value={content.noAttGrounds || "-Velg årsak-"}
+          value={content.noAttGrounds || "choose"}
           onChange={(e) => {
-            onChangeContent({ noAttGrounds: e.target.value });
+            onChangeContent(
+              { noAttGrounds: e.target.value },
+              "checkAttendance"
+            );
           }}
         >
-          <option disabled>-Velg årsak-</option>
-          <option value={appAttTexts.validFail}>
-            Fullmakt og legeerklæring
+          <option value="choose" disabled>
+            {defaultValues.choose}
           </option>
-          <option value={appAttTexts.noMedEv}>Mangler legeerklæring</option>
-          <option value={appAttTexts.noRep}>Mangler fullmakt</option>
-          <option value={appAttTexts.noGrounds}>
-            Mangler både fullmakt og legeerklæring
-          </option>
+          {/* Render grounds options for failing to attend */}
+          {noAttGrounds.map((ground) => (
+            <option key={ground} value={ground}>
+              {noAttendanceGrounds[ground]}
+            </option>
+          ))}
         </select>
       )}
     </div>

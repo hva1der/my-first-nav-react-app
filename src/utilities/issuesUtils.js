@@ -13,6 +13,11 @@ import { RATES } from "../constants";
 // Array of all issues (used for accessing issues in loops)
 // TODO remember to also update issueTypes below - should refactor to combined/better solution (?)
 export const allIssues = [
+  // Attendance issues
+  "validNonAttendance",
+  "controlAttNoMedEv",
+  "applicationAttNoMedEv",
+  "noRepresentative",
   // Income issues
   "excessIncome",
   "lowAward",
@@ -23,7 +28,6 @@ export const allIssues = [
   "noResidency",
   "expiredResidency",
   "lapsingResidency",
-
   // Institution issues - PLACEHOLDER
   "institutionAdmittance",
   // Savings issues
@@ -43,6 +47,11 @@ export const allIssues = [
 export const issueTypes = {
   // Dummy type / placeholder type
   dummyIssue: "dummyIssue",
+  // Attendance type
+  validNonAttendance: "attendanceIssue",
+  controlAttNoMedEv: "attendanceIssue",
+  applicationAttNoMedEv: "attendanceIssue",
+  noRepresentative: "attendanceIssue",
   // Income type
   excessIncome: "incomeIssue",
   lowAward: "incomeIssue",
@@ -66,7 +75,63 @@ export const issueTypes = {
 };
 // ------------------------------------------------------------------
 // FUNCTIONS TO TEST FOR ISSUES (used in issuechecker function below)
-// -------------
+// ---------------------
+// Function cheks for issues related to personal attendance at application/control
+export function checkAttendance(content) {
+  const { attendance, noAttGrounds, formType } = content;
+
+  if (attendance === false) {
+    // claimant has not appeared in person
+    switch (noAttGrounds) {
+      case "validFail":
+        // valid grounds for failure to attend
+        return {
+          validNonAttendance: {
+            active: true,
+            terminal: false,
+            resolution: false,
+          },
+        };
+      case "noMedEv":
+        // No medical evidence claimant can't attend in person
+        if (formType === "control") {
+          // not a ground to terminate a running award -> send warning of termination letter
+          return {
+            controlAttNoMedEv: {
+              active: true,
+              terminal: false,
+              resolution: false,
+            },
+          };
+        }
+        // Application invalid if claimant failed to attend w/o medical grounds
+        else
+          return {
+            applicationAttNoMedEv: {
+              active: true,
+              terminal: true,
+              resolution: false,
+            },
+          };
+      case "noRep":
+        // No valid authorisation for representative to attend in place of claimant => application is invalid
+        return {
+          noRepresentative: { active: true, terminal: true, resolution: false },
+        };
+      default:
+        break;
+    }
+  }
+  return {
+    noIssues: [
+      "validNonAttendance",
+      "controlAttNoMedEv",
+      "applicationAttNoMedEv",
+      "noRepresentative",
+    ],
+  };
+}
+// ---------------------
 // Function checks for income issues (excess income, or award under 2%)
 export function checkIncomes(content) {
   const { rate, effectiveDate } = content;
@@ -182,6 +247,7 @@ export function checkSavings(content) {
   return { noIssues: ["excessSavings"] };
 }
 // ------------------
+// Function checks for travel issues
 // Need to add a button/option to note that all travels have been recorded/handled prior to new application (= no issues)
 // * This function can return lots of issues -> Need to process in prioritised order - i.e. terminal issues first!
 import { travelType } from "./dateUtils";
@@ -286,6 +352,7 @@ export function checkFinancialAid(content) {
 // -------------------
 // ********* Obejct of tests to be used in checker function *******************
 const tests = {
+  checkAttendance,
   checkIncomes,
   checkResidency,
   checkFirstResidency,
@@ -301,13 +368,12 @@ const tests = {
 export function checkForInputIssues(content, testFunction = "allTests") {
   const oldIssues = { ...content.issues } || {};
   const test = tests[testFunction];
-  // result should be an object in this format: {issueName: {active: boolean, terminal: boolean, resolution: false or string}}
+  // result should be an object in this format: {issueName: {active: boolean, terminal: boolean, resolution: false or string}} OR noIssues: [list of possible issues]
   const result = test(content);
-  // Object.keys returns an array of keys. result will always only have a single object, so [0] will be the issueName as a string (or undefined if the tesfunction hasn't detected any issues and returned an empty object {})
+  // Object.keys returns an array of keys. result will always only have a single object, so [0] will be the issueName as a string OR "noIssues" if the function detected no issues
   const issue = Object.keys(result)[0];
 
-  // if there is no issue now, check if the issue has been registered in the past - if active set active:false
-  // (In order to preserve user inputted solutions)
+  // if there is no issue now, check if the issue has been registered in the past - if active set active:false. (In order to preserve user inputted solutions)
   if (issue === "noIssues") {
     const inactiveIssues = result["noIssues"]; // (if there are no current issues the test functions return an [array] of the issues they test for)
     for (let i = 0; i < inactiveIssues.length; i++) {
@@ -318,7 +384,7 @@ export function checkForInputIssues(content, testFunction = "allTests") {
         if (oldIssues[inactiveIssue].active) {
           oldIssues[inactiveIssue].active = false;
           // return update to be processed by onChangeContent
-          return { [inactiveIssue]: oldIssues[inactiveIssue] };
+          return { [inactiveIssue]: oldIssues[inactiveIssue] }; //! Does this only return the first found issue that should be set to inactive? if so, it may ignore other issues that should now also be set to inactive (ex: if effDate has been changed)!
         }
       }
     }

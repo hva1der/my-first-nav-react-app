@@ -60,6 +60,32 @@ const issuesTexts = {
       "Vedtaket er fattet etter §6 og 9 i lov om supplerende stønad for personar med kort butid i Noreg.",
   },
   // ----------------------
+  // Attendance issues
+  validNonAttendance: {
+    longName: `Gyldig fravær`,
+    description: `Bruker har ikke møtt. Det foreligger både gyldig fullmakt og legeerklæring.`,
+    hasSolutions: true,
+    possibleSolutions: ["copyForRep"],
+    solutionTexts: {
+      copyForRep: {
+        inputText: "Send kopi til fullmektig",
+        title: "Slik lager du oversendelsesbrev til fullmektig:",
+        paragraphs: (params) => [
+          {
+            text: `Opprett fritekstbrev uten purring, med teksten: `,
+          },
+          {
+            text: `Fordi du er registrert som fullmektig for ---NAVN PÅ BRUKER---, 
+            mottar du kopi av vedtak om supplerende stønad.`,
+          },
+          {
+            text: `(Husk å endre adresse til fullmektig.)`,
+          },
+        ],
+      },
+    },
+  },
+  // ----------------------
   // Original residency rights issues (all terminal)
   familyReunion: {
     longName: "Familieinnvandring",

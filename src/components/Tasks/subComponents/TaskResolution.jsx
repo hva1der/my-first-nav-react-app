@@ -1,19 +1,25 @@
 // COMPONENT renders issue descriptions and solutions
 
 import styles from "../Tasks.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import issuesTexts from "../../../texts/issuestexts";
 import { solutionParams } from "../../../utilities/textUtils";
 
 export default function TaskResolution({ content, selectedIssue }) {
-  const { description, hasSolutions, possibleSolutions, solutionTexts } =
+  const { hasSolutions, possibleSolutions, solutionTexts } =
     issuesTexts[selectedIssue] || issuesTexts.dummyIssue; // * hasSolutions is set to "false" in the dummy issue
-  const [selectedSolution, setSelectedSolution] = useState(
-    possibleSolutions?.[0]
-  );
+  const [selectedSolution, setSelectedSolution] = useState("choose");
 
   //* SolutionParams returns data used to dynamically render solution parameters for the selected issue.
   const params = hasSolutions && solutionParams(content, selectedIssue);
+
+  // effect to reset solution selector when a new issue is selected
+  // ? unneccessary use of effect? move to ex: pass a prop from parent instead?
+  useEffect(() => {
+    if (hasSolutions) {
+      setSelectedSolution("choose");
+    }
+  }, [selectedIssue]);
 
   return (
     <div>
@@ -36,12 +42,15 @@ export default function TaskResolution({ content, selectedIssue }) {
       {/* Select field for possible solutions */}
       {hasSolutions && (
         <select
+          name="selectedSolution"
           value={selectedSolution}
           onChange={(e) => {
             setSelectedSolution(e.target.value);
           }}
         >
-          <option disabled>--Velg--</option>
+          <option value="choose" disabled>
+            --Velg--
+          </option>
           {/* List possible solutions */}
           {possibleSolutions.map((solution) => (
             <option value={solution} key={solution}>
@@ -67,6 +76,3 @@ export default function TaskResolution({ content, selectedIssue }) {
     </div>
   );
 }
-
-// ! Remember: The paragraphs will have dates, amounts etc. in them => need to be functions/dynamic render
-// TODO: Add new prop to "paragraphs": isBold:boolean or className for CSS - for formatting of text
