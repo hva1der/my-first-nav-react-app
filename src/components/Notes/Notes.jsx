@@ -8,6 +8,7 @@ import {
   passportTexts,
   travelTexts,
   financialAidTexts,
+  firstResidencyTexts,
 } from "../../texts/notesTexts";
 import FinancialAidNotes from "./subComponents/FinancialAidNotes";
 import TravelNotes from "./subComponents/TravelNotes";
@@ -22,6 +23,7 @@ export default function Notes({ content }) {
     effectiveDate,
     rate,
     institution,
+    firstResidency,
     residency,
     validPassport,
     travel,
@@ -64,7 +66,12 @@ export default function Notes({ content }) {
           Institusjonsopphold: <b>{institutionTexts[institution] || ""}</b>
         </p>
       )}
-
+      {/* First residency rights/ground */}
+      {formType === "firstApplication" && (
+        <p>
+          Første oppholdstillatelse: {firstResidencyTexts?.[firstResidency]}
+        </p>
+      )}
       {/* Right to reside */}
       {formType !== "control" && (
         <p>

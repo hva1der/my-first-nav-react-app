@@ -13,6 +13,16 @@ export const attendanceTexts = {
 };
 // Stays at institutions
 export const institutionTexts = { yes: "Ja", no: "Nei" };
+// First residency right/ground
+export const firstResidencyTexts = {
+  nordic: "Nordisk statsborger",
+  EEA: "EØS",
+  refugee: "Flyktning",
+  noFamilyReunion: "Ikke familieinnvandring med krav om underhold.",
+  familyReunion: "AVSLAGSGRUNN: Familieinnvandring med krav om underhold.",
+  noResidencyBasis: "AVSLAGSGRUNN: Ikke grunnlag for varig oppholdstillatelse",
+};
+
 // Right to reside
 export const residencyTexts = {
   permanent: "Permanent",
