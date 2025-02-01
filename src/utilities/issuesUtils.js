@@ -208,6 +208,9 @@ export function checkResidency(content) {
 }
 
 // --------------
+// Function checks for passport issues
+export function checkPassport(content) {}
+// --------------
 // Function checks for institution issues
 // PLACEHOLDER - full functionality not implemented
 export function checkInstitutions(content) {
