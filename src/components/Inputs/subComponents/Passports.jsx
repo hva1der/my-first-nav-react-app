@@ -21,16 +21,25 @@ export default function Passports({ content, onChangeContent }) {
     }
   };
 
+  // Convert validPassport from js Date to "yyyy-mm-dd" so it can be read/displayed as a value in the input field
+  let displayPassportDate;
+  if (validPassport) {
+    displayPassportDate = validPassport.toISOString().split("T")[0]; // (ISOString returns date in the format: "2025-02-05T21:19:56.239Z")
+  }
+
   return (
     <div className={styles.inputLine}>
       <label>
         Utløpsdato pass:
         <input
           type="date"
+          id="passportDate"
           disabled={!hasPassport}
-          value={validPassport || ""}
+          value={displayPassportDate || ""}
           // update parent state "content" with passport expiry date (reset to undefined if the hasPassport box is checked and unchecked again)
-          onChange={(e) => onChangeContent({ validPassport: e.target.value })}
+          onChange={(e) =>
+            onChangeContent({ validPassport: new Date(e.target.value) })
+          }
         />
       </label>
       <label>
