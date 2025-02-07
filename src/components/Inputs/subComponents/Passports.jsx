@@ -14,10 +14,10 @@ export default function Passports({ content, onChangeContent }) {
     setHasPassport(updatedHasPassport);
     if (updatedHasPassport) {
       // If the box is unchecked (passport presented), allow date input again
-      onChangeContent({ validPassport: undefined });
+      onChangeContent({ validPassport: undefined }, "checkPassport");
     } else {
       // If the box is checked (no passport), clear/reset the date and confirm -false- the user has no passport
-      onChangeContent({ validPassport: false });
+      onChangeContent({ validPassport: false }, "checkPassport");
     }
   };
 
@@ -38,7 +38,10 @@ export default function Passports({ content, onChangeContent }) {
           value={displayPassportDate || ""}
           // update parent state "content" with passport expiry date (reset to undefined if the hasPassport box is checked and unchecked again)
           onChange={(e) =>
-            onChangeContent({ validPassport: new Date(e.target.value) })
+            onChangeContent(
+              { validPassport: new Date(e.target.value) },
+              "checkPassport"
+            )
           }
         />
       </label>

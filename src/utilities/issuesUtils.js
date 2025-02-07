@@ -28,6 +28,11 @@ export const allIssues = [
   "noResidency",
   "expiredResidency",
   "lapsingResidency",
+  // Passport issues
+  "noPassport",
+  "passportExpiredApp",
+  "passportExpiredCtrl",
+  "passportExpiresSoon",
   // Institution issues - PLACEHOLDER
   "institutionAdmittance",
   // Savings issues
@@ -59,6 +64,11 @@ export const issueTypes = {
   noResidency: "residencyIssue",
   expiredResidency: "residencyIssue",
   lapsingResidency: "residencyIssue",
+  // Passport type
+  noPassport: "passportIssue",
+  passportExpiredApp: "passportIssue",
+  passportExpiredCtrl: "passportIssue",
+  passportExpiresSoon: "passportIssue",
   // Institution type - (Placeholder)
   institutionAdmittance: "institutionIssue",
   // Savings type
@@ -207,9 +217,70 @@ export function checkResidency(content) {
   };
 }
 
-// --------------
+// ----------------------------------------------------
 // Function checks for passport issues
-export function checkPassport(content) {}
+export function checkPassport(content) {
+  const {
+    validPassport,
+    formType,
+    effectiveDate,
+    applicationDate,
+    controlFormDate,
+  } = content;
+  const expiryDate = !isNaN(validPassport) ? validPassport : false;
+  const controlMonths = findControlMonths(effectiveDate);
+
+  let expiresBeforeCtrl;
+  for (let i = 0; i < controlMonths.length; i++) {
+    if (expiryDate < controlMonths[i]) {
+      expiresBeforeCtrl = true;
+      break;
+    }
+  }
+
+  if (validPassport === false) {
+    // claimant has not produced a valid passport
+    return {
+      noPassport: { active: true, terminal: true, resolution: false },
+    };
+  }
+  if (expiryDate) {
+    if (expiryDate < applicationDate && formType !== "control") {
+      // passport expired prior to applicationDate => application is invalid
+      return {
+        passportExpiredApp: { active: true, terminal: true, resolution: false },
+      };
+    }
+    if (expiryDate < controlFormDate && formType === "control") {
+      // passport expired prior to attendance for control => claimants needs to attend again with valid passport, or award will terminate in 4 weeks
+      return {
+        passportExpiredCtrl: {
+          active: true,
+          terminal: false,
+          resolution: false,
+        },
+      };
+    }
+    if (expiresBeforeCtrl) {
+      // passport will expire prior to next control date -> send reminder to claimant to order new passport
+      return {
+        passportExpiresSoon: {
+          active: true,
+          terminal: false,
+          resolution: false,
+        },
+      };
+    }
+  }
+  return {
+    noIssues: [
+      "noPassport",
+      "passportExpiredApp",
+      "passportExpiredCtrl",
+      "passportExpiresSoon",
+    ],
+  };
+}
 // --------------
 // Function checks for institution issues
 // PLACEHOLDER - full functionality not implemented
@@ -359,6 +430,7 @@ const tests = {
   checkIncomes,
   checkResidency,
   checkFirstResidency,
+  checkPassport,
   checkInstitutions,
   checkSavings,
   checkFinancialAid,
