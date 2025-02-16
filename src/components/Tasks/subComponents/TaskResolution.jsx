@@ -64,7 +64,7 @@ export default function TaskResolution({ content, selectedIssue }) {
         <div>
           <p>{solutionTexts[selectedSolution]?.title}</p>
           {solutionTexts[selectedSolution]
-            ?.paragraphs(params)
+            ?.paragraphs?.(params)
             ?.map((para, index) => (
               // Apply a style if the "style" prop exists; otherwise, no styling is applied.
               <p key={index} className={styles[para?.style]}>

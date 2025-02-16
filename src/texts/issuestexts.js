@@ -144,6 +144,192 @@ const issuesTexts = {
   },
   // EEA, but not permanent => terminal
   // Expired
+  // -------------------------
+  // PASSPORT issues
+  noPassport: {
+    // User has indicated claimant has failed to produce a passport (required)
+    longName: "Ikke fremvist pass",
+    description: "Bruker har ikke fremvist pass. Søknad er ugyldig. ",
+    hasSolutions: true,
+    possibleSolutions: [
+      "questionAttendance",
+      "fetchPassport",
+      "dontFetchPassport",
+    ],
+    solutionTexts: {
+      // Solution: assume failure to produce passport is because the application was sent by post. Require personal attendance.
+      questionAttendance: {
+        inputText: `Krav om personlig oppmøte`,
+        title: `Krav sendt i posten er ugyldig. Krev personling oppmøte.`,
+        paragraphs: (params) => [
+          {
+            style: `boldSolution`,
+            text: `Opprett fritekstbrev uten purring, med teksten:`,
+          },
+          {
+            text: `Vi har *params.applicationDate* mottat en søknad om supplerende stønad. Det ser ut som at søknaden 
+            er sendt i posten.`,
+          },
+          {
+            text: `Det er krav om personlig oppmøte på det lokale Nav kontoret ved søknad om supplerende stønad. Dette 
+            må bekreftes med fremvisning av originale pass som skal kontrolleres, kopieres, og sendes med søknaden. Pass 
+            skal forevises hver gang du er på lokalkontoret til kontrollsamtale og ved krav om ny stønadsperiode. Pass 
+            skal bekrefte at det er deg personlig som møter, og pass skal sjekkes for eventuelle stempel fra 
+            utenlandsopphold.`,
+          },
+          {
+            text: `Vi ber om at du møter på ditt lokale Nav-kontor så fort som mulig, og senest innen 14 dager. Du må forevise 
+            alle gyldige pass for kontroll og kopiering.`,
+          },
+          {
+            text: `Vi gjør oppmerksom på at dersom du ikke møter innen fristen kan søknaden bli avslått, jf. §18 i lov om 
+            supplerende stønad for personer med kort botid i Norge.`,
+          },
+        ],
+      },
+      // Fetch valid passport
+      fetchPassport: {
+        inputText: `Innhent pass fra bruker`,
+        title: `Søknad fremsatt uten gyldig pass anses som ugyldig. Bruker må møte med pass.`,
+        paragraphs: (params) => [
+          {
+            style: `boldSolution`,
+            text: `Opprett fritekstbrev uten purring, med teksten:`,
+          },
+          {
+            text: `Vi viser til søknad om supplerende stønad mottatt *params.applicationDate*. Det var ikke fremvist pass.`,
+          },
+          {
+            text: `I tillegg til kravet om personlig oppmøte ved Nav når man søker om supplerende stønad, stilles det 
+            krav om at man fremviser originale pass som skal kontrolleres. Passet skal bekrefte at det er deg personlig 
+            som møter, og pass skal sjekkes for eventuelle stempel fra utenlandsopphold.`,
+          },
+          {
+            text: `Vi ber deg derfor om å levere kopi av gyldig pass, eller eventuelt bekreftelse fra passkontoret på 
+            at nytt pass ikke er utstedt, så fort som mulig og senest innen 14 dager.`,
+          },
+          {
+            text: `Vi gjør oppmerksom på at dersom vi ikke mottar dokumentasjonen innen fristen kan søknaden bli avslått, 
+            jf. §18 i lov om supplerende stønad for personer med kort botid i Norge. Det er derfor viktig at du gir beskjed 
+            til Nav dersom du trenger mer tid for å innhente dokumentasjon.`,
+          },
+        ],
+      },
+      // Don't fetch passport. Refuse application immediately. Prompt user to give grounds for this option.
+      dontFetchPassport: {
+        inputText: `Ikke innhent pass`,
+        title: `Det innhentes ikke pass fra bruker. Du bør oppgi årsak. Søknad avslås.`,
+      },
+    },
+  },
+  passportExpiredApp: {
+    // claimant passport expired before application date
+    longName: "Utløpt pass",
+    description: "Brukers pass er utløpt.",
+    hasSolutions: true,
+    possibleSolutions: ["fetchPassport", "dontFetchPassport"],
+    solutionTexts: {
+      fetchPassport: {
+        inputText: `Innhent gyldig pass fra bruker`,
+        title: `Utløpt pass kan ikke kontrolleres for utenlandsopphold. Bruker må fremvise nytt pass, eller 
+        bekreftelse på at nytt pass ikke er utstedt.`,
+        paragraphs: (params) => [
+          {
+            style: `boldSolution`,
+            text: `Opprett fritekstbrev uten purring, med teksten:`,
+          },
+          {
+            text: `Vi viser til søknad om supplerende stønad mottatt *params.applicationDate*. Passet du leverte 
+            var gyldig til *params.passportExpiry* og er dermed utgått.`,
+          },
+          {
+            text: `I tillegg til kravet om personlig oppmøte ved Nav når man søker om supplerende stønad, stilles det 
+            krav om at man fremviser originale pass som skal kontrolleres. Passet skal bekrefte at det er deg personlig 
+            som møter, og pass skal sjekkes for eventuelle stempel fra utenlandsopphold.`,
+          },
+          {
+            text: `Vi ber deg derfor om å levere kopi av gyldig pass, eller eventuelt bekreftelse fra passkontoret på 
+            at nytt pass ikke er utstedt, så fort som mulig og senest innen 14 dager.`,
+          },
+          {
+            text: `Vi gjør oppmerksom på at dersom vi ikke mottar dokumentasjonen innen fristen kan søknaden bli avslått, 
+            jf. §18 i lov om supplerende stønad for personer med kort botid i Norge. Det er derfor viktig at du gir beskjed 
+            til Nav dersom du trenger mer tid for å innhente dokumentasjon.`,
+          },
+        ],
+      },
+      dontFetchPassport: {
+        inputText: `Ikke innhent gyldig pass`,
+        title: `Det innhentes ikke gyldig pass fra bruker. Du bør oppgi årsak. Søknad avslås.`,
+      },
+    },
+  },
+  passportExpiredCtrl: {
+    // claimant passport expired before attendance for control
+    longName: "Utløpt pass",
+    description:
+      "Brukers pass er utløpt. Stønad skal opphøres dersom bruker ikke fremviser gyldig pass innen 4 uker.",
+    hasSolutions: true,
+    possibleSolutions: ["fetchPassport", "dontFetchPassport"],
+    solutionTexts: {
+      fetchPassport: {
+        inputText: `Innhent gyldig pass fra bruker`,
+        title: `Bruker må fremvise gyldig pass til kontroll innen 4 uker, ellers skal stønaden opphøres`,
+        paragraphs: (params) => [
+          {
+            style: `boldSolution`,
+            text: `Opprett fritekstbrev uten purring "Varsel om opphør", med teksten:`,
+          },
+          {
+            text: `Passet du leverte til kontrollsamtale *params.controlFormDate* var gyldig til *params.passportExpiry* 
+            og er dermed utløpt.`,
+          },
+          {
+            text: `I tillegg til krav om personlig oppmøte er der krav om å fremivse gyldig pass... ...`,
+          },
+          {
+            text: `Vi gjør oppmerksom på at dersom vi ikke mottar dokumentasjonen innen fristen vil stønaden opphøre fra 
+            *params.terminationDate*, jf. §18 i lov om supplerende stønad for personer med kort botid i Norge. 
+            Det er derfor viktig at du gir beskjed til Nav dersom du trenger mer tid for å innhente dokumentasjon.`,
+          },
+        ],
+      },
+      dontFetchPassport: {
+        inputText: `Ikke innhent gyldig pass`,
+        title: `Det innhentes ikke gyldig pass fra bruker. Du bør oppgi årsak. Søknad avslås.`,
+      },
+    },
+  },
+  passportExpiresSoon: {
+    longName: "Pass utløper snart",
+    description:
+      "Pass utløper før neste gang bruker skal møte. Vurder å sende påminnelse.",
+    hasSolutions: true,
+    possibleSolutions: ["sendReminder", "dontSendReminder"],
+    solutionTexts: {
+      sendReminder: {
+        inputText: `Send påminnelse`,
+        title: `Send påminnelse til bruker om at de må fornye pass før neste kontrollsamtale/søknad`,
+        paragraphs: (params) => [
+          {
+            style: `boldSolution`,
+            text: `Opprett brev til bruker "Passet ditt utløper snart", med følgende tekst:`,
+          },
+          {
+            text: `Tekst som forklarer at passet utløper før neste kontrollsamtale, i MÅNED.`,
+          },
+          {
+            style: `boldSolution`,
+            text: `Opprett oppgave i Gosys med frist til *params.nextControlDeadline* om å sjekke at pass er fornyet..`,
+          },
+        ],
+      },
+      dontSendReminder: {
+        inputText: `Ikke send påminnelse`,
+        title: `Sender ikke påminnelse om utløp av pass til bruker`,
+      },
+    },
+  },
   //
   // ---------------------
   // Savings issues
