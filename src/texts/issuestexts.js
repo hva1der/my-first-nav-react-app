@@ -167,8 +167,9 @@ const issuesTexts = {
             text: `Opprett fritekstbrev uten purring, med teksten:`,
           },
           {
-            text: `Vi har *params.applicationDate* mottat en søknad om supplerende stønad. Det ser ut som at søknaden 
-            er sendt i posten.`,
+            text: `Vi har 
+            ${params.applicationDate || "[missing application date]"}
+            mottat en søknad om supplerende stønad. Det ser ut som at søknaden er sendt i posten.`,
           },
           {
             text: `Det er krav om personlig oppmøte på det lokale Nav kontoret ved søknad om supplerende stønad. Dette 
@@ -197,7 +198,9 @@ const issuesTexts = {
             text: `Opprett fritekstbrev uten purring, med teksten:`,
           },
           {
-            text: `Vi viser til søknad om supplerende stønad mottatt *params.applicationDate*. Det var ikke fremvist pass.`,
+            text: `Vi viser til søknad om supplerende stønad mottatt ${
+              params.applicationDate || "[missing application date]"
+            }. Det var ikke fremvist pass.`,
           },
           {
             text: `I tillegg til kravet om personlig oppmøte ved Nav når man søker om supplerende stønad, stilles det 
@@ -239,8 +242,11 @@ const issuesTexts = {
             text: `Opprett fritekstbrev uten purring, med teksten:`,
           },
           {
-            text: `Vi viser til søknad om supplerende stønad mottatt *params.applicationDate*. Passet du leverte 
-            var gyldig til *params.passportExpiry* og er dermed utgått.`,
+            text: `Vi viser til søknad om supplerende stønad mottatt ${
+              params.applicationDate || "[missing application date]"
+            }. Passet du leverte var gyldig til ${
+              params.passportExpiry || "[missing passport expiry date]"
+            } og er dermed utgått.`,
           },
           {
             text: `I tillegg til kravet om personlig oppmøte ved Nav når man søker om supplerende stønad, stilles det 
@@ -281,8 +287,11 @@ const issuesTexts = {
             text: `Opprett fritekstbrev uten purring "Varsel om opphør", med teksten:`,
           },
           {
-            text: `Passet du leverte til kontrollsamtale *params.controlFormDate* var gyldig til *params.passportExpiry* 
-            og er dermed utløpt.`,
+            text: `Passet du leverte til kontrollsamtale ${
+              params.applicationDate || "[missing application date]"
+            } var gyldig til ${
+              params.passportExpiry || "[missing passport expiry date]"
+            } og er dermed utløpt.`,
           },
           {
             text: `I tillegg til krav om personlig oppmøte er der krav om å fremivse gyldig pass... ...`,
@@ -316,11 +325,11 @@ const issuesTexts = {
             text: `Opprett brev til bruker "Passet ditt utløper snart", med følgende tekst:`,
           },
           {
-            text: `Tekst som forklarer at passet utløper før neste kontrollsamtale, i MÅNED.`,
+            text: `Tekst som forklarer at passet utløper før neste kontrollsamtale, i ${params.nextCtrlMonth} ${params.nextCtrlYear}.`,
           },
           {
             style: `boldSolution`,
-            text: `Opprett oppgave i Gosys med frist til *params.nextControlDeadline* om å sjekke at pass er fornyet..`,
+            text: `Opprett oppgave i Gosys med frist til ${params.ctrlDeadline} om å sjekke at pass er fornyet..`,
           },
         ],
       },
@@ -361,7 +370,7 @@ const issuesTexts = {
             text: `Bruker har satt frem krav om supplerende stønad. Dersom bruker eller eventuell 
           ektefelle har mottatt økonomisk sosialhjelp skal denne gå til fradrag i en evt. etterbetaling. 
           Vi ber derfor om at det oppgis hva de evt. har mottatt i økonomisk sosialhjelp per måned i 
-          perioden 01xxxx til og med dags dato. Dersom det ikke er utbealt noe så bes også dette bekreftet.`,
+          perioden ${params.fetchFinancialAidFrom} til og med dags dato. Dersom det ikke er utbealt noe så bes også dette bekreftet.`,
           },
           {
             style: `boldSolution`,

@@ -1,7 +1,22 @@
 // Utilities for rendering text
 
-import { formatDates, travelDetails } from "./dateUtils";
+import {
+  addMonths,
+  formatDates,
+  months,
+  nextControlMonth,
+  travelDetails,
+} from "./dateUtils";
 import { issueTypes } from "./issuesUtils"; // Issues are grouped by type to reduce duplication
+
+// Basic/general params - used in same format in multiple areas
+const basicParams = (content) => {
+  const effectiveDate = formatDates(content.effectiveDate);
+  const applicationDate = formatDates(content.applicationDate);
+  const controlFormDate = formatDates(content.controlFormDate);
+
+  return { effectiveDate, applicationDate, controlFormDate };
+};
 
 // Object of param finder functions - returns the desired params (as an object)
 // Used in dynamically rendering texts - namely/for now, in the Tasks modal
@@ -11,13 +26,28 @@ const paramFinders = {
     return { dummyParam: "***test dummy param***" };
   },
   //* -------------------------------------------------
+  //* -------------------------------------------------
+  // passport issues require basicParams, passport expiry date and next control month
+  passportIssue: (content) => {
+    const passportExpiry = formatDates(content.validPassport);
+    const nextControl = nextControlMonth(content.effectiveDate);
+    const nextCtrlMonth = months[nextControl.getMonth()];
+    const nextCtrlYear = nextControl.getFullYear();
+    const ctrlDeadline = formatDates(addMonths(nextControl, 0, 0));
 
-  //* ------------------------------------------------
+    return {
+      ...basicParams(content),
+      passportExpiry,
+      nextCtrlMonth,
+      nextCtrlYear,
+      ctrlDeadline,
+    };
+  },
+  //* -------------------------------------------------
   // financial aid issues requrie the date from which financial aid info is to be fetched from
   financialAidIssue: (content) => {
     // TODO (soon) - add params for text for "excessFinancialAid(?) "
-    const { effectiveDate } = content;
-    const formatEffDate = formatDates(effectiveDate); // Financial aid is fetched from start date of award period, if the award is backdated
+    const formatEffDate = basicParams(content)?.effectiveDate; // Financial aid is fetched from start date of award period, if the award is backdated
     // TODO: (FUTURE) implement functionality for where effDate is a different date than start of period - ex: SU FI - Possibly has to be categorized as a different issue(type) entirely, with different params
     return { fetchFinancialAidFrom: formatEffDate };
   },

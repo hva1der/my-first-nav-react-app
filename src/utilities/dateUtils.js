@@ -5,7 +5,7 @@
 //      * Object in format {day: dd, monht: mm, year:yy/yyyy}
 //
 // VARIABLES
-const months = [
+export const months = [
   "januar",
   "februar",
   "mars",
@@ -184,6 +184,17 @@ export function findControlMonths(effectiveDate) {
     addMonths(effectiveDate, 11),
   ];
   return controlMonths;
+}
+// -------------------------
+// FUNCTION returns next control month, calculated from today
+export function nextControlMonth(effectiveDate) {
+  const controlMonths = findControlMonths(effectiveDate);
+  const today = new Date();
+  for (let i = 0; i < controlMonths.length; i++) {
+    if (controlMonths[i] > today) {
+      return controlMonths[i];
+    }
+  }
 }
 // -------------------------
 // FUNCTION to see if a backdated award causes a control meeting to be called the same month as the award letter is issued
