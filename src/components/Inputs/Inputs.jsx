@@ -69,7 +69,7 @@ export default function Inputs({ onChangeContent, content }) {
 
       {/* INPUT Incomes COMPONENT */}
       <Incomes
-        oldIncomes={content.incomes}
+        content={content}
         onChangeContent={onChangeContent}
         onUpdateIssues={onUpdateIssues}
       />
