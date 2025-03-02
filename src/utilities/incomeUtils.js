@@ -3,6 +3,8 @@
 import { RATES } from "../constants.js";
 //
 // Income categories (used for categorising incomes for letters, and in some functions)
+// default values used in each incomeType (added with .map at end)
+const defaultValues = { startDate: "", amount: 0 };
 // incomeType is generally the name of one of the norwegian benefits, or translated for ex: foreign pension == "utenlandsk pensjon"
 //TODO: remember alphabetical order!
 export const allIncomeTypes = [
@@ -41,7 +43,7 @@ export const allIncomeTypes = [
     currency: "",
     sumNOK: 0,
   },
-];
+].map((income) => ({ ...income, ...defaultValues }));
 // Income formatting
 //--------------------------------------------------------------------
 // ! outdated - safe to delete? FUNCTION returns a basic income object, with id = incomeArray.length

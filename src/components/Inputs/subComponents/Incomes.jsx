@@ -6,7 +6,9 @@ import { addBlankIncome, allIncomeTypes } from "../../../utilities/incomeUtils";
 import styles from "../Inputs.module.css";
 
 export default function Incomes({ content, onChangeContent }) {
-  const { rate, incomes, partnerIncomes } = content;
+  const { rate } = content;
+  const incomes = content.incomes || [];
+  const partnerIncomes = content.partnerIncomes || [];
 
   // function adds a new income to the income array,
   function handleSubmitNewIncome(e, targetIncomes = "incomes") {
@@ -28,7 +30,7 @@ export default function Incomes({ content, onChangeContent }) {
     onChangeContent({ [targetIncomes]: updatedIncomes }, "checkIncomes");
   }
 
-  // function updates an (existing) income in the array of incomes (belonging to claimant or partner)
+  // ---------- function updates an (existing) income in the array of incomes (belonging to claimant or partner) --------
   function handleUpdateIncome(
     targetIncomes = "incomes", // defaults to claimants own incomes
     incomeID, // id of the income to update
@@ -44,7 +46,7 @@ export default function Incomes({ content, onChangeContent }) {
     onChangeContent({ [targetIncomes]: updatedIncomes }, "checkIncomes");
   }
 
-  // Function deletes income with specified ID
+  // ------------------ Function deletes income with specified  ------------------------
   function handleDeleteIncome(targetIncomes = "incomes", incomeID) {
     const oldIncomes = content[targetIncomes];
     const updatedIncomes = oldIncomes.filter(
@@ -56,6 +58,7 @@ export default function Incomes({ content, onChangeContent }) {
   return (
     <div>
       <h4>Inntekter</h4>
+      {/* Render select and add new income inputs */}
       <form onSubmit={(e) => handleSubmitNewIncome(e, "incomes")}>
         {/* Select income type to add */}
         <select name="selectedIncomeType" defaultValue="alderspensjon">
@@ -69,6 +72,38 @@ export default function Incomes({ content, onChangeContent }) {
         {/* Add income button */}
         <button type="submit">Legg til inntekt</button>
       </form>
+
+      {/* Render list of income inputs for claimant - CONSIDER MAKING INTO SEPARATE COMPONENT */}
+      {incomes.map((income) => (
+        <div key={income.id}>
+          <label>
+            {income.incomeType} per
+            <input
+              type="date"
+              value={
+                income?.startDate
+                  ? new Date(income.startDate).toISOString().split("T")[0] // convert to html date format for displaying
+                  : ""
+              }
+              onChange={(e) =>
+                handleUpdateIncome(
+                  "incomes",
+                  income.id,
+                  "startDate",
+                  new Date(e.target.value)
+                )
+              }
+            />
+          </label>
+          <input
+            type="number"
+            value={income?.amount}
+            onChange={(e) =>
+              handleUpdateIncome("incomes", income.id, "amount", e.target.value)
+            }
+          />
+        </div>
+      ))}
 
       {(rate === "EN" || rate === "EO") && ( // TODO: "EN" for testing, remember to change to "EU"
         <div>
