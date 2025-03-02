@@ -3,15 +3,45 @@
 import { RATES } from "../constants.js";
 //
 // Income categories (used for categorising incomes for letters, and in some functions)
-// "monthlyBasic" sets input value to be multiplied by 12 and adds no other input fields
-// "monthlyForeign" as above, but adds a currency type, link/button to currency calculator, and NOK sum field
-export const incomeCategories = {
-  alderspensjon: { letterType: "StateBenefits", inputType: "monthlyBasic" },
-  arbeidsavklaringspenger: {
-    letterType: "StateBenefits",
-    inputType: "dailyBasic",
+// incomeType is generally the name of one of the norwegian benefits, or translated for ex: foreign pension == "utenlandsk pensjon"
+//TODO: remember alphabetical order!
+export const allIncomeTypes = [
+  {
+    incomeType: "Alderspensjon",
+    category: "stateBenefits",
+    paymentFrequency: 12,
   },
-};
+  {
+    incomeType: "Arbeidsavklaringspenger",
+    category: "stateBenefits",
+    paymentFrequency: 260,
+  },
+  {
+    incomeType: "Arbeidsinntekt",
+    category: "wages",
+    paymentFrequency: 12,
+    name: "",
+  },
+  {
+    incomeType: "Privat pensjon",
+    category: "privatePension",
+    paymentFrequency: 12,
+    name: "",
+  },
+  {
+    incomeType: "Uføretrygd",
+    category: "stateBenefits",
+    paymentFrequency: 12,
+  },
+  {
+    incomeType: "Utenlandsk pensjon",
+    category: "foreignBenefits",
+    paymentFrequency: 12,
+    name: "",
+    currency: "",
+    sumNOK: 0,
+  },
+];
 // Income formatting
 //--------------------------------------------------------------------
 // ! outdated - safe to delete? FUNCTION returns a basic income object, with id = incomeArray.length

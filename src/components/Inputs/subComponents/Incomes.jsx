@@ -2,30 +2,29 @@
 // COMPONENT inputs for categorised incomes
 
 import { useState } from "react";
-import { addBlankIncome } from "../../../utilities/incomeUtils";
+import { addBlankIncome, allIncomeTypes } from "../../../utilities/incomeUtils";
 import styles from "../Inputs.module.css";
-import { incomeCategories } from "../../../utilities/incomeUtils";
 
 export default function Incomes({ content, onChangeContent }) {
   const { rate, incomes, partnerIncomes } = content;
 
-  // state for managing adding of new income of type x
-  const [incomeToAdd, setIncomeToAdd] = useState("");
-
   // function adds a new income to the income array,
-  // TODO: with specified parameters, based on the type of income
-  // NEW add income function - form submit version
   function handleSubmitNewIncome(e, targetIncomes = "incomes") {
     e.preventDefault();
     // get form data
     const form = e.target;
-    const formData = new FormData(form);
+    const formData = new FormData(form); //* For FormData key is the form input's "name" and value is "value"
     // get the selected income type
-    const incomeType = formData.get("selectedIncomeType");
+    const selectedIncomeType = formData.get("selectedIncomeType");
+    // find expanded details for the selected income type
+    const incomeTypeDetails = allIncomeTypes.find(
+      (income) => income.incomeType === selectedIncomeType
+    );
     const oldIncomes = content[targetIncomes] || [];
-    const newIncome = { type: incomeType, id: crypto.randomUUID() };
+    // create a new income object with default details, and a unique id
+    const newIncome = { ...incomeTypeDetails, id: crypto.randomUUID() };
     const updatedIncomes = [...oldIncomes, newIncome];
-
+    // update parent content with new income
     onChangeContent({ [targetIncomes]: updatedIncomes }, "checkIncomes");
   }
 
@@ -60,11 +59,12 @@ export default function Incomes({ content, onChangeContent }) {
       <form onSubmit={(e) => handleSubmitNewIncome(e, "incomes")}>
         {/* Select income type to add */}
         <select name="selectedIncomeType" defaultValue="alderspensjon">
-          <option disabled>--Velg--</option>
-          <option value={"alderspensjon"}>Alderspensjon</option>
-          <option value={"arbeidsavklaringspenger"}>
-            Arbeidsavklaringspenger
-          </option>
+          {/* map through income types */}
+          {allIncomeTypes.map((income) => (
+            <option key={income.incomeType} value={income.incomeType}>
+              {income.incomeType}
+            </option>
+          ))}
         </select>
         {/* Add income button */}
         <button type="submit">Legg til inntekt</button>
@@ -73,6 +73,19 @@ export default function Incomes({ content, onChangeContent }) {
       {(rate === "EN" || rate === "EO") && ( // TODO: "EN" for testing, remember to change to "EU"
         <div>
           <h5>Ektefelles inntekter</h5>
+          <form onSubmit={(e) => handleSubmitNewIncome(e, "partnerIncomes")}>
+            {/* Select income type to add */}
+            <select name="selectedIncomeType" defaultValue="alderspensjon">
+              {/* map through income types */}
+              {allIncomeTypes.map((income) => (
+                <option key={income.incomeType} value={income.incomeType}>
+                  {income.incomeType}
+                </option>
+              ))}
+            </select>
+            {/* Add income button */}
+            <button type="submit">Legg til inntekt</button>
+          </form>
         </div>
       )}
     </div>
